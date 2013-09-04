@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: donuts_dev
+  pool: 5
+  username: 
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: donuts_test
+  pool: 5
+  username: 
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: donuts
+  pool: 5
+  username: 
+  password:
