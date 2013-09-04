@@ -1,5 +1,6 @@
 # Ignore bundler config
 /.bundle
+/vendor/bundle
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -10,7 +11,6 @@ config/database.yml
 /tmp
 *.gem
 *.rbc
-.bundle
 .config
 coverage
 InstalledFiles
@@ -20,6 +20,16 @@ rdoc
 spec/reports
 tmp
 *.DS_Store
+*.sassc
+.sass-cache
+capybara-*.html
+.rspec
+/public/system/*
+/spec/tmp/*
+**.orig
+rerun.txt
+pickle-email-*.html
+.htaccess
 
 # YARD artifacts
 .yardoc
