@@ -1,0 +1,43 @@
+require 'spec_helper'
+
+feature Entry do
+  let(:entry) { FactoryGirl.create(:entry) }
+
+  scenario "user wants to create a new entry" do
+    visit new_entry_path
+    fill_in "entry_content", with: "Journal Man"
+    expect{
+      click_on "Create Entry"
+    }.to change(Entry, :count).by(1)
+  end
+
+  scenario "user wants to view all entries" do
+    entry
+    visit entries_path
+    page.should have_content "Listing entries"
+    page.should have_content entry.content
+  end
+
+  scenario "user wants to view a single entry" do
+    entry
+    visit entry_path(entry)
+    page.should have_content entry.content
+  end
+
+  scenario "user wants to edit an entry" do
+    entry
+    edited_content = "edited string man thing"
+    visit edit_entry_path(entry)
+    fill_in "entry_content", with: edited_content
+    click_on "Update Entry"
+    entry.reload.content.should eq edited_content
+  end
+
+  scenario "user wants to delete an entry" do
+    entry
+    visit entries_path
+    expect{
+      click_on "Destroy"
+    }.to change(Entry, :count).by(-1)
+  end
+end
