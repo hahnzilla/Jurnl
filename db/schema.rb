@@ -11,12 +11,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904144740) do
+ActiveRecord::Schema.define(:version => 20130909222847) do
 
   create_table "entries", :force => true do |t|
     t.text     "content"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "word_count"
+    t.integer  "distraction_count"
+    t.integer  "duration"
+    t.integer  "words_per_minute"
+    t.integer  "user_id"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.integer  "entry_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.integer  "goal_duration"
+    t.integer  "goal_word_count"
+    t.string   "bg_color_hex"
+    t.string   "font_color_hex"
+    t.integer  "font_point"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end

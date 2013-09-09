@@ -14,7 +14,7 @@ feature Entry do
   scenario "user wants to view all entries" do
     entry
     visit entries_path
-    page.should have_content "Listing Entries"
+    page.should have_content "Listing entries"
     page.should have_content entry.content
   end
 
