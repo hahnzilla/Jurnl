@@ -3,8 +3,8 @@ development:
   encoding: unicode
   database: donuts_dev
   pool: 5
-  username: dustin
-  password: cardinals47
+  username: 
+  password: 
 
 test:
   adapter: postgresql
@@ -19,5 +19,5 @@ production:
   encoding: unicode
   database: donuts
   pool: 5
-  username: dustin
-  password: cardinals47
+  username: 
+  password: 
