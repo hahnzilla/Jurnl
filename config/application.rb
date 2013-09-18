@@ -66,5 +66,16 @@ module Donuts
         request_specs:      true
       g.fixture_replacement :factory_girl, :dir => "spec/factories"
     end
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address              => "smtp.gmail.com",
+      :port                 => 587,
+      :domain               => 'gmail.com',
+      :user_name            => 'helpdesk.donuts@gmail.com',
+      :password             => 'D0nuts12',
+      :authentication       => 'plain',
+      :enable_starttls_auto => true  
+    }
   end
 end

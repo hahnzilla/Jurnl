@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 feature Entry do
-  let(:entry) { FactoryGirl.create(:entry) }
+  let!(:entry) { FactoryGirl.create(:entry) }
+  before(:each) { login! }
 
   scenario "user wants to create a new entry" do
     visit new_entry_path
@@ -12,20 +13,17 @@ feature Entry do
   end
 
   scenario "user wants to view all entries" do
-    entry
     visit entries_path
     page.should have_content "Listing entries"
     page.should have_content entry.content
   end
 
   scenario "user wants to view a single entry" do
-    entry
     visit entry_path(entry)
     page.should have_content entry.content
   end
 
   scenario "user wants to edit an entry" do
-    entry
     edited_content = "edited string man thing"
     visit edit_entry_path(entry)
     fill_in "entry_content", with: edited_content
@@ -34,7 +32,6 @@ feature Entry do
   end
 
   scenario "user wants to delete an entry" do
-    entry
     visit entries_path
     expect{
       click_on "Destroy"

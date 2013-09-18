@@ -19,6 +19,7 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.mock_with :rspec
 
+  config.include Devise::TestHelpers, :type => :controller
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
@@ -48,3 +49,12 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+def login!
+  @user = FactoryGirl.create(:user)
+  visit "/users/sign_in"
+  fill_in 'Email', :with => @user.email
+  fill_in 'Password', :with => @user.password
+  click_on 'Sign in'
+end
+

@@ -42,6 +42,7 @@ gem "pg"
 gem "annotate", "~> 2.5.0"
 
 group :test do
+  gem "faker"
   gem "rspec", "~> 2.13.0"
   gem "rspec-rails", "~> 2.13.0"
   gem "rspec-spies", "~> 2.1.4"
@@ -49,6 +50,7 @@ group :test do
   gem "factory_girl_rails", "~> 4.2.1"
   gem "shoulda-matchers", "~> 2.1.0"
   gem "database_cleaner", "~> 1.0.1"
+  gem 'selenium-webdriver', '~> 2.35'
 end
 
 group :development do
