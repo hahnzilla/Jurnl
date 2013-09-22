@@ -1,0 +1,50 @@
+
+/*for google font*/
+@import url(http://fonts.googleapis.com/css?family=Happy+Monkey&subset=latin,latin-ext);
+
+
+html{background-image:url('/assets/CompositionBackOpacity.gif');background-size:cover;background-position:center;background-attachment:fixed;}
+
+html, body{display:block;width:100%;height:100%;margin:0px;padding:0px;overflow:hidden;}
+
+.Column100{width:800px;}
+.Column75{width:75%;}
+.Column66{width:66%;}
+.Column50{width:50%;}
+.Column25{width:25%;}
+
+div, section, article{display:block;}
+
+#OuterWrapper{min-height:100%;width:100%;padding:0px;margin:0px;position:relative;display:table;background-color:#000000;}
+#MainColumn{margin:0px auto;padding:0px;position:relative;}
+
+/* Login Page*/
+#loginWrapper{height:100%;width:100%;display:table;text-align:center;font-family: 'Happy Monkey', cursive;}
+#Forms{position:relative;display:table-cell;vertical-align:middle;width:600px;}
+#Forms .FormWrapper{z-index:1;position:relative;overflow:hidden;width:600px;margin:0px auto;}
+#ImageBack{overflow:show;width:600px;margin:0px auto;}
+#ImageBack  > img{position:absolute;z-index:0;left:-1000px;top:0px;}
+.FormWrapper{background-color:#FFFFFF;min-height:200px;text-align:center;padding:15px;
+border-bottom-left-radius:50px 50%;
+border-top-left-radius:50px 50%;
+border-bottom-right-radius:50px 50%;
+border-top-right-radius:50px 50%;
+border:double 5px #000000;
+}
+.FormWrapper > *:first-child{margin-top:0px;}
+.FormInner{min-height:250px;}
+#options{bottom:0px;}
+
+/*Input fields*/
+form{display:table;width:80%;height:150px;margin:0px auto;}
+#loginWrapper .Baseline input{width:100%;font-family: 'Happy Monkey', cursive;height:100%;background:none;border:0px;}
+#loginWrapper dl{display:table;vertical-align:middle;padding:0px 20px;width:100%;}
+#loginWrapper dl:after{content:" ";display:block;clear:both;}
+#loginWrapper dl > *{float:left;margin:0px;display:table-cell;vertical-align:bottom;position:relative;}
+#loginWrapper dl .Baseline{border-bottom:solid 3px #999999;padding-top:20px;height:30px;}
+#loginWrapper dl > * > *{display:table-cell;vertical-align:bottom;}
+#loginWrapper dt{clear:left;width:25%;}
+#loginWrapper dd{width:75%;}
+#loginWrapper label{bottom:0px;}
+
+/**/
