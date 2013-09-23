@@ -1,18 +1,42 @@
-<h2>Sign up</h2>
+<!Doctype html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Donut - login/sign up</title>
+	<link id="page_favicon" href="/assets/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<div id="loginWrapper">
+	<div id="Forms">
+		<div class="FormWrapper">
+			<h1>Donut</h1>
+				<div class="FormInner" id="logIn">
+				
+					<h2>Sign up</h2>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+					<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+						<dl>
+						  <%= devise_error_messages! %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+						  <dt class="Baseline"><%= f.label :email %></dt>
+						  <dd class="Baseline"><%= f.email_field :email, :autofocus => true %></dd>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+						  <dt class="Baseline"><%= f.label :password %></dt>
+						  <dd class="Baseline"><%= f.password_field :password %></dd>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+						  <dt class="Baseline"><%= f.label :password_confirmation %></dt>
+						  <dd class="Baseline"><%= f.password_field :password_confirmation %></dd>
 
-<%= render "devise/shared/links" %>
+						  <div><%= f.submit "Sign up" %></div>
+						</dl>
+					<% end %>
+
+				</div>
+			<%= render "devise/shared/links" %>
+		</div>
+	</div>
+</div>
+	
+</body>
+</html>

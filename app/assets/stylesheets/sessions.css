@@ -41,10 +41,11 @@ form{display:table;width:80%;height:150px;margin:0px auto;}
 #loginWrapper dl{display:table;vertical-align:middle;padding:0px 20px;width:100%;}
 #loginWrapper dl:after{content:" ";display:block;clear:both;}
 #loginWrapper dl > *{float:left;margin:0px;display:table-cell;vertical-align:bottom;position:relative;}
-#loginWrapper dl .Baseline{border-bottom:solid 3px #999999;padding-top:20px;height:30px;}
+#loginWrapper dl .Baseline{border-bottom:solid 3px #999999;padding-top:20px;height:30px;text-align:left;}
 #loginWrapper dl > * > *{display:table-cell;vertical-align:bottom;}
 #loginWrapper dt{clear:left;width:25%;}
 #loginWrapper dd{width:75%;}
 #loginWrapper label{bottom:0px;}
+
 
 /**/
