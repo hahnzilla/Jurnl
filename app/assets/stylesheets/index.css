@@ -1,0 +1,200 @@
+/* Index.css */
+.Column100 	{ width: 800px; }
+.Column75	{ width: 75%; }
+.Column25	{ width: 25%; }
+.Column66	{ width: 66.6%; }
+.Column33	{ width: 33.3%; }
+.Column50	{ width: 50%; }
+
+@font-face {
+	font-family: 'icomoon';
+	src:url('/fonts/icomoon.eot');
+	src:url('/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/icomoon.woff') format('woff'),
+		url('/fonts/icomoon.ttf') format('truetype'),
+		url('/fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 2em;
+	line-height: 40px;
+}
+
+/*body.indexBody {
+	font-size: 16px;
+	background-image: url('/images/irongrip.png');
+	background-repeat: repeat;
+}*/
+
+.right {
+	float: right;
+	margin-left: 1em;
+}
+
+.left {
+	float: left;
+	margin-right: 1em;
+}
+
+#MainColumn {
+	margin: 0 auto;
+	overflow: visible;
+	height: 50em;
+	border-radius: .3em;
+	background: -moz-linear-gradient(top,  rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.25) 1%, rgba(255,255,255,0) 70%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.25)), color-stop(1%,rgba(255,255,255,0.25)), color-stop(70%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.25) 1%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.25) 1%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.25) 1%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.25) 1%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+}
+
+.innerColumn {
+	margin: 1em;
+}
+
+.mainHeader {
+	text-align: center;
+}
+
+.mainHeader h1 {
+	font-family: 'Fugaz One', sans-serif;
+	color: #fff;
+	padding: 0;
+	margin: 0;
+	font-size: 3em;
+}
+
+.button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f) );
+	background:-moz-linear-gradient( center top, #f24537 5%, #c62d1f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f');
+	background-color:#f24537;
+	-webkit-border-radius:.4em;
+	-moz-border-radius:.4em;
+	border-radius:.4em;
+	text-indent:0;
+	border:1px solid #d02718;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #810e05;
+}
+
+.button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537) );
+	background:-moz-linear-gradient( center top, #c62d1f 5%, #f24537 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537');
+	background-color:#c62d1f;
+}
+
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+.icon {
+	width: 40px;
+}
+
+.search {
+	margin-top:.5em;
+	height: 1.6em;
+    background: url('/images/magnify.png') no-repeat 10px 6px #444;
+    background-size: 1.5em;
+    border: 0 none;
+    font: bold 12px Arial,Helvetica,Sans-serif;
+    color: #fff;
+    width: 160px;
+    padding: 6px 15px 6px 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+    outline: 0;
+}
+
+.entries {
+	clear: both;
+	overflow: auto;
+}
+
+.entry {
+	font-family: 'Bitter', serif;
+	margin-top: 1em;
+	background-color: #fff;
+	overflow: auto;
+	border-radius: .3em;
+}
+
+.entry p {
+	font-size: .9em;
+	margin: 1em;
+	clear: both;
+}
+
+.entry header {
+	clear: both;
+}
+
+.entry header h4 {
+	font-size: 1em;
+	margin: 1em 1em .2em;
+}
+
+.entry ul {
+	list-style: none;
+	margin: 0 1em 1em;
+	padding: 0;
+}
+
+.entry li {
+	display: inline-block;
+}
+
+.tag {
+	font-size: .7em;
+	text-decoration: none;
+	color: #000;
+	font-style: italic;
+}
+
+.tag:hover {
+	text-decoration: underline;
+	color: #f24537;
+}
+
+.mainFooter {
+	height: 10em;
+}
