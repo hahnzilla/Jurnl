@@ -14,7 +14,7 @@ feature Entry do
 
   scenario "user wants to view all entries" do
     visit entries_path
-    page.should have_content "Listing entries"
+    page.should have_content "Donuts"
     page.should have_content entry.content
   end
 
@@ -29,12 +29,5 @@ feature Entry do
     fill_in "entry_content", with: edited_content
     click_on "Update Entry"
     entry.reload.content.should eq edited_content
-  end
-
-  scenario "user wants to delete an entry" do
-    visit entries_path
-    expect{
-      click_on "Destroy"
-    }.to change(Entry, :count).by(-1)
   end
 end
