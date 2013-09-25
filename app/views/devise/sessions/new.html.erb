@@ -1,34 +1,37 @@
+<html class="SigninPage">
+  <body class="SigninPage">
+    <div id="WindowWrapper">
+            <div id="Forms">
+                    <div class="FormWrapper">
+                            <h1>Donuts</h1>
+                                    <div class="FormInner" id="logIn">
+                                            <h2>User sign in</h2>
 
-<div id="WindowWrapper">
-	<div id="Forms">
-		<div class="FormWrapper">
-			<h1>Donuts</h1>
-				<div class="FormInner" id="logIn">
-					<h2>User sign in</h2>
+                                            <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), class: "SigninForm") do |f| %>
+                                                    <dl>
+                                                            <dt class="Baseline"><%= f.label :email %></dt>
+                                                            <dd class="Baseline"><%= f.email_field :email, :autofocus => true %></dd>
+                                                            <hr class="Baseline" />
 
-					<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-						<dl>
-							<dt class="Baseline"><%= f.label :email %></dt>
-							<dd class="Baseline"><%= f.email_field :email, :autofocus => true %></dd>
-							<hr class="Baseline" />
+                                                            <dt class="Baseline"><%= f.label :password %></dt>
+                                                            <dd class="Baseline"><%= f.password_field :password %></dd>
+                                                            <hr class="Baseline" />
 
-							<dt class="Baseline"><%= f.label :password %></dt>
-							<dd class="Baseline"><%= f.password_field :password %></dd>
-							<hr class="Baseline" />
+                                                            <% if devise_mapping.rememberable? -%>
+                                                            <dt><%= f.label :remember_me %></dt>
+                                                            <dd><%= f.check_box :remember_me %></dd>
+                                                            <% end -%>
 
-							<% if devise_mapping.rememberable? -%>
-							<dt><%= f.label :remember_me %></dt>
-							<dd><%= f.check_box :remember_me %></dd>
-							<% end -%>
-
-							<div class="SubmitButton"><%= f.submit "Sign in" %></div>
-						</dl>
-					<% end %>
-					
-				</div>
-				<div class="SharedLinks">
-					<%= render "devise/shared/links" %>
-				</div>
-		</div>
-	</div>
-</div>
+                                                            <div class="SubmitButton"><%= f.submit "Sign in" %></div>
+                                                    </dl>
+                                            <% end %>
+                                            
+                                    </div>
+                                    <div class="SharedLinks">
+                                            <%= render "devise/shared/links" %>
+                                    </div>
+                    </div>
+            </div>
+    </div>
+  </body>
+</html>
