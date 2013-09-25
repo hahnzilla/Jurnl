@@ -2,8 +2,9 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.all
-
+    #@entries = Entry.where("user_id = ?", current_user.id)
+    @entries = Entry.order("created_at desc")
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @entries }
