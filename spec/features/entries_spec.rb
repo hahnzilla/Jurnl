@@ -17,17 +17,4 @@ feature Entry do
     page.should have_content "Donuts"
     page.should have_content entry.content
   end
-
-  scenario "user wants to view a single entry" do
-    visit entry_path(entry)
-    page.should have_content entry.content
-  end
-
-  scenario "user wants to edit an entry" do
-    edited_content = "edited string man thing"
-    visit edit_entry_path(entry)
-    fill_in "entry_content", with: edited_content
-    click_on "Update Entry"
-    entry.reload.content.should eq edited_content
-  end
 end
