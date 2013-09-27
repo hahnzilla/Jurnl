@@ -15,6 +15,7 @@
               <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x22;"></span></a>
               <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x21;"></span></a>
               <form><input type="text" name="search" class="search right"><form>
+              <%= link_to "Sign Out", :destroy_user_session, :method => :delete %>
           </div>
       </header>
       <section class="entries">
