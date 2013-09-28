@@ -11,12 +11,12 @@ function initTiny() {
 	width : "1000",
 	height : "500",
 	save_onsavecallback : "addEntry",
-	plugins : "pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
+	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
 
 	// Theme options
 	theme_advanced_buttons1 : "close,pdw_toggle",
 	theme_advanced_buttons2 : "save,newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,fontselect,fontsizeselect",
-	theme_advanced_buttons3 : "forecolor,backcolor,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,insertdate,inserttime",
+	theme_advanced_buttons3 : "forecolor,backcolor,|,spellchecker,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,insertdate,inserttime",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_statusbar_location : "bottom",
