@@ -14,8 +14,8 @@ function initTiny() {
 	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
 
 	// Theme options
-	theme_advanced_buttons1 : "close,pdw_toggle",
-	theme_advanced_buttons2 : "save,newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,fontselect,fontsizeselect",
+	theme_advanced_buttons1 : "close,save,pdw_toggle",
+	theme_advanced_buttons2 : "newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,fontselect,fontsizeselect",
 	theme_advanced_buttons3 : "forecolor,backcolor,|,spellchecker,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,insertdate,inserttime",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
@@ -112,7 +112,7 @@ function window_pos(popUpDivVar) {
 }
 function popup(windowname) {
 	blanket_size(windowname);
-	window_pos(windowname);
+	//window_pos(windowname);
 	toggle('blanket');
 	toggle(windowname);		
 }

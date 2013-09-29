@@ -10,10 +10,10 @@
     height: 100%;
 }
 #popUpDiv {
-    position:absolute;
+    position: absolute;
+    top: 0px;
+    margin-left: -500px;
     left: 50%;
-    margin-top: -1300px;
-    margin-left: -625px;
     background-color:#eeeeee;
     width:1000px;
     height:500px;
