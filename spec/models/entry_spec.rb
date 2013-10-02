@@ -22,4 +22,25 @@ describe Entry do
     entry.content = nil
     entry.valid?.should be false
   end
+
+  context "after_save" do
+    context "tags that should be found" do
+      ["#exampletag", "#example_tag", "#example-tag"].each do |tag|
+        it "should save tag: #{tag}" do
+          entry = Entry.create(content: "test #{tag} test")
+          entry.reload.tags.first.name.should eq tag.delete("#").delete("\n")
+        end
+      end
+    end
+    
+    context "tags that should not be found" do
+      ["#5", "#tag#tag", "link.com#id", "test#tagtest"].each do |tag|
+        it "should save tag in this string: #{tag}" do
+          expect{
+            Entry.create(content: tag) 
+          }.to change(Tag, :count).by(0)
+        end
+      end
+    end
+  end
 end
