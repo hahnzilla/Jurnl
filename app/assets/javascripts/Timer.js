@@ -88,7 +88,7 @@ function Timer()
     this.start = function(interval, duration, onTick)
     {
         //Set defaults for parameters to one second
-        this.interval = typeof interval === 'undefined' ? 1000 : interval;
+        this.interval = typeof interval === 'undefined' ? this.interval : interval;
         this.duration = typeof duration === 'undefined' ? this.interval : duration;
         this.onTick = typeof onTick === 'undefined' ? this.onTick : onTick;
 
@@ -96,7 +96,8 @@ function Timer()
             throw "onTick not defined";
         }
         else {
-           this.execute(); 
+            if(this.TimerState !== this.TimerStates.Running)
+                this.execute();
         }
 
     };
@@ -136,6 +137,12 @@ function Timer()
     this.reset = function()
     {
         this.elapsed = 0;
+    };
+
+    this.restart = function()
+    {
+        this.stop();
+        this.start();
     };
         
     this.stop = function()
