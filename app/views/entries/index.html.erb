@@ -8,37 +8,35 @@
 <script type="text/javascript" src="tiny_mce//tiny_mce.js"></script>
 <section class="Column100" id="MainColumn">
   <section class="innerColumn">
-    <header class="mainHeader">
-      <h1>Donuts</h1>
-      <div class="menu">
-        <%= render 'text_editor' %>
-        <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x24;"></span></a>
-        <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x22;"></span></a>
-        <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x21;"></span></a>
-        <form><input type="text" name="search" class="search right"><form>
-      </div>
-    </header>
-
-    <section class="entries">
-      <% @entries.each do |entry| %>
-        <article class="entry">
-          <header>
-          <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
-          <h4 class="right"><%= parseForTime(entry.created_at) %></h4>
-        </header>
-        <p>
-          <%= entry.content %>
-        </p>
-        <footer>
-          <ul>
-            <li><a href="#" class="tag">#Example Tag</a></li>
-            <% entry.tags.each do |tag| %>
-                <li><%= tag.name %></li>
-            <% end %>
-          </ul>
-        </footer>
-      </article>
-      <% end %>
+      <header class="mainHeader">
+        <h1>Donuts</h1>
+        <div class="menu">
+          <%= render 'text_editor' %>
+          <%= link_to "Sign Out", :destroy_user_session, :class => "button right", :method => :delete %>
+          <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x24;"></span></a>
+          <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x22;"></span></a>
+          <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x21;"></span></a>
+          <form><input type="text" name="search" class="search right"><form>
+        </div>
+      </header>
+      <section class="entries">
+        <% @entries.each do |entry| %>
+          <article class="entry">
+            <header>
+            <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
+            <h4 class="right"><%= parseForTime(entry.created_at) %></h4>
+          </header>
+          <p> <%= entry.content %> </p>
+            <footer>
+              <ul>
+                <li><a href="#" class="tag">#Example Tag</a></li>
+                <% entry.tags.each do |tag| %>
+                    <li><%= tag.name %></li>
+                <% end %>
+              </ul>
+            </footer>
+          </article>
+        <% end %>
     </section>
   </section>
 </section>
