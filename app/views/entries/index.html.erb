@@ -5,17 +5,19 @@
     background-repeat: repeat;
   }
 </style>
+<script type="text/javascript" src="tiny_mce//tiny_mce.js"></script>
 <section class="Column100" id="MainColumn">
   <section class="innerColumn">
       <header class="mainHeader">
-          <h1>Donuts</h1>
-          <div class="menu">
-              <%= link_to 'New Post', new_entry_path, :class => "button left" %>
-              <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x24;"></span></a>
-              <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x22;"></span></a>
-              <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x21;"></span></a>
-              <form action="/entries" method="get"><input type="text" name="search" class="search right"><form>
-          </div>
+        <h1>Donuts</h1>
+        <div class="menu">
+          <%= render 'text_editor' %>
+          <%= link_to "Sign Out", :destroy_user_session, :class => "button right", :method => :delete %>
+          <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x24;"></span></a>
+          <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x22;"></span></a>
+          <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x21;"></span></a>
+          <form action="/entries" method="get"><input type="text" name="search" class="search right"><form>
+        </div>
       </header>
       <section class="entries">
         <% @entries.each do |entry| %>

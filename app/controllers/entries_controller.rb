@@ -25,22 +25,6 @@ class EntriesController < ApplicationController
     end
   end
 
-  # GET /entries/new
-  # GET /entries/new.json
-  def new
-    @entry = Entry.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @entry }
-    end
-  end
-
-  # GET /entries/1/edit
-  def edit
-    @entry = Entry.find(params[:id])
-  end
-
   # POST /entries
   # POST /entries.json
   def create
