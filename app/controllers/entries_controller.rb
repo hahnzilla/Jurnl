@@ -2,8 +2,11 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    #@entries = Entry.where("user_id = ?", current_user.id)
-    @entries = Entry.order("created_at desc")
+    if params[:search].blank?
+      @entries = Entry.where(user_id: current_user.id).order("created_at desc")
+    else
+      @entries = Entry.search(params[:search], current_user.id)
+    end
     
     respond_to do |format|
       format.html # index.html.erb
