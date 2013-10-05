@@ -2,15 +2,20 @@
 <html>
 <head>
   <title>Donuts</title>
-  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic|Fugaz+One' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <link id="page_favicon" href="/assets/favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+	<%- if notice %>
+  	<div class="notice"><p class="wrapper"><span aria-hidden="true" class="close" data-icon="&#x25;"></span><%= notice %></p></div>
+	<% end -%>
+  
+	<%- if alert %>
+  	<div class="alert"><p class="wrapper"><span aria-hidden="true" class="close" data-icon="&#x25;"></span><%= alert %></p></div>
+	<% end -%>
   <%= yield %>
 </body>
 </html>

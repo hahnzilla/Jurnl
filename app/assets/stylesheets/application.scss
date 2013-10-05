@@ -1,0 +1,310 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+/*-------------------- CLEARFIX --------------------*/
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/*-------------------- COLORS --------------------*/
+
+$primary: #ed5153;
+$secondary: #51aded;
+$grey: #536270;
+$white: #fdfdfd;
+$background: darken($grey,10%);
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+/*-------------------- GLOBAL STYLES --------------------*/
+
+body {
+  font-size: 16px;
+  background-color: $background;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+	float: left;
+	color: $white;
+	font-size: 3em;
+	margin-top: .2em;
+	font-family: 'open_sansbold', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: $white;
+}
+
+label {
+	color: $white;
+}
+
+input {
+	background-color: $white;
+	font-size: 1em;
+	height: 2em;
+	width: 12em;
+	margin: 1.4em 0 0;
+	border: 0;
+	padding: 0 1em;
+	outline: 0;
+}
+input[type=button]{
+	width: auto;
+	line-height: 2em;
+}
+input[type=button]:hover{
+	right: 1px solid black;
+}
+
+.button {
+	color: #ffffff;
+	background-color: $primary;
+	text-decoration: none;
+	font-family: 'open_sanslight', sans-serif;
+	font-size: 1em;
+	height: 2.5em;
+	line-height: 2.5em;
+	padding: 0 1em;
+	border: 0;
+	padding: 0 1em;
+}
+
+.button:hover {
+	background-color: darken($primary, 10%);
+	cursor: pointer;
+}
+
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+.wrapper {
+	max-width: 50em;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.alert, .notice {
+	display: block;
+	color: $white;
+	font-size: 1em;
+	line-height: 2.5em;
+	font-family: 'open_sanslight', sans-serif;
+	.close {
+		margin-right: 1em;
+	}
+	.close:hover {
+		cursor: pointer;
+	}
+}
+
+.alert {
+	background-color: $primary;
+}
+
+.notice {
+	background-color: $secondary;
+}
+
+ .shared_links {
+// 	width: 50%;
+// 	margin: 0 auto;
+// 	background-color: rgba($grey, 0.7);
+// 	padding: 1em 0;
+	font-weight: bold;
+	text-shadow: 2px 1px $background;
+}
+
+/*-------------------- MAIN SCREEN --------------------*/
+
+.navigation {
+	position: fixed;
+	margin: 5em 0 0 -5em;
+	.icon {
+		font-size: 2em;
+		line-height: 2em;
+		display: block;
+		text-align: center;
+		height: 2em;
+		width: 2em;
+		margin: .2em 0 0 0;
+		padding: 0;
+	}
+	.icon:first-child {
+		margin-top: 0;
+	}
+}
+
+.main-header {
+	height: 5em;
+	margin-top: 1em;
+	input {
+		float: right;
+	}
+	input[type=button]{
+		height: 2em;
+	}
+	.icon {
+		float: right;
+		height: 2em;
+		width: auto;
+		margin: 1.4em 0 0;
+		line-height: 2.2em;
+		padding: 0 0.5em;
+		border-right: 1px solid lighten($primary, 15%);
+	}
+}
+
+.entry {
+	font-family: 'Bitter', serif;
+	background-color: $white;
+	margin-bottom: 1em;
+	padding: 1em;
+	h4 {
+		font-size: 1.2em;
+		margin-bottom: .3em;
+	}
+}
+
+.tag {
+	color: $primary;
+	font-size: 0.8em;
+}
+
+/*-------------------- LOGIN SCREEN --------------------*/
+
+.entrance {
+	margin: 4em 0;
+	background-color: $background;
+}
+
+.form {
+	text-align: center;
+	font-family: 'open_sanslight', sans-serif;
+	header {
+		h1 {
+			margin-top: 0.2em;
+			float: none;
+			text-align: center;
+			font-size: 12em;
+			text-shadow: 3px 3px $background;
+		}
+	}
+	.new_user{
+		float: left;
+		width:47%;
+		margin: 1em 1% 1em 2%;
+		padding: 0;
+		input {
+			border: 0;
+			padding: 0;
+			margin: 0 0 1em 0;
+			width: 100%;
+			height: 2em;
+		}
+		input[type=email], input[type=password]{
+			width: 96%;
+			padding: 0 2%;
+		}
+		.remember {
+			position: relative;
+			height: 2em;
+			margin-bottom: 1em;
+			white-space: nowrap;
+			label {
+				position: absolute;
+				top: .4em;
+				left: .5em;
+				display: inline-block;
+				height: 2em;
+			}
+			input {
+				width: auto;
+				border-radius: 0;
+				position: absolute;
+				top: 0;
+				left: 8em;
+			}
+		}
+		input[type=checkbox]{
+			display: inline;
+		}
+		.button {
+			line-height: 1.5em;
+			font-size: 1.5em;
+			margin-bottom: 0;
+			background-color: $primary;
+		}
+	}
+	.new_user:last-child{
+		margin: 1em 2% 1em 1%;
+	}
+}
+
+/*---------- RESEND CONFIRMATION INSTRUCTIONS ----------*/
+
+.alternate{
+	width: 50%;
+	margin: 4em auto;
+	.new_user {
+		margin: 1em 3%;
+		width: 94%;
+	}
+	.new_user:last-child {
+		margin: 1em 3%;
+	}
+}
+
+#error_explanation {
+	color: $white;
+	margin-bottom: 1em;
+}
+
+
+
+
+

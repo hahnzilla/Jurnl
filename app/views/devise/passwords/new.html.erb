@@ -1,12 +1,29 @@
-<h2>Forgot your password?</h2>
+<style>
+html {
+  background: url("/images/background/bg4.png") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+body {
+  background: none;
+}
+</style>
+<section class="wrapper form">
+  <header>
+    <h1>journal</h1>
+  </header>
+  <div class="entrance cf alternate">
+		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+		  <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+		  <%= f.email_field :email, :placeholder => 'Email', :autofocus => true %>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
+		  <%= f.submit "Send Password Reset", :class => 'button' %>
+		<% end %>
+  </div>
 
-<%= render "devise/shared/links" %>
+	<%= render "devise/shared/links" %>
+</section>
