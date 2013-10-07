@@ -1,5 +1,6 @@
 window.onload = function(){
     initTiny();
+    window.tinyTimer = new DistractionTimer(undefined, 5000, function(){alert("Distracted");}, function(){alert("Not Distracted");});
 };
 
 function initTiny() {
@@ -35,6 +36,7 @@ function initTiny() {
 		    popup("popUpDiv");
 		}
 	    });
+	    ed.onKeyPress.add(function(ed, e) {tinyTimer.KeyPressHandler(); });
 	}
     });
 }

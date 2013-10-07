@@ -33,7 +33,7 @@ function DistractionTimer(elementName, interval, DistractCallBack, FocusCallBack
     var InternalTimer = new Timer();
     var InternalDistractions = new distractions();
 
-    this.Initialize = function(interval, DistractCallBack, FocusCallBack) {
+    this.Initialize = function(interval) {
         var me = this;
         InternalTimer.onTick = function () {
             me.Distract("timeout");
@@ -72,13 +72,14 @@ function DistractionTimer(elementName, interval, DistractCallBack, FocusCallBack
     };
 
     this.Focus = function() {
+        if(InternalDistractions.distracted) FocusCallBack();
         InternalDistractions.end();
-        FocusCallBack();
         InternalTimer.restart();
     };
 
+    this.Initialize(interval);
+    
     if(typeof elementName !== "undefined") {
-        this.Initialize(interval, DistractCallBack, FocusCallBack);
         this.Attach(elementName);
     }
 
