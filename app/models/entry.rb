@@ -25,7 +25,7 @@ class Entry < ActiveRecord::Base
   private
 
     def find_and_save_tags
-      tag_names = content.scan(/(?:\s|^|>)(?:#(?!\d+(?:\s|$)))([\w-]+)(?=\s|$|<|!|\.|\?)/i).flatten
+      tag_names = content.scan(/(?:\s|^|>)(?:#(?!\d+(?:\s|$)))([\w-]+)(?=\s|$|<|!|\.|\?|,)/i).flatten
       tag_names.each { |tag_name| Tag.create(entry_id: self.id, name: tag_name) }
     end
 end

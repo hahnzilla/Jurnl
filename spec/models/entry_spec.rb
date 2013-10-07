@@ -25,10 +25,10 @@ describe Entry do
 
   context "after_save" do
     context "tags that should be found" do
-      [" #exampletag.", "#example_tag!", ">#example-tag<", "#example-tag?" ].each do |tag|
+      [" #exampletag.", "#example_tag!", ">#example-tag<", "#example-tag?","#example-tag," ].each do |tag|
         it "should save tag: #{tag}" do
           entry = Entry.create(content: "test #{tag} test")
-          entry.reload.tags.first.name.should eq tag.gsub(/>|<|\?|\.|!|\s|#/, "")
+          entry.reload.tags.first.name.should eq tag.gsub(/>|<|\?|\.|!|\s|#|,/, "")
         end
       end
     end
