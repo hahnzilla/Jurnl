@@ -37,4 +37,16 @@ class EntriesController < ApplicationController
       end
     end
   end
+
+  def update
+  @entry=Entry.find(params[:id])
+  respond_to do |format|
+      if @entry.update_attributes(params[:entry])
+        format.json { render json: @entry, status: :created, location: @entry }
+      else
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      end
+    end
+  end   
 end
+
