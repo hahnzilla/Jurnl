@@ -1,0 +1,65 @@
+
+/*for google font*/
+@import url(http://fonts.googleapis.com/css?family=Happy+Monkey&subset=latin,latin-ext);
+
+
+html.SigninPage, body.SigninPage, html.SignupPage, body.SignupPage{width:100%;height:100%;margin:0px;padding:0px;}
+
+.Column100{width:800px;}
+.Column75{width:75%;}
+.Column66{width:66%;}
+.Column50{width:50%;}
+.Column25{width:25%;}
+
+div, section, article{display:block;}
+
+#OuterWrapper{min-height:100%;width:100%;padding:0px;margin:0px;position:relative;display:table;background-color:#000000;}
+#MainColumn{margin:0px auto;padding:0px;position:relative;}
+
+
+#WindowWrapper{height:100%;width:100%;display:table;text-align:center;font-family: 'Happy Monkey', cursive;
+	background-image:url('/assets/CompositionBackOpacity.gif');background-size:cover;background-position:center;background-attachment:fixed;
+}
+#Forms{position:relative;display:table-cell;vertical-align:middle;}
+#Forms .FormWrapper{z-index:1;position:relative;overflow:hidden;width:500px;margin:0px auto;}
+.FormWrapper{background-color:#FFFFFF;min-height:200px;text-align:center;padding:15px;
+border-bottom-left-radius:50px 50%;
+border-top-left-radius:50px 50%;
+border-bottom-right-radius:50px 50%;
+border-top-right-radius:50px 50%;
+border:double 10px #000000;
+}
+.FormWrapper > *:first-child{margin-top:0px;}
+.FormWrapper h1, .FormWrapper h2{margin:0px;}
+.FormInner{min-height:250px;}
+#options{bottom:0px;}
+
+/*Input fields*/
+form.SigninForm, form.SignupForm{display:table;width:80%;height:150px;margin:0px auto;}
+#WindowWrapper .Baseline input{width:100%;font-family: 'Happy Monkey', cursive;height:100%;background:none;border:0px;position:absolute;bottom:0px;}
+#WindowWrapper dl{display:table;vertical-align:middle;width:100%;}
+#WindowWrapper dl:after{content:" ";display:block;clear:both;}
+#WindowWrapper dl > *:not(hr){float:left;margin-left:0px;position:relative;margin-top:20px;text-align:left;}
+#WindowWrapper hr.Baseline{border-bottom:solid 2px #999999;clear:both;margin:0px;padding:0px;}
+#WindowWrapper dl > * > *{display:table-cell;vertical-align:bottom;}
+#WindowWrapper dt{clear:left;width:25%;padding-bottom:6px;}
+#WindowWrapper dd{width:75%;position:relative;min-height:20px;}
+#WindowWrapper label{bottom:0px;}
+#WindowWrapper h2{margin:0px;}
+
+input#user_remember_me{float:left;}
+input#user_remember_me:after{display:block;clear:both;content:" ";}
+
+.SubmitButton{clear:both;}
+/**/
+
+/* - These notices should be made conditional or removed in the rails framework - */
+p.notice:before, p.alert:before{content:"System message:";color:#997711;padding:0px;margin:0px;position:absolute;}
+p.notice, p.alert{display:none;}
+
+.SharedLinks ul{padding:0px 100px;margin:0px;text-align:center;}
+.SharedLinks ul:after{content:" ";display:block;clear:both;}
+.SharedLinks li{display:inline-block;}
+.SharedLinks li:before{content:"\A0\2022\A0";}
+.SharedLinks a{text-decoration:none;color:#666666;}
+.SharedLinks a:visited{color:#999999;}
