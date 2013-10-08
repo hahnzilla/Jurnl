@@ -12,4 +12,10 @@
 require 'spec_helper'
 
 describe Tag do
+  it "should validate uniquess of :name scoped by :entry_id" do
+    tag = FactoryGirl.create(:tag)
+    expect{
+      Tag.create(entry_id: tag.entry_id, name: tag.name)
+    }.to change(Tag, :count).by(0)
+  end
 end

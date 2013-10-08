@@ -25,17 +25,18 @@ describe Entry do
 
   context "after_save" do
     context "tags that should be found" do
-      ["#exampletag", "#example_tag", "#example-tag"].each do |tag|
+      [" #exampletag.", "#example_tag!", ">#example-tag<", "#example-tag?","#example-tag,", "#example&nbsp"].each do |tag|
         it "should save tag: #{tag}" do
           entry = Entry.create(content: "test #{tag} test")
-          entry.reload.tags.first.name.should eq tag.delete("#").delete("\n")
+          entry.reload.tags.first.name.should eq tag.gsub(/>|<|\?|\.|!|\s|#|,|&nbsp/, "")
         end
       end
     end
+
     
     context "tags that should not be found" do
       ["#5", "#tag#tag", "link.com#id", "test#tagtest"].each do |tag|
-        it "should save tag in this string: #{tag}" do
+        it "should not save tag in this string: #{tag}" do
           expect{
             Entry.create(content: tag) 
           }.to change(Tag, :count).by(0)
