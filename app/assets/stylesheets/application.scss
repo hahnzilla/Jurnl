@@ -39,6 +39,11 @@ $background: darken($grey,10%);
 
 li {
 	list-style: none;
+	display: inline;
+}
+
+ul {
+	margin-top: 0.6em;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -68,7 +73,8 @@ h1 {
 	float: left;
 	color: $white;
 	font-size: 3em;
-	margin-top: .2em;
+	margin-top: 0.05em;
+	margin-left: 0.1em;
 	font-family: 'open_sansbold', sans-serif;
 }
 
@@ -155,8 +161,10 @@ input[type=button]:hover{
 // 	margin: 0 auto;
 // 	background-color: rgba($grey, 0.7);
 // 	padding: 1em 0;
-	font-weight: bold;
-	text-shadow: 2px 1px $background;
+	li {
+		display: block;
+	}
+	text-shadow: 1px 1px $background;
 }
 
 /*-------------------- MAIN SCREEN --------------------*/
@@ -213,6 +221,10 @@ input[type=button]:hover{
 .tag {
 	color: $primary;
 	font-size: 0.8em;
+}
+
+.tag:hover {
+	color: darken($primary, 20%);
 }
 
 /*-------------------- LOGIN SCREEN --------------------*/

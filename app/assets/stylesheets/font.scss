@@ -1,30 +1,30 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('/fonts/icomoon.eot');
-	src:url('/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('/fonts/icomoon.woff') format('woff'),
-		url('/fonts/icomoon.ttf') format('truetype'),
-		url('/fonts/icomoon.svg#icomoon') format('svg');
+    src:url('icomoon.eot');
+	src:url(font-path('icomoon.eot') + "?#iefix") format('embedded-opentype'),
+		url(font-path('icomoon.woff')) format('woff'),
+		url(font-path('icomoon.ttf')) format('truetype'),
+		url(font-path('icomoon.svg') + "#icomoon") format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 @font-face {
     font-family: 'open_sanslight';
-    src: url('/fonts/OpenSans-Light-webfont.eot');
-    src: url('/fonts/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/OpenSans-Light-webfont.woff') format('woff'),
-         url('/fonts/OpenSans-Light-webfont.ttf') format('truetype'),
-         url('/fonts/OpenSans-Light-webfont.svg#open_sanslight') format('svg');
+    src: url(font-path('OpenSans-Light-webfont.eot'));
+    src: url(font-path('OpenSans-Light-webfont.eot') + "?#iefix") format('embedded-opentype'),
+         url(font-path('OpenSans-Light-webfont.woff')) format('woff'),
+         url(font-path('OpenSans-Light-webfont.ttf')) format('truetype'),
+         url(font-path('OpenSans-Light-webfont.svg') + "#open_sanslight") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'open_sansbold';
-    src: url('OpenSans-Bold-webfont.eot');
-    src: url('OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('OpenSans-Bold-webfont.woff') format('woff'),
-         url('OpenSans-Bold-webfont.ttf') format('truetype'),
-         url('OpenSans-Bold-webfont.svg#open_sansbold') format('svg');
+    src: url(font-path('OpenSans-Bold-webfont.eot'));
+    src: url(font-path('OpenSans-Bold-webfont.eot') + "?#iefix") format('embedded-opentype'),
+         url(font-path('OpenSans-Bold-webfont.woff')) format('woff'),
+         url(font-path('OpenSans-Bold-webfont.ttf')) format('truetype'),
+         url(font-path('OpenSans-Bold-webfont.svg') + "#open_sansbold") format('svg');
     font-weight: normal;
     font-style: normal;
 }
