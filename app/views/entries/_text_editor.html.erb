@@ -2,7 +2,7 @@
   <a onclick="popup('popUpDiv')" href="#"><button id = "opener" class="button left">New Entry</button></a>
 <!--</div>-->
 <%= form_for :entry, :url => {:action => :create}, :html => {:id => "createEntry"} do |f| %>
-	<input id="entry_user_id" name="entry[user_id]" style="display: none;" aria-hidden="true" value="<%= current_user.id %>">
+  <%= f.hidden_field :user_id, :value => current_user.id%>
   <div id="blanket" style="display:none;"></div>
   <div id="popUpDiv" style="display:none;" class=fields>
     <%= f.text_area :content%>
