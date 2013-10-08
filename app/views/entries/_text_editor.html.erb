@@ -1,5 +1,5 @@
 <!--<div>-->
-  <a onclick="popup('popUpDiv')" href="#"><button id = "opener" class="button left">New Entry</button></a>
+  <a onclick="popup('popUpDiv')" href="#" id = "opener" class="button icon"><span aria-hidden="true" data-icon="&#x23;"></a>
 <!--</div>-->
 <%= form_for :entry, :url => {:action => :create}, :html => {:id => "createEntry"} do |f| %>
   <%= f.hidden_field :user_id, :value => current_user.id%>
