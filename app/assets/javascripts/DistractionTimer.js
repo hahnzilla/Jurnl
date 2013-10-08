@@ -1,5 +1,5 @@
 
-function DistractionTimer(elementName, interval, DistractCallBack, FocusCallBack) {
+function DistractionTimer(DistractCallBack, FocusCallBack) {
     /*
 
         DistractionTimer
@@ -76,13 +76,7 @@ function DistractionTimer(elementName, interval, DistractCallBack, FocusCallBack
         InternalDistractions.end();
         InternalTimer.restart();
     };
-
-    this.Initialize(interval);
     
-    if(typeof elementName !== "undefined") {
-        this.Attach(elementName);
-    }
-
     if(typeof DistractCallBack !== "function" || typeof FocusCallBack !== "function")
         throw "Callback functions for Distract and Focus must be specified";
 }

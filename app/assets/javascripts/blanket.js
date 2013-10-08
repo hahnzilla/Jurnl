@@ -1,6 +1,7 @@
 window.onload = function(){
     initTiny();
-    window.tinyTimer = new DistractionTimer(undefined, 5000, function(){alert("Distracted");}, function(){alert("Not Distracted");});
+    window.tinyTimer = new DistractionTimer(function(){ AlertDistraction();}, function(){ AlertFocused();});
+    window.otherTimer = new Timer();
 };
 
 function initTiny() {
@@ -82,5 +83,34 @@ function blanket_size(popUpDivVar) {
 function popup(windowname) {
 	blanket_size(windowname);
 	toggle('blanket');
-	toggle(windowname);		
+	toggle(windowname);
+        tinyTimer.Initialize(5000);
+        AlertFocused();
 }
+function AlertDistraction()
+{
+    dAlerts = document.getElementById("distractionAlerts");
+    dAlerts.style.backgroundColor = "#cc0011";
+    dAlerts.innerHTML = "DISTRACTED!!!\n<br/>\n";
+    AlertBody();
+    otherTimer.onTick = function() {
+        dAlerts.innerHTML = "DISTRACTED!!!\n<br />\n";
+        AlertBody();
+    };
+    otherTimer.start(1000, -1);
+}
+function AlertFocused()
+{
+    dAlerts = document.getElementById("distractionAlerts");
+    dAlerts.style.backgroundColor = "#00cc11";
+    dAlerts.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
+    AlertBody();
+    otherTimer.stop();
+    otherTimer.reset();
+}
+function AlertBody()
+{
+    dAlerts = document.getElementById("distractionAlerts");
+    dAlerts.innerHTML += "Distractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
+                         "Duration(sec): " + window.tinyTimer.GetDistractions().TotalDuration();
+}  

@@ -247,6 +247,14 @@ function distractions() {
 
         return total;      
     }
+
+    this.TotalDuration = function() {
+        var total = 0;
+        for (var i = 0; i < this.numOdistractions; i++) {
+            total += this.distractions[i].duration();
+        }
+        return Math.round(total / 1000);
+    }
 }
 
 // for testing

@@ -124,9 +124,9 @@ function Timer()
     
     this.elapse = function()
     {
-        if(this.duration!==-1) this.elapsed += this.interval;
+        if(this.duration!=-1) this.elapsed += this.interval;
         this.onTick();
-        if(this.elapsed>=this.duration)
+        if((this.elapsed>=this.duration) && this.duration !== -1)
         {
             this.pause();
             this.elapsed = 0;
