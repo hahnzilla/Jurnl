@@ -15,7 +15,7 @@ function initTiny() {
 	// Theme options
 	theme_advanced_buttons1 : "close,save,pdw_toggle",
 	theme_advanced_buttons2 : "newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,fontselect,fontsizeselect",
-	theme_advanced_buttons3 : "forecolor,backcolor,|,spellchecker,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,insertdate,inserttime",
+	theme_advanced_buttons3 : "forecolor,backcolor,|,spellchecker,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,insertdate,inserttime,|,Verbatim, Monospace",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_statusbar_location : "bottom",
@@ -27,6 +27,56 @@ function initTiny() {
 	
 	//Setup for custom buttons
 	setup : function(ed) {
+		//status of toggle buttons verbatim and monospace
+		var verbatimToggle = false;
+		var monospaceToggle = false;
+
+		ed.addButton('Verbatim',{
+        	title : 'Change verbatim',
+        	image : 'V.png',
+        	onclick : function(){
+        		//verbatim is off being turned on
+        		if(!verbatimToggle){
+        			ed.execCommand('FormatBlock', false, 'blockquote');
+        			verbatimToggle = true;
+        			if(!monospaceToggle){
+        				ed.execCommand('FontName', false, 'Andale Mono');
+        				mono = true;
+        			}
+        		}
+            	//verbatim is on being turned off
+            	else{
+            		ed.execCommand('FormatBlock', false, 'blockquote');
+            		verbatimToggle = false;
+            		if(mono){
+            			ed.execCommand('FontName', false, 'Andale Mono');
+            			monospaceToggle = false;
+            		}
+            	}          	
+        	}
+        });
+
+        ed.addButton('Monospace',{
+        	title : 'Change to monospace',
+        	image : 'M.png',
+        	onclick : function(){
+
+        		if(!verbatimToggle){
+        			//monospace is off being turned on
+        			if(!monospaceToggle){
+        				ed.execCommand('FontName', false, 'Andale Mono');
+        				monospaceToggle = true;
+        			}
+        			//monospace is on being turned off
+        			else{
+        				ed.execCommand('FontName',false, 'Andale Mono'); 
+        				monospaceToggle = false; 
+        			}
+        		}
+            	           		
+        	}
+        });
+        
 	    // Close Editor Button
 	    ed.addButton('close', {
 		label : 'Close',
