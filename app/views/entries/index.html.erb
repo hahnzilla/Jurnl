@@ -16,7 +16,7 @@
           <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x24;"></span></a>
           <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x22;"></span></a>
           <a href="#" class="button right icon"><span aria-hidden="true" data-icon="&#x21;"></span></a>
-          <form><input type="text" name="search" class="search right"><form>
+          <form action="/entries" method="get"><input type="text" name="search" class="search right"><form>
         </div>
       </header>
       <section class="entries">
@@ -26,17 +26,18 @@
             <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
             <h4 class="right"><%= parseForTime(entry.created_at) %></h4>
           </header>
-          <p> <%= entry.content %> </p>
-            <footer>
-              <ul>
-                <li><a href="#" class="tag">#Example Tag</a></li>
-                <% entry.tags.each do |tag| %>
-                    <li><%= tag.name %></li>
-                <% end %>
-              </ul>
-            </footer>
-          </article>
-        <% end %>
+          <p>
+            <%= entry.content %>
+          </p>
+          <footer>
+            <ul>
+              <% entry.tags.each do |tag| %>
+                <li><a href="#" class="tag">#<%= tag.name %></a></li>
+              <% end %>
+            </ul>
+          </footer>
+        </article>
+      <% end %>
     </section>
   </section>
 </section>
