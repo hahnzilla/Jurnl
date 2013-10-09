@@ -32,7 +32,7 @@
           <footer>
             <ul>
               <% entry.tags.each do |tag| %>
-                <li><a href="#" class="tag">#<%= tag.name %></a></li>
+                <li><a href="/entries?search=<%= tag.name %>" class="tag">#<%= tag.name %></a></li>
               <% end %>
             </ul>
           </footer>
