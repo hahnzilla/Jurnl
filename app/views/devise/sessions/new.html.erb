@@ -1,37 +1,48 @@
-<html class="SigninPage">
-  <body class="SigninPage">
-    <div id="WindowWrapper">
-            <div id="Forms">
-                    <div class="FormWrapper">
-                            <h1>Donuts</h1>
-                                    <div class="FormInner" id="logIn">
-                                            <h2>User sign in</h2>
+<style>
+html {
+  background: url('<%= asset_path('background/bg4.png') %>') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
-                                            <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), class: "SigninForm") do |f| %>
-                                                    <dl>
-                                                            <dt class="Baseline"><%= f.label :email %></dt>
-                                                            <dd class="Baseline"><%= f.email_field :email, :autofocus => true %></dd>
-                                                            <hr class="Baseline" />
+body {
+  background: none;
+}
+</style>
+<section class="wrapper form">
+  <header>
+    <h1>journal</h1>
+  </header>
+  <div class="entrance cf">
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :class => "SigninForm") do |f| %>
 
-                                                            <dt class="Baseline"><%= f.label :password %></dt>
-                                                            <dd class="Baseline"><%= f.password_field :password %></dd>
-                                                            <hr class="Baseline" />
+      <%= f.email_field :email, :placeholder => "Email", :autofocus => true %>
 
-                                                            <% if devise_mapping.rememberable? -%>
-                                                            <dt><%= f.label :remember_me %></dt>
-                                                            <dd><%= f.check_box :remember_me %></dd>
-                                                            <% end -%>
+      <%= f.password_field :password, :placeholder => "Password" %>
 
-                                                            <div class="SubmitButton"><%= f.submit "Sign in" %></div>
-                                                    </dl>
-                                            <% end %>
-                                            
-                                    </div>
-                                    <div class="SharedLinks">
-                                            <%= render "devise/shared/links" %>
-                                    </div>
-                    </div>
-            </div>
-    </div>
-  </body>
-</html>
+      <div class="remember">
+      <% if devise_mapping.rememberable? -%>
+        <%= f.label :remember_me, "Remember Me?" %>
+        <%= f.check_box :remember_me %>
+      <% end -%>
+      </div>
+
+      <%= f.submit "Sign In" , :class => "button"  %>
+    <% end %>
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), class: "SignupForm") do |f| %>
+      <%= devise_error_messages! %>
+
+      <%= f.email_field :email, :placeholder => "Email" %>
+
+      <%= f.password_field :password, :placeholder => "Password" %>
+
+      <%= f.password_field :password_confirmation, :placeholder => "Retype Password" %>
+
+      <%= f.submit "Sign Up" , :class => "button" %>
+    <% end %>
+  </div>
+
+  <%= render "devise/shared/links" %>
+</section>
