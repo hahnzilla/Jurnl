@@ -2,6 +2,10 @@ Donuts::Application.routes.draw do
   devise_for :users
 
   resources :entries
+  put '/users/:id', to: 'users#update'
+  get '/users/:id/edit', to: 'users#edit'
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
