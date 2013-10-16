@@ -1,0 +1,50 @@
+<h1>Settings#show</h1>
+<p>Find me in app/views/settings/show.html.erb</p>
+
+attr_accessible :bg_color_hex, :font_color_hex, :font_point, :goal_duration, :goal_word_count
+
+<div>
+<br />
+<%= @settings.email %>
+<%= @settings.bg_color_hex %>
+<%= @settings.font_color_hex %>
+<%= @settings.font_point %>
+<%= @settings.goal_duration %>
+<%= @settings.goal_word_count %>
+<br />
+</div>
+
+<div>
+<%= form_for :user, url: settings_path(@settings.id), method: :update do |f| %>
+  <p>
+    <%= f.label :bg_color_hex %><br>
+    <%= f.text_field :bg_color_hex %>
+  </p>
+ 
+  <p>
+    <%= f.label :font_color_hex %><br>
+    <%= f.text_field :font_color_hex %>
+  </p>
+  
+  <p>
+    <%= f.label :font_point %><br>
+    <%= f.text_field :font_point %>
+  </p>
+ 
+  <p>
+    <%= f.label :goal_duration %><br>
+    <%= f.text_field :goal_duration %>
+  </p>
+  
+  <p>
+    <%= f.label :goal_word_count %><br>
+    <%= f.text_field :goal_word_count %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', settings_path%>
+</div>
