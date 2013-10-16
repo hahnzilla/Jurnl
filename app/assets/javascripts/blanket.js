@@ -40,13 +40,9 @@ function initTiny() {
         		//verbatim is off being turned on
         		if(!verbatimToggle){
         			ed.execCommand('FormatBlock', false, 'blockquote');
+                    ed.execCommand('FontName', false, 'Andale Mono');
         			ed.controlManager.get('Verbatim').setActive(true);
         			verbatimToggle = true;
-
-        			if(!monospaceToggle){
-        				ed.execCommand('FontName', false, 'Andale Mono');
-
-        			}
         		}
 
             	//verbatim is on being turned off
@@ -58,34 +54,42 @@ function initTiny() {
             	}          	
         	}
         });
-
         ed.addButton('Monospace',{
         	title : 'Change to monospace',
         	image : 'M.png',
         	onclick : function(){
-        		var fontBox = ed.controlManager.get('fontselect');
-        		var currentFont = fontBox.items[fontBox.selectedIndex];
-
         		if(!verbatimToggle){
         			//monospace is off being turned on
         			if(!monospaceToggle){
         				monospaceToggle = true;
-        				currentFont = fontBox.items[fontBox.selectedIndex];
         				ed.controlManager.get('Monospace').setActive(true);
         				ed.execCommand('FontName', false, 'Andale Mono');
+                        ed.controlManager.get("fontselect").select(function(){
+                                return 1;
+                            });
         				
         			}
         			//monospace is on being turned off
         			else{
         				monospaceToggle = false; 
         				ed.controlManager.get('Monospace').setActive(false); 
-        				ed.execCommand('FontName',false, 'Andale Mono');	
+        				ed.execCommand('FontName',false, 'Arial Black');
+                        ed.controlManager.get("fontselect").select(function(){
+                                return 0;
+                            });	
         			}
         		}
             	           		
         	}
         });
-        
+        ed.onNodeChange.add(function(ed, cm, e) {
+            var fontSelect = ed.controlManager.get("fontselect");
+            var cur = fontSelect.items[fontSelect.selectedIndex];
+            if(typeof cur != 'undefined' && cur.value != 'andale mono,times'){
+                ed.controlManager.get('Monospace').setActive(false);
+                mono = false;
+            }
+        });
 	    // Close Editor Button
 	    ed.addButton('close', {
 		label : 'Close',
