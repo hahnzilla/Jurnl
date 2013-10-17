@@ -25,7 +25,7 @@
           <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
         </header>
         <p>
-          <%= entry.content %>
+          <%= entry.content.html_safe %>
         </p>
         <footer>
           <ul>
