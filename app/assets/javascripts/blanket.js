@@ -32,6 +32,10 @@ function initTiny() {
 		//status of toggle buttons verbatim and monospace
 		var verbatimToggle = false;
 		var monospaceToggle = false;
+		
+		ed.onInit.add(function(ed) {
+		    ed.getDoc().body.style.fontSize = '18px';
+		});
 
 		ed.addButton('Verbatim',{
         	title : 'Change verbatim',
@@ -73,7 +77,7 @@ function initTiny() {
         			else{
         				monospaceToggle = false; 
         				ed.controlManager.get('Monospace').setActive(false); 
-        				ed.execCommand('FontName',false, 'Arial Black');
+        				ed.execCommand('FontName',false, 'Arial');
                         ed.controlManager.get("fontselect").select(function(){
                                 return 0;
                             });	
@@ -86,8 +90,16 @@ function initTiny() {
             var fontSelect = ed.controlManager.get("fontselect");
             var cur = fontSelect.items[fontSelect.selectedIndex];
             if(typeof cur != 'undefined' && cur.value != 'andale mono,times'){
+		alert("cheese");
+		//ed.execCommand('FontName',false, 'Arial');
                 ed.controlManager.get('Monospace').setActive(false);
-                mono = false;
+                monospaceToggle = false;
+            }
+	    else if(typeof cur != 'undefined' && cur.value == 'andale mono,times'){
+		//alert(cur.value);
+		//ed.execCommand('FontName',false, 'Andale Mono');
+                ed.controlManager.get('Monospace').setActive(true);
+                monospaceToggle = true;
             }
         });
 	    // Close Editor Button
