@@ -2,6 +2,7 @@ window.onload = function(){
     initTiny();
     window.tinyTimer = new DistractionTimer(function(){ AlertDistraction();}, function(){ AlertFocused();});
     window.otherTimer = new Timer();
+    get_userid();
 };
 
 function initTiny() {
@@ -86,6 +87,7 @@ function popup(windowname) {
 	toggle(windowname);
         tinyTimer.Initialize(5000);
         AlertFocused();
+        initAutoSave();
 }
 function AlertDistraction()
 {
