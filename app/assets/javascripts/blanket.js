@@ -16,7 +16,7 @@ function initTiny() {
 
 	// Theme options
 	theme_advanced_buttons1 : "close,save,pdw_toggle",
-	theme_advanced_buttons2 : "newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,fontselect,fontsizeselect",
+	theme_advanced_buttons2 : "newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,fontsizeselect",
 	theme_advanced_buttons3 : "forecolor,backcolor,|,spellchecker,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,insertdate,inserttime,|,Verbatim, Monospace",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
@@ -29,79 +29,73 @@ function initTiny() {
 	
 	//Setup for custom buttons
 	setup : function(ed) {
-		//status of toggle buttons verbatim and monospace
-		var verbatimToggle = false;
-		var monospaceToggle = false;
-		
-		ed.onInit.add(function(ed) {
-		    ed.getDoc().body.style.fontSize = '18px';
-		});
+	    //status of toggle buttons verbatim and monospace
+	    var verbatimToggle = false;
+	    var monospaceToggle = false;
+	    
+	    //TinyMCE Default settings
+	    ed.onInit.add(function(ed) {
+		ed.getDoc().body.style.font="18px arial, serif";
+	    });
 
-		ed.addButton('Verbatim',{
-        	title : 'Change verbatim',
-        	image : 'V.png',
-        	onclick : function(){
-        		//verbatim is off being turned on
-        		if(!verbatimToggle){
-        			ed.execCommand('FormatBlock', false, 'blockquote');
-                    ed.execCommand('FontName', false, 'Andale Mono');
-        			ed.controlManager.get('Verbatim').setActive(true);
-        			verbatimToggle = true;
-        		}
-
-            	//verbatim is on being turned off
-            	else{
-            		ed.execCommand('FormatBlock', false, 'blockquote');
-            		ed.execCommand('FontName', false, 'Andale Mono');
-            		ed.controlManager.get('Verbatim').setActive(false);
-            		verbatimToggle = false;
-            	}          	
-        	}
-        });
-        ed.addButton('Monospace',{
-        	title : 'Change to monospace',
-        	image : 'M.png',
-        	onclick : function(){
-        		if(!verbatimToggle){
-        			//monospace is off being turned on
-        			if(!monospaceToggle){
-        				monospaceToggle = true;
-        				ed.controlManager.get('Monospace').setActive(true);
-        				ed.execCommand('FontName', false, 'Andale Mono');
-                        ed.controlManager.get("fontselect").select(function(){
-                                return 1;
-                            });
-        				
-        			}
-        			//monospace is on being turned off
-        			else{
-        				monospaceToggle = false; 
-        				ed.controlManager.get('Monospace').setActive(false); 
-        				ed.execCommand('FontName',false, 'Arial');
-                        ed.controlManager.get("fontselect").select(function(){
-                                return 0;
-                            });	
-        			}
-        		}
-            	           		
-        	}
-        });
-        ed.onNodeChange.add(function(ed, cm, e) {
-            var fontSelect = ed.controlManager.get("fontselect");
-            var cur = fontSelect.items[fontSelect.selectedIndex];
-            if(typeof cur != 'undefined' && cur.value != 'andale mono,times'){
-		alert("cheese");
-		//ed.execCommand('FontName',false, 'Arial');
-                ed.controlManager.get('Monospace').setActive(false);
-                monospaceToggle = false;
-            }
-	    else if(typeof cur != 'undefined' && cur.value == 'andale mono,times'){
-		//alert(cur.value);
-		//ed.execCommand('FontName',false, 'Andale Mono');
-                ed.controlManager.get('Monospace').setActive(true);
-                monospaceToggle = true;
-            }
-        });
+	    ed.addButton('Verbatim',{
+		title : 'Change verbatim',
+		image : 'V.png',
+		onclick : function(){
+		    //verbatim is off being turned on
+		    if(!verbatimToggle){
+			ed.execCommand('FormatBlock', false, 'blockquote');
+			ed.execCommand('FontName', false, 'Monospace');
+			ed.controlManager.get('Verbatim').setActive(true);
+			verbatimToggle = true;
+		    }
+		    //verbatim is on being turned off
+		    else{
+			ed.execCommand('FormatBlock', false, 'blockquote');
+			ed.execCommand('FontName', false, 'Monospace');
+			ed.controlManager.get('Verbatim').setActive(false);
+			verbatimToggle = false;
+		    }          	
+		}
+	    });
+	    
+	    // Monospace button
+	    ed.addButton('Monospace',{
+		title : 'Change to monospace',
+		image : 'M.png',
+		onclick : function(){
+		    if(!verbatimToggle){
+			//monospace is off being turned on
+			if(!monospaceToggle){
+			    monospaceToggle = true;
+			    ed.controlManager.get('Monospace').setActive(true);
+			    ed.execCommand('FontName', false, 'Monospace');
+			}
+			//monospace is on being turned off
+			else{
+			    monospaceToggle = false;
+			    ed.controlManager.get('Monospace').setActive(false);
+			    ed.execCommand('FontName',false, 'Arial');
+			}
+		    }
+		}
+	    });
+	    
+	    // checks the current node type to activate/deactivate monospace button
+	    ed.onNodeChange.add(function(ed, cm, e) {
+		// just need to fix the cursor positiong to +1 and -1 form current position
+		// to get from non-mono to mono when backspacing
+		// currently backspacing from mono to non-mono works
+		if(e.style.fontFamily != 'Monospace') {
+		    cm.setActive('Monospace', false);
+		    monospaceToggle = false;
+		}
+		else if(e.style.fontFamily == 'Monospace') {
+		    cm.setActive('Monospace', true);
+		    monospaceToggle = true;
+		}
+	    });
+	    
 	    // Close Editor Button
 	    ed.addButton('close', {
 		label : 'Close',
@@ -110,9 +104,29 @@ function initTiny() {
 		    popup("popUpDiv");
 		}
 	    });
+	    
+	    // Checks for keypresses to become not distracted.
 	    ed.onKeyPress.add(function(ed, e) {tinyTimer.KeyPressHandler(); });
 	}
     });
+}
+
+function setSelectionRange(input, selectionStart, selectionEnd) {
+  if (input.setSelectionRange) {
+    input.focus();
+    input.setSelectionRange(selectionStart, selectionEnd);
+  }
+  else if (input.createTextRange) {
+    var range = input.createTextRange();
+    range.collapse(true);
+    range.moveEnd('character', selectionEnd);
+    range.moveStart('character', selectionStart);
+    range.select();
+  }
+}
+
+function setCaretToPos (input, pos) {
+  setSelectionRange(input, pos, pos);
 }
 
 function addEntry(){
