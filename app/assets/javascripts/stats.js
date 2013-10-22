@@ -1,4 +1,4 @@
-//Stats Manager Object
+//Stats Manager Object(to be completed)
 function stats(elt) {
     //This function currently doesn't do anything.
     //this.elt = elt;
@@ -9,13 +9,26 @@ function stats(elt) {
     console.log("here");
 }
 
+
+
+// Helpful functions and objects
 function WordCount(str) {
+    // Counts words in the string.
+    // If no string is give, gets it from tinyMCE.
+    // Note: This seems to work better than the plugin, and is easier to get the
+    //      data than from the plugin
     if (!str) str = tinyMCE.activeEditor.getContent();
     var count = (str.length === 0) ? 0 : str.trim().split(/\s+/).length;
     return count;
 }
 
 function seconds(second) {
+    // Seconds object
+    // toString():
+    // Displays the seconds in hh:mm:ss format
+    // doesn't show hh if 00, or mm if 00(unless hour > 00)
+    // examples: 5 => 5, 15 => 15, 60 => 1:00, 65 => 1:05, etc
+    // other methods return time components
     this.sec = (second) ? second : 0;
 
     this.hours = function (second) {
