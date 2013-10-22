@@ -2,6 +2,7 @@ window.onload = function(){
     initTiny();
     window.tinyTimer = new DistractionTimer(function(){ AlertDistraction();}, function(){ AlertFocused();});
     window.otherTimer = new Timer();
+    //window.statsMan = new stats();
 };
 
 function initTiny() {
@@ -11,8 +12,8 @@ function initTiny() {
 	theme : "advanced",
 	width : "1000",
 	height : "500",
-	save_onsavecallback : "addEntry",
-	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
+	save_onsavecallback : "addEntry",                                  //get rid of wordcount vvvvvvvvvv
+	plugins: "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
 
 	// Theme options
 	theme_advanced_buttons1 : "close,save,pdw_toggle",
@@ -110,7 +111,9 @@ function AlertFocused()
 }
 function AlertBody()
 {
+    distractiontime = new seconds(window.tinyTimer.GetDistractions().TotalDuration())
     dAlerts = document.getElementById("distractionAlerts");
     dAlerts.innerHTML += "Distractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
-                         "Duration(sec): " + window.tinyTimer.GetDistractions().TotalDuration();
+                         "Duration: " + distractiontime.toString() + "\n<br />\n" +
+                         "Word Count: " + WordCount();
 }  
