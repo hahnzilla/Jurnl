@@ -1,8 +1,9 @@
-<%= form_for "/entries", method: "post", :html => {:id => "createEntry"} do |f| %>
-  <%= f.hidden_field :user_id, :value => current_user.id%>
+<%= form_tag('/entries', method: "post", id: "createEntry") do -%>
+<%# <%= form_tag "/entries", method: "post", :html => {:id => "createEntry"} do |f| %>
+  <%= hidden_field_tag "entry[user_id]", current_user.id%>
   <div id="blanket" style="display:none;"></div>
   <div id="popUpDiv" style="display:none;" class=fields>
-    <%= f.text_area :content%>
+    <%= text_area_tag "entry[content]"%>
     <div id="distractionAlerts"></div>
   </div>
 <% end %>
