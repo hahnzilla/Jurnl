@@ -18,7 +18,15 @@ function WordCount(str) {
     // Note: This seems to work better than the plugin, and is easier to get the
     //      data than from the plugin
     if (!str) str = tinyMCE.activeEditor.getContent();
-    var count = (str.length === 0) ? 0 : str.trim().split(/\s+/).length;
+    //var count = (str.length === 0) ? 0 : str.trim().split(/\s+/).length;
+    var words = str.split(/\s+/);
+    var count = 0;
+    //var cleanedWords = [];
+    for (i = 0; i < words.length; i++) {
+        //console.log(words[i]); //debug line
+        // the following tallies up all the non whitespace things
+        if (!(words[i] === "&nbsp;" || words[i] === "<p>&nbsp;</p>" || words[i] === "")) count++;
+    }
     return count;
 }
 
