@@ -3,6 +3,17 @@ require 'html/sanitizer'
 # This module acts as an extension to ActiveRecord::Relation
 module Statistics
   class ActiveRecord::Relation
+    def stats
+      stats = {}
+      %w{word_count distraction_count duration words_per_minute}.each do |stat|
+        stats[stat.to_sym] = {}
+        %w{min max avg}.each do |type|
+          stats[stat.to_sym][type.to_sym] = send "#{type}_#{stat}"
+        end
+      end
+      stats
+    end
+
     def method_missing method_sym
       method = method_sym.to_s
       if method =~ /^min_/
@@ -20,7 +31,7 @@ module Statistics
       content = get_all_content
       words = extract_words_from_content(content)
       words_and_count = get_words_and_count(words)
-      sort_count_desc(words_and_count)
+      sort_count_desc(words_and_count)[0..9]
     end
 
     private 
