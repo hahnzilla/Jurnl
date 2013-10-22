@@ -8,7 +8,11 @@ $(document).ready(function(){
 	//fill in editor content with today's post
 	//this isn't working
 	$('#opener').click(function() {
-  	$('#entry_content').append("appended");
+		// $.ajax({
+		// 	type: "GET",
+		// 	url: "/entries/",
+		// })
+  	tinyMCE.get("entry_content").setContent("appended");
 	});
 	
 });
