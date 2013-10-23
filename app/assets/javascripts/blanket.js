@@ -1,9 +1,3 @@
-window.onload = function(){
-    initTiny();
-    window.tinyTimer = new DistractionTimer(function(){ AlertDistraction();}, function(){ AlertFocused();});
-    window.otherTimer = new Timer();
-};
-
 function initTiny() {
     tinyMCE.init({
 	// General options
@@ -81,11 +75,14 @@ function blanket_size(popUpDivVar) {
 	popUpDiv.style.top = popUpDiv_height + 'px';
 }
 function popup(windowname) {
-	blanket_size(windowname);
-	toggle('blanket');
-	toggle(windowname);
-        tinyTimer.Initialize(5000);
-        AlertFocused();
+  initTiny();
+  window.tinyTimer = new DistractionTimer(function(){ AlertDistraction();}, function(){ AlertFocused();});
+  window.otherTimer = new Timer();
+  blanket_size(windowname);
+  toggle('blanket');
+  toggle(windowname);
+  tinyTimer.Initialize(5000);
+  AlertFocused();
 }
 function AlertDistraction()
 {
