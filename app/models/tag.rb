@@ -10,8 +10,8 @@
 #
 
 class Tag < ActiveRecord::Base
+  REGEX = /(?:\s|^|>)(?:#(?!\d+(?:\s|$)))([\w-]+)(?=\s|$|\.|\?|!|&|,|<)/i
   attr_accessible :entry_id, :name
   belongs_to :entries
-
   validates :name, :uniqueness => {:scope => :entry_id}
 end

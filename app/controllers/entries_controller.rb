@@ -25,6 +25,12 @@ class EntriesController < ApplicationController
     end
   end
 
+  # GET /entries/current
+  def current
+    entry = Entry.where("cast(created_at as text) like ?", "#{Time.zone.today}%").first
+    render json: entry
+  end
+
   # POST /entries
   # POST /entries.json
   def create

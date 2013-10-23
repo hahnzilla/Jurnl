@@ -1,7 +1,10 @@
 Donuts::Application.routes.draw do
   devise_for :users
 
+  get "/entries/current" => "entries#current"
   resources :entries
+  get "/statistics" => "statistics#index"
+  get "/statistics/:type" => "statistics#show"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

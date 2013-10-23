@@ -1,0 +1,21 @@
+<script type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"> </script>
+<script> 
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+</script>
+
+<%= render 'entries/text_editor' %>
+<section class="wrapper">
+  <%= render "shared/navbar" %>
+  <%= render "shared/header" %>
+  <section class="entry">
+    <% @statistics.each do |key, value|  %>
+      <h2><%= key.to_s.titleize %></h2>
+      <p>Minimum: <%= value[:min] %></p>
+      <p>Maximum: <%= value[:max] %></p>
+      <p>Average: <%= value[:avg] %></p>
+    <% end %>
+    <img id="stats-loading" src="assets/stats-loading.gif"/>
+  </section>
+</section>

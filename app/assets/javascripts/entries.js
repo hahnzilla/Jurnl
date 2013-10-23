@@ -6,12 +6,30 @@ var INTERVAL = 10000;
 
 function entry_update(){
 	//$.post("/entries", {entry: {content: "call_getcontent_here", userid: "call_getuserid_here"}});
-        var id = get_userid();
-	$.ajax({ url: "/entries/"+get_postid(), 
+    var uid = get_userid();
+    var entryid = get_postid();
+
+    if(entryid === "") {
+        $.ajax({ url: "/entries",
+                 data:  { entry: { content: $("#entry_content").val(),
+                                   user_id: uid}},
+                 dataType: "json",
+                 type: "post",
+                 success: function(data) {
+                     $("#popUpDiv").data("entry-id", data.id);
+                 }});
+    }
+    else {
+        var oldDistractions = getOldDistractions();
+        var oldDuration = getOldDuration();
+	    $.ajax({ url: "/entries/"+get_postid(), 
                  data:{ entry:
-                            { content: $("#entry_content").val() }},
-                 datatype: "json",
+                            { content: $("#entry_content").val(),
+                              distraction_count: oldDistractions + tinyTimer.GetDistractions().numDistractions(),
+                              duration: oldDuration + tinyTimer.GetDistractions().TotalDuration() }},
+                 dataType: "json",
                  type: "put"});
+    }
 }
 
 function get_userid(){
@@ -19,11 +37,17 @@ function get_userid(){
 }
 
 function get_postid() {
-    return 10;
+    return $("#popUpDiv").data("entry-id");
 }
 
-function get_entrycontent(){
+function getOldDistractions() {
+    var oldDistractions = $("#popUpDiv").data("dist-count");
+    return (oldDistractions === "" ? 0 : oldDistractions);
+}
 
+function getOldDuration() {
+    var oldDuration = $("#popUpDiv").data("dist-time");
+    return (oldDuration === "" ? 0 : oldDuration);
 }
 
 function initAutoSave() {
@@ -35,7 +59,6 @@ function initAutoSave() {
         this.stop();
         this.reset();
         this.start();
-        console.log("Did something");
     };
     autoSaveTimer.start();
 }
