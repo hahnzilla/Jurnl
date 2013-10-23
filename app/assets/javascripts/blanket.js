@@ -84,6 +84,7 @@ function popup(windowname) {
   tinyTimer.Initialize(5000);
   AlertFocused();
 }
+
 function AlertDistraction()
 {
     dAlerts = document.getElementById("distractionAlerts");
@@ -96,6 +97,7 @@ function AlertDistraction()
     };
     otherTimer.start(1000, -1);
 }
+
 function AlertFocused()
 {
     dAlerts = document.getElementById("distractionAlerts");
@@ -105,6 +107,7 @@ function AlertFocused()
     otherTimer.stop();
     otherTimer.reset();
 }
+
 function AlertBody()
 {
     dAlerts = document.getElementById("distractionAlerts");
