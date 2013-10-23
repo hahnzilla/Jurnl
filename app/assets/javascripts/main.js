@@ -9,9 +9,9 @@ $(document).ready(function(){
 $(document).on("click", '#opener', function() {
   $.getJSON("/entries/current", function(result){
     if(result != null){
-      $('#popUpDiv').data('entry-id', result.id);
-      $('#popUpDiv').data('dist-count', result.distraction_count);
-      $('#popUpDiv').data('dist-time', result.duration);
+      $('#popUpDiv').attr('data-entry-id', result.id);
+      $('#popUpDiv').attr('data-dist-count', result.distraction_count);
+      $('#popUpDiv').attr('data-dist-time', result.duration);
       tinyMCE.get("entry_content").setContent(result.content);
       AlertFocused();
     }
