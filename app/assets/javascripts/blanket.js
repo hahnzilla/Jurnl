@@ -1,9 +1,3 @@
-window.onload = function(){
-    initTiny();
-    window.tinyTimer = new DistractionTimer(function(){ AlertDistraction();}, function(){ AlertFocused();});
-    window.otherTimer = new Timer();
-};
-
 function initTiny() {
     tinyMCE.init({
 	// General options
@@ -102,6 +96,9 @@ function initTiny() {
 		image : 'close.png',
 		onclick : function() {
 		    popup("popUpDiv");
+            autoSaveTimer.stop();
+            otherTimer.stop();
+            tinyTimer.GetTimer().stop();
 		}
 	    });
 	    
@@ -168,12 +165,17 @@ function blanket_size(popUpDivVar) {
 	popUpDiv.style.top = popUpDiv_height + 'px';
 }
 function popup(windowname) {
-	blanket_size(windowname);
-	toggle('blanket');
-	toggle(windowname);
-        tinyTimer.Initialize(5000);
-        AlertFocused();
+  initTiny();
+  window.tinyTimer = new DistractionTimer(function() { AlertDistraction(); }, function() { AlertFocused(); });
+  window.otherTimer = new Timer();
+  blanket_size(windowname);
+  toggle('blanket');
+  toggle(windowname);
+  tinyTimer.Initialize(5000);
+  initAutoSave();
+  AlertFocused();
 }
+
 function AlertDistraction()
 {
     dAlerts = document.getElementById("distractionAlerts");
@@ -186,6 +188,7 @@ function AlertDistraction()
     };
     otherTimer.start(1000, -1);
 }
+
 function AlertFocused()
 {
     dAlerts = document.getElementById("distractionAlerts");
@@ -195,9 +198,12 @@ function AlertFocused()
     otherTimer.stop();
     otherTimer.reset();
 }
+
 function AlertBody()
 {
     dAlerts = document.getElementById("distractionAlerts");
-    dAlerts.innerHTML += "Distractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
-                         "Duration(sec): " + window.tinyTimer.GetDistractions().TotalDuration();
+    var distCount = $("#popUpDiv").data("dist-count") + tinyTimer.GetDistractions().numDistractions();
+    var distLength = $("#popUpDiv").data("dist-time") + tinyTimer.GetDistractions().TotalDuration();
+    dAlerts.innerHTML += "Distractions: " + distCount + "\n<br />\n" +
+                         "Duration(sec): " + distLength; 
 }  

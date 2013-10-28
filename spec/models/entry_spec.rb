@@ -45,7 +45,7 @@ describe Entry do
     end
   end
   
-  describe "search_for_hash_tags" do
+  describe "search for hash tags" do
     let!(:user_id) { entry.user.id }
     let!(:entry2) { Entry.create(content: "don't return me!", user_id: user_id) }
     context "param contains tag" do
