@@ -4,20 +4,22 @@ $(document).ready(function(){
   $('.close').click(function() {
     $(this).closest('div').hide();
   });
+  initTiny();
+  window.tinyTimer = new DistractionTimer(function() { AlertDistraction(); }, function() { AlertFocused(); });
+  window.otherTimer = new Timer();
 });
 
 $(document).on("click", '#opener', function() {
-  window.tinyTimer = new DistractionTimer(function() { AlertDistraction(); }, function() { AlertFocused(); });
-  window.otherTimer = new Timer();
   tinyTimer.Initialize(5000);
+    initAutoSave();
   $.getJSON("/entries/current", function(result){
+    AlertFocused();
+    popup("popUpDiv");
     if(result != null){
       $('#popUpDiv').data('entry-id', result.id);
       $('#popUpDiv').data('dist-count', result.distraction_count);
       $('#popUpDiv').data('dist-time', result.duration);
       tinyMCE.get("entry_content").setContent(result.content);
-      AlertFocused();
-      initAutoSave();
     }
   });
 });
@@ -33,6 +35,9 @@ function AlertDistraction()
         AlertBody();
     };
     otherTimer.start(1000, -1);
+    autoSaveTimer.stop();
+    autoSaveTimer.reset();
+    autoSaveTimer.onTick();
 }
 
 function AlertFocused()
@@ -43,8 +48,7 @@ function AlertFocused()
     AlertBody();
     otherTimer.stop();
     otherTimer.reset();
-    autoSaveTimer.stop();
-    autoSaveTimer.reset();
+    autoSaveTimer.start();
 }
 
 function AlertBody()
