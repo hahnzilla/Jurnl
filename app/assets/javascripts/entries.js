@@ -8,7 +8,7 @@ function entry_update(){
 	//$.post("/entries", {entry: {content: "call_getcontent_here", userid: "call_getuserid_here"}});
     var uid = get_userid();
     var entryid = get_postid();
-
+    console.log(entryid);
     if(entryid === "") {
         $.ajax({ url: "/entries",
                  data:  { entry: { content: $("#entry_content").val(),
