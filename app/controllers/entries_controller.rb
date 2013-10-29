@@ -25,6 +25,12 @@ class EntriesController < ApplicationController
     end
   end
 
+  # GET /entries/current
+  def current
+    entry = Entry.where("cast(created_at as text) like ?", "#{Time.zone.today}%").first
+    render json: entry
+  end
+
   # POST /entries
   # POST /entries.json
   def create
@@ -40,4 +46,16 @@ class EntriesController < ApplicationController
       end
     end
   end
+
+  def update
+  @entry=Entry.find(params[:id])
+  respond_to do |format|
+      if @entry.update_attributes(params[:entry])
+        format.json { render json: @entry, status: :created, location: @entry }
+      else
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      end
+    end
+  end   
 end
+
