@@ -1,29 +1,32 @@
-<h1>Users#edit</h1>
+<script type="text/javascript" src="jscolor/jscolor.js"></script>
+<section class="wrapper">
+  <%= render "shared/navbar" %>
+  <%= render "shared/header" %>
 
 <div>
-  <%= form_for @user, url: "/users/#{@user.id}", method: "PUT" do |f| %>
+  <%= form_for @user, url: "/users/#{@user.id}/edit", method: "put" do |f| %>
     <p>
-      <%= f.label :bg_color_hex %><br>
+      <%= f.label :bg_color_hex %>
       <%= f.text_field :bg_color_hex %>
     </p>
    
     <p>
-      <%= f.label :font_color_hex %><br>
+      <%= f.label :font_color_hex %>
       <%= f.text_field :font_color_hex %>
     </p>
     
     <p>
-      <%= f.label :font_point %><br>
+      <%= f.label :font_point %>
       <%= f.text_field :font_point %>
     </p>
    
     <p>
-      <%= f.label :goal_duration %><br>
+      <%= f.label :goal_duration %>
       <%= f.text_field :goal_duration %>
     </p>
     
     <p>
-      <%= f.label :goal_word_count %><br>
+      <%= f.label :goal_word_count %>
       <%= f.text_field :goal_word_count %>
     </p>
    
@@ -32,3 +35,5 @@
     </p>
   <% end %>
 </div>
+</section>
+

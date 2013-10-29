@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     
     if @user.update_attributes(params[:user])
       redirect_to "/users/#{@user.id}/edit"
+
     else
       render 'edit'
     end
