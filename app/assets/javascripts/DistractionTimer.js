@@ -30,16 +30,18 @@ function DistractionTimer(DistractCallBack, FocusCallBack) {
 
     */
 
-    var InternalTimer = new Timer();
-    var InternalDistractions = new distractions();
+    this.InternalTimer = new Timer();
+    this.InternalDistractions = new distractions();
+    this.functionswap = undefined;
 
     this.Initialize = function(interval) {
         var me = this;
-        InternalTimer.onTick = function () {
+        this.interval = interval;
+        this.InternalTimer.interval = interval;
+        this.InternalTimer.duration = -1;
+        this.InternalTimer.onTick = function() {
             me.Distract("timeout");
-            InternalTimer.stop();
         };
-        InternalTimer.start(interval);
     };
     
     this.Attach = function(elementName) {
@@ -48,6 +50,32 @@ function DistractionTimer(DistractCallBack, FocusCallBack) {
         targetElement.onkeypress = function() { me.KeyPressHandler(); };
         targetElement.onblur = function() { me.BlurHandler(); };
     }
+
+    this.SwapTimer = function() {
+        this.Stop();
+        if(this.IsDistracted()) {
+            this.functionswap = this.InternalTimer.onTick;
+            this.InternalTimer.onTick = DistractCallBack;
+            this.InternalTimer.interval = 1000;
+        }
+        else {
+            this.InternalTimer.onTick = this.functionswap;
+            this.InternalTimer.interval = this.interval;
+        }
+        this.Start();
+    }
+
+    this.IsDistracted = function() {
+        return this.InternalDistractions.isDistracted();
+    };
+
+    this.DistractionCount = function() {
+        return this.InternalDistractions.numDistractions();
+    };
+
+    this.DistractionDuration = function() {
+        return this.InternalDistractions.TotalDuration();
+    };
 
     this.KeyPressHandler = function() {
         this.Focus();
@@ -58,23 +86,47 @@ function DistractionTimer(DistractCallBack, FocusCallBack) {
     };
 
     this.GetTimer = function() {
-        return InternalTimer;
+        return this.InternalTimer;
     };
 
     this.GetDistractions = function() {
-        return InternalDistractions;
+        return this.InternalDistractions;
+    };
+
+    this.Restart = function() {
+        this.InternalTimer.stop();
+        this.InternalTimer.reset();
+        this.InternalTimer.start();
+    };
+
+    this.Stop = function() {
+        this.InternalTimer.stop();
+    };
+
+    this.Start = function() {
+        if(this.IsDistracted()) {
+            this.InternalTimer.interval = 1000;
+            this.InternalTimer.start();
+        }
+        else { 
+            this.InternalTimer.interval = this.interval;
+            this.InternalTimer.start();
+        }
     };
 
     this.Distract = function(type) {
-        InternalTimer.stop();
-        InternalDistractions.start(type);
+        this.InternalDistractions.start(type);
+        this.SwapTimer();
         DistractCallBack();
     };
 
     this.Focus = function() {
-        if(InternalDistractions.distracted) FocusCallBack();
-        InternalDistractions.end();
-        InternalTimer.restart();
+        if(this.InternalDistractions.distracted) {
+            FocusCallBack();
+        }
+        this.InternalDistractions.end();
+        this.SwapTimer();
+        //this.InternalTimer.restart();
     };
     
     if(typeof DistractCallBack !== "function" || typeof FocusCallBack !== "function")
