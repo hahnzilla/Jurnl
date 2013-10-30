@@ -2,15 +2,7 @@
 <%= render 'text_editor' %>
 <section class="wrapper">
   <%= render "shared/navbar" %>
-  <header class="main-header">
-    <h1><%= link_to "jurnl", entries_path %></h1>
-    <form>
-      <input type="button" class="button" value="Search">
-      <input type="hidden" id="userid" value="<%= current_user.id %>"/>
-      <a href="#" title="Search by Month" class="button icon"><span aria-hidden="true" data-icon="&#x27;"></span></a>
-      <input type="text" name="search" class="search right">
-    </form> 
-  </header>
+  <%= render "shared/header" %>
   <section class="entries">
     <% @entries.each do |entry| %>
       <article class="entry">
@@ -18,7 +10,7 @@
           <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
         </header>
         <p>
-          <%= entry.content %>
+          <%= entry.content.html_safe %>
         </p>
         <footer>
           <ul>
