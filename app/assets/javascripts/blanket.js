@@ -44,13 +44,6 @@ function addEntry(){
     saveButton.submit();
 }
 
-function downloads(filename, text) {
-    var pom = document.createElement('a');
-    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    pom.setAttribute('download', filename);
-    pom.click();
-}
-
 function toggle(div_id) {
 	var el = document.getElementById(div_id);
 	if ( el.style.display == 'none' ) {	el.style.display = 'block';}
