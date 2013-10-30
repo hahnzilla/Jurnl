@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @entries }
+      format.json { send_data format_entries(@entries), :filename => "exported_entries.txt" }
     end
   end
 
@@ -56,6 +56,17 @@ class EntriesController < ApplicationController
         format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
-  end   
+  end
+  
+  private
+  
+    def format_entries entries
+      #put logic here to create file with entries
+      content = ""
+      entries.each do |entry|
+        content += entry.content + "\n"
+      end
+      content
+    end
 end
 
