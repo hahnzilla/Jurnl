@@ -29,19 +29,17 @@ function initTiny() {
 		image : 'close.png',
 		onclick : function() {
 		    popup("popUpDiv");
-            autoSaveTimer.stop();
-            otherTimer.stop();
-            tinyTimer.GetTimer().stop();
+                    Donuts.Application.StopTimers();
 		}
 	    });
-	    ed.onKeyPress.add(function(ed, e) {tinyTimer.KeyPressHandler(); });
+	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
 	}
     });
 }
 
 function addEntry(){
-    var saveButton = document.getElementById("createEntry");
-    saveButton.submit();
+    Donuts.Application.UpdateEntry();
+    location.reload(true);
 }
 
 function downloads(filename, text) {
