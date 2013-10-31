@@ -29,19 +29,17 @@ function initTiny() {
 		image : 'close.png',
 		onclick : function() {
 		    popup("popUpDiv");
-            autoSaveTimer.stop();
-            otherTimer.stop();
-            tinyTimer.GetTimer().stop();
+                    Donuts.Application.StopTimers();
 		}
 	    });
-	    ed.onKeyPress.add(function(ed, e) {tinyTimer.KeyPressHandler(); });
+	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
 	}
     });
 }
 
 function addEntry(){
-    var saveButton = document.getElementById("createEntry");
-    saveButton.submit();
+    Donuts.Application.UpdateEntry();
+    location.reload(true);
 }
 
 function downloads(filename, text) {
@@ -78,45 +76,7 @@ function blanket_size(popUpDivVar) {
 	popUpDiv.style.top = popUpDiv_height + 'px';
 }
 function popup(windowname) {
-  initTiny();
-  window.tinyTimer = new DistractionTimer(function() { AlertDistraction(); }, function() { AlertFocused(); });
-  window.otherTimer = new Timer();
   blanket_size(windowname);
   toggle('blanket');
   toggle(windowname);
-  tinyTimer.Initialize(5000);
-  initAutoSave();
-  AlertFocused();
 }
-
-function AlertDistraction()
-{
-    dAlerts = document.getElementById("distractionAlerts");
-    dAlerts.style.backgroundColor = "#cc0011";
-    dAlerts.innerHTML = "DISTRACTED!!!\n<br/>\n";
-    AlertBody();
-    otherTimer.onTick = function() {
-        dAlerts.innerHTML = "DISTRACTED!!!\n<br />\n";
-        AlertBody();
-    };
-    otherTimer.start(1000, -1);
-}
-
-function AlertFocused()
-{
-    dAlerts = document.getElementById("distractionAlerts");
-    dAlerts.style.backgroundColor = "#00cc11";
-    dAlerts.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
-    AlertBody();
-    otherTimer.stop();
-    otherTimer.reset();
-}
-
-function AlertBody()
-{
-    dAlerts = document.getElementById("distractionAlerts");
-    var distCount = $("#popUpDiv").data("dist-count") + tinyTimer.GetDistractions().numDistractions();
-    var distLength = $("#popUpDiv").data("dist-time") + tinyTimer.GetDistractions().TotalDuration();
-    dAlerts.innerHTML += "Distractions: " + distCount + "\n<br />\n" +
-                         "Duration(sec): " + distLength; 
-}  
