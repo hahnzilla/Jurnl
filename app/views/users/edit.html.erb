@@ -1,23 +1,25 @@
-<script type="text/javascript" src="jscolor/jscolor.js"></script>
+<script type="text/javascript" src="/jscolor/jscolor.js">
+
+</script>
 <section class="wrapper">
   <%= render "shared/navbar" %>
   <%= render "shared/header" %>
 
 <div>
-  <%= form_for @user, url: "/users/#{@user.id}/edit", method: "put" do |f| %>
+  <%= form_for @user, url: "/users/#{@user.id}", method: "put" do |f| %>
     <p>
       <%= f.label :bg_color_hex %>
-      <%= f.text_field :bg_color_hex %>
+      <%= f.text_field :bg_color_hex, class: "color" %>
     </p>
    
     <p>
       <%= f.label :font_color_hex %>
-      <%= f.text_field :font_color_hex %>
+      <%= f.text_field :font_color_hex, class: "color" %>
     </p>
     
     <p>
-      <%= f.label :font_point %>
-      <%= f.text_field :font_point %>
+      <br><%= f.label :font_point %>
+      <%= f.select :font_point, options_for_select([[6,6], [7, 7], [8, 8], [9,9], [10,10], [11,11], [12,12], [14,14], [16,16], [18,18], [24,24], [28,28], [32,32], [40,40], [62,62]], @user.font_point)%>
     </p>
    
     <p>

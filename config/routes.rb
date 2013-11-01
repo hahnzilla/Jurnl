@@ -5,9 +5,8 @@ Donuts::Application.routes.draw do
   resources :entries
   get "/statistics" => "statistics#index"
   get "/statistics/:type" => "statistics#show"
-  get "/users/:id", to: "users#edit"
   get "/users/:id/edit", to: "users#edit"
-  put "/users/:id/edit", to: "users#update"
+  put "/users/:id", to: "users#update"
 
 
 
