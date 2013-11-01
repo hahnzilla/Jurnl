@@ -89,7 +89,7 @@ function Timer()
     {
         //Set defaults for parameters to one second
         this.interval = typeof interval === 'undefined' ? this.interval : interval;
-        this.duration = typeof duration === 'undefined' ? this.interval : duration;
+        this.duration = typeof duration === 'undefined' ? this.duration : duration;
         this.onTick = typeof onTick === 'undefined' ? this.onTick : onTick;
 
         if(!this.onTick) {
