@@ -29,9 +29,6 @@ function initTiny() {
 	
 	//Setup for custom buttons
 	setup : function(ed) {
-	    //status of toggle buttons verbatim and monospace
-	    var verbatimToggle = false;
-	    var monospaceToggle = false;
 	    
 	    //TinyMCE Default settings
 	    ed.onInit.add(function(ed) {
@@ -42,20 +39,9 @@ function initTiny() {
 		title : 'Change verbatim',
 		image : 'V.png',
 		onclick : function(){
-		    //verbatim is off being turned on
-		    if(!verbatimToggle){
 			ed.execCommand('FormatBlock', false, 'blockquote');
 			ed.execCommand('FontName', false, 'Monospace');
 			ed.controlManager.get('Verbatim').setActive(true);
-			verbatimToggle = true;
-		    }
-		    //verbatim is on being turned off
-		    else{
-			ed.execCommand('FormatBlock', false, 'blockquote');
-			ed.execCommand('FontName', false, 'Monospace');
-			ed.controlManager.get('Verbatim').setActive(false);
-			verbatimToggle = false;
-		    }          	
 		}
 	    });
 	    
@@ -64,20 +50,8 @@ function initTiny() {
 		title : 'Change to monospace',
 		image : 'M.png',
 		onclick : function(){
-		    if(!verbatimToggle){
-			//monospace is off being turned on
-			if(!monospaceToggle){
-			    monospaceToggle = true;
-			    ed.controlManager.get('Monospace').setActive(true);
-			    ed.execCommand('FontName', false, 'Monospace');
-			}
-			//monospace is on being turned off
-			else{
-			    monospaceToggle = false;
-			    ed.controlManager.get('Monospace').setActive(false);
-			    ed.execCommand('FontName',false, 'Arial');
-			}
-		    }
+			ed.controlManager.get('Monospace').setActive(true);
+			ed.execCommand('FontName', false, 'Monospace');
 		}
 	    });
 	    
@@ -86,14 +60,26 @@ function initTiny() {
 		// just need to fix the cursor positiong to +1 and -1 form current position
 		// to get from non-mono to mono when backspacing
 		// currently backspacing from mono to non-mono works
-		if(e.style.fontFamily != 'Monospace') {
-		    cm.setActive('Monospace', false);
-		    monospaceToggle = false;
+		console.log('Node change to ', e);
+		if(e.tagName.toLowerCase() == 'br'){
+			e = e.parentNode;
+			//janky, but user never sees the br or recognizes it as current node
 		}
-		else if(e.style.fontFamily == 'Monospace') {
+		if(e.style.fontFamily.toLowerCase() != 'monospace') {
+		    cm.setActive('Monospace', false);
+			cm.setActive('Verbatim', false);
+		}
+		else{ //if(e.style.fontFamily == 'Monospace') {
 		    cm.setActive('Monospace', true);
 		    monospaceToggle = true;
+			if(e.parentNode.parentNode.tagName.toLowerCase() == 'blockquote'){
+				//if current node is a monospace span inside a blockquote, set verbatim to active
+				cm.setActive('Verbatim', true);
+			}else{
+				cm.setActive('Verbatim', false);
+			}
 		}
+
 	    });
 	    
 	    // Close Editor Button
