@@ -79,8 +79,4 @@ function popup(windowname) {
   blanket_size(windowname);
   toggle('blanket');
   toggle(windowname);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 28eb8b39b2729db9d7a9ba5e87fa6f68f5157f9d
