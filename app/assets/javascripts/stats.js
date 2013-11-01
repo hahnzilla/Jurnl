@@ -1,7 +1,5 @@
 //Stats Manager Object(to be completed)
 refreshInterval = 1000;
-//typingTime = new Timer();
-
 
 function stats(elt, wordGoal, startTime) {
     this.elt = elt;
@@ -10,42 +8,31 @@ function stats(elt, wordGoal, startTime) {
 
     this.interval = new Timer();
 
-    //console.log("here");
     var me = this;
     this.interval.onTick = function () {
         me.refresh();
     }
     this.interval.start(refreshInterval);
     
-
-    //this.start = function () {
-    //    this.interval.start(refreshInterval);
-    //}
-
-
     this.refresh = function () {
-        //Displays the message to the element dive provided
-        //console.log("here2");
+        //Displays the message to the element div provided
+
         distractionTime = window.tinyTimer.GetDistractions().TotalDuration()
-        //distractiontimeobj = new seconds(distractionTime)
+
         //first div for distractions
         //had to do the var inner to fix a glitch
         var inner = "<div>\nDistractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
                          "Duration: " + secondsToString(distractionTime, 2) + "\n<br />\n</div>";
-                         //"Word Count: " + WordCount();
+
         //second div for word count:
         wCount = WordCount();
         inner += "<div>\nWord Count: " + wCount + "\n<br />\n" +
                         "Word Count Goal: " + this.wordGoal + "\n<br />\n";
-        if (wCount >= this.wordGoal) {
-            inner += "Goal Completed!";
-        } else {
-            inner += "Remaining: " + (this.wordGoal - wCount);
-        }
-        //this.elt.innerHTML += (wCount >= this.wordGoal) ? "Goal Completed!" : ("Remaining: " + (this.wordGoal - wCount));
-        inner += "\n</div>\n";
-        //third div for times n such
 
+        inner += (wCount >= this.wordGoal) ? "Goal Completed!" : ("Remaining: " + (this.wordGoal - wCount));
+        inner += "\n</div>\n";
+
+        //third div for times n such
         elapsedTime = Math.round(Date.now() / 1000) - this.startTime;
         typingTime = elapsedTime - distractionTime;
         inner += "<div>\nElapsed Time: " + secondsToString(elapsedTime, 2) + "\n<br />\n" +
@@ -69,14 +56,18 @@ function WordCount(str) {
     // Note: This seems to work better than the plugin, and is easier to get the
     //      data than from the plugin
     if (!str) str = tinyMCE.activeEditor.getContent();
-    //var count = (str.length === 0) ? 0 : str.trim().split(/\s+/).length;
+
     var words = str.split(/\s+/);
     var count = 0;
-    //var cleanedWords = [];
+
     for (i = 0; i < words.length; i++) {
-        //console.log(words[i]); //debug line
         // the following tallies up all the non whitespace things
-        if (!(words[i] === "&nbsp;" || words[i] === "<p>&nbsp;</p>" || words[i] === "")) count++;
+        if (!(
+            // Add whitespace words as needed
+            words[i] === "&nbsp;" ||
+            words[i] === "<p>&nbsp;</p>" ||
+            words[i] === ""
+            )) count++;
     }
     return count;
 }

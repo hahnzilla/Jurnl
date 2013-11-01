@@ -1,8 +1,9 @@
 window.onload = function(){
     initTiny();
-    window.tinyTimer = new DistractionTimer(function(){ AlertDistraction();}, function(){ AlertFocused();});
+    //window.tinyTimer = new DistractionTimer(function () { AlertDistraction(); }, function () { AlertFocused(); });
+    window.tinyTimer = new DistractionTimer(function () {  }, function () {  });
     window.otherTimer = new Timer();
-    //window.statsMan = new stats();
+    //window.statsMan = new stats(document.getElementById("distractionAlerts")); //initalize the stats manager
 };
 
 function initTiny() {
@@ -86,14 +87,16 @@ function blanket_size(popUpDivVar) {
 }
 function popup(windowname) {
   initTiny();
-  window.tinyTimer = new DistractionTimer(function() { AlertDistraction(); }, function() { AlertFocused(); });
+    //window.tinyTimer = new DistractionTimer(function() { AlertDistraction(); }, function() { AlertFocused(); });
+  window.tinyTimer = new DistractionTimer(function () {  }, function () {  });
   window.otherTimer = new Timer();
   blanket_size(windowname);
   toggle('blanket');
   toggle(windowname);
   tinyTimer.Initialize(5000);
   initAutoSave();
-  AlertFocused();
+    //AlertFocused();
+  window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
 }
 
 function AlertDistraction()
