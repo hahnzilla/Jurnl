@@ -1,4 +1,8 @@
 //Stats Manager Object(to be completed)
+
+typingTime = new Timer();
+
+
 function stats(elt) {
     //This function currently doesn't do anything.
     //this.elt = elt;
@@ -8,8 +12,6 @@ function stats(elt) {
     //window.setInterval(timeout1, 1000, 3);
     console.log("here");
 }
-
-
 
 // Helpful functions and objects
 function WordCount(str) {
