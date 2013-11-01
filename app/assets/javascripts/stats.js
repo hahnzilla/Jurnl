@@ -12,6 +12,7 @@ function stats(elt, wordGoal, startTime) {
     this.interval.onTick = function () {
         me.refresh();
     }
+    this.interval.duration = -1; //what the hell is this for?
     this.interval.start(refreshInterval);
     
     this.refresh = function () {

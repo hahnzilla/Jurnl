@@ -35,6 +35,8 @@ Donuts.Application.OpenEditor = function() {
         }
         Donuts.Application.FocusedCallback();
     });
+    //window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
+
 };
 
 Donuts.Utils.GetUserID = function() {
@@ -96,17 +98,19 @@ Donuts.Application.AutoSaveCallback = function() {
 
 Donuts.Application.DistractionCallback = function() {
     //TODO Figure out some better way of doing all of this
+    /* Stats manager now does this
     var AlertDiv = document.getElementById("distractionAlerts");
     AlertDiv.style.backgroundColor = "#cc0011";
     AlertDiv.innerHTML = "DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);
+    AlertBody(AlertDiv);*/
 };
 
-Donuts.Application.FocusedCallback = function() {
+Donuts.Application.FocusedCallback = function () {
+    /* Stats manager now does this
     var AlertDiv = document.getElementById("distractionAlerts");
     AlertDiv.style.backgroundColor = "#00cc11";
     AlertDiv.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);
+    AlertBody(AlertDiv);*/
 };
 
 Donuts.Application.InitTimers = function(Timers) {

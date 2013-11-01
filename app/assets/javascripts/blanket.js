@@ -79,4 +79,5 @@ function popup(windowname) {
   blanket_size(windowname);
   toggle('blanket');
   toggle(windowname);
+  window.statsMan = new stats(document.getElementById("distractionAlerts"), 20);
 }
