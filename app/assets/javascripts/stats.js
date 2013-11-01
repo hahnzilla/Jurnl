@@ -1,16 +1,64 @@
 //Stats Manager Object(to be completed)
+refreshInterval = 1000;
+//typingTime = new Timer();
 
-typingTime = new Timer();
+
+function stats(elt, wordGoal, startTime) {
+    this.elt = elt;
+    this.wordGoal = wordGoal;
+    this.startTime = (startTime) ? startTime : Math.round(Date.now() / 1000);
+
+    this.interval = new Timer();
+
+    //console.log("here");
+    var me = this;
+    this.interval.onTick = function () {
+        me.refresh();
+    }
+    this.interval.start(refreshInterval);
+    
+
+    //this.start = function () {
+    //    this.interval.start(refreshInterval);
+    //}
 
 
-function stats(elt) {
-    //This function currently doesn't do anything.
-    //this.elt = elt;
-    //this.timer = new timer();
-    //this.notTypingTime = new distractions();
-   // window.setTimeout(this.timeout1, 1000, 3);
-    //window.setInterval(timeout1, 1000, 3);
-    console.log("here");
+    this.refresh = function () {
+        //Displays the message to the element dive provided
+        //console.log("here2");
+        distractionTime = window.tinyTimer.GetDistractions().TotalDuration()
+        //distractiontimeobj = new seconds(distractionTime)
+        //first div for distractions
+        this.elt.innerHTML = "<div>\nDistractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
+                         "Duration: " + secondsToString(distractionTime, 2) + "\n<br />\n</div>";
+                         //"Word Count: " + WordCount();
+        //second div for word count:
+        wCount = WordCount();
+        this.elt.innerHTML += "<div>\nWord Count: " + wCount + "\n<br />\n" +
+                        "Word Count Goal: " + this.wordGoal + "<br />";
+        if (wCount >= this.wordGoal) {
+            this.elt.innerHTML += "Goal Completed!";
+        } else {
+            this.elt.innerHTML += "Remaining: " + (this.wordGoal - wCount);
+        }
+        //this.elt.innerHTML += (wCount >= this.wordGoal) ? "Goal Completed!" : ("Remaining: " + (this.wordGoal - wCount));
+        this.elt.innerHTML += "\n</div>\n";
+        //third div for times n such
+
+        elapsedTime = Math.round(Date.now() / 1000) - this.startTime;
+        typingTime = elapsedTime - distractionTime;
+        this.elt.innerHTML += "<div>\nElapsed Time: " + secondsToString(elapsedTime, 2) + "\n<br />\n" +
+                              "Typing Time: " + secondsToString(typingTime, 2) + "\n<br />\n" +
+                              "Words Per Minute: " + Math.round(60 * wCount / typingTime) + "\n</div>\n";
+
+
+        //this.elt.innerHTML = "Distractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
+        //         "Duration: " + window.tinyTimer.GetDistractions().TotalDuration() + "\n<br />\n" +
+        //         "Word Count: " + WordCount();
+        this.interval.restart();
+    }
+    this.refresh(); //displays the div
+
 }
 
 // Helpful functions and objects
@@ -32,14 +80,24 @@ function WordCount(str) {
     return count;
 }
 
-function seconds(second) {
+function secondsToString(time, min){
+    sec = new seconds(time, min);
+    return sec.toString(time, min);
+}
+
+
+function seconds(second, min) {
     // Seconds object
     // toString():
     // Displays the seconds in hh:mm:ss format
     // doesn't show hh if 00, or mm if 00(unless hour > 00)
     // examples: 5 => 5, 15 => 15, 60 => 1:00, 65 => 1:05, etc
     // other methods return time components
+    // if a second argument (min) is given, it defines how many blocks will be shown;
+    // ie: if sec = 30 and min = 1, returns 30
+    //     if sec = 30 and min = 2, returns 0:30
     this.sec = (second) ? second : 0;
+    this.min = (min) ? min : 1;
 
     this.hours = function (second) {
         if (!second) second = this.sec;
@@ -56,10 +114,11 @@ function seconds(second) {
         return second % 60;
     }
 
-    this.toString = function (second) {
+    this.toString = function (second, min) {
         if (!second) second = this.sec;
-        var hour = (second >= 3600) ? this.hours(second) + ":" : "";
-        var minute = (second >= 60) ? this.minutes(second) + ":" : "";
+        if (!min) min = 1;
+        var hour = ((second >= 3600) || min >= 3) ? this.hours(second) + ":" : "";
+        var minute = ((second >= 60) || min >= 2) ? this.minutes(second) + ":" : "";
         if (hour && minute.length === 1) minute = "0" + minute;
         var second = "" + this.seconds(second);
         if (minute && second.length === 1) second = "0" + second;
