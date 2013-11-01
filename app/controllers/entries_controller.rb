@@ -10,7 +10,8 @@ class EntriesController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { send_data format_entries(@entries), :filename => "exported_entries.txt" }
+      format.json { send_data format_entries(@entries), :filename => "entries.txt" }
+      format.js { send_data format_entriesHTML(@entries), :filename => "entries.html" }
     end
   end
 
@@ -64,7 +65,16 @@ class EntriesController < ApplicationController
       #put logic here to create file with entries
       content = ""
       entries.each do |entry|
-        content += entry.content + "\n"
+        content += entry.content.gsub(%r{</?[^>]+?>}, '') + "\n***\n"
+      end
+      content
+    end
+    
+    def format_entriesHTML entries
+      #put logic here to create file with entries
+      content = ""
+      entries.each do |entry|
+        content += entry.content + "\n***\n"
       end
       content
     end
