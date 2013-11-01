@@ -29,28 +29,29 @@ function stats(elt, wordGoal, startTime) {
         distractionTime = window.tinyTimer.GetDistractions().TotalDuration()
         //distractiontimeobj = new seconds(distractionTime)
         //first div for distractions
-        this.elt.innerHTML = "<div>\nDistractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
+        //had to do the var inner to fix a glitch
+        var inner = "<div>\nDistractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
                          "Duration: " + secondsToString(distractionTime, 2) + "\n<br />\n</div>";
                          //"Word Count: " + WordCount();
         //second div for word count:
         wCount = WordCount();
-        this.elt.innerHTML += "<div>\nWord Count: " + wCount + "\n<br />\n" +
-                        "Word Count Goal: " + this.wordGoal + "<br />";
+        inner += "<div>\nWord Count: " + wCount + "\n<br />\n" +
+                        "Word Count Goal: " + this.wordGoal + "\n<br />\n";
         if (wCount >= this.wordGoal) {
-            this.elt.innerHTML += "Goal Completed!";
+            inner += "Goal Completed!";
         } else {
-            this.elt.innerHTML += "Remaining: " + (this.wordGoal - wCount);
+            inner += "Remaining: " + (this.wordGoal - wCount);
         }
         //this.elt.innerHTML += (wCount >= this.wordGoal) ? "Goal Completed!" : ("Remaining: " + (this.wordGoal - wCount));
-        this.elt.innerHTML += "\n</div>\n";
+        inner += "\n</div>\n";
         //third div for times n such
 
         elapsedTime = Math.round(Date.now() / 1000) - this.startTime;
         typingTime = elapsedTime - distractionTime;
-        this.elt.innerHTML += "<div>\nElapsed Time: " + secondsToString(elapsedTime, 2) + "\n<br />\n" +
+        inner += "<div>\nElapsed Time: " + secondsToString(elapsedTime, 2) + "\n<br />\n" +
                               "Typing Time: " + secondsToString(typingTime, 2) + "\n<br />\n" +
                               "Words Per Minute: " + Math.round(60 * wCount / typingTime) + "\n</div>\n";
-
+        this.elt.innerHTML = inner;
 
         //this.elt.innerHTML = "Distractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
         //         "Duration: " + window.tinyTimer.GetDistractions().TotalDuration() + "\n<br />\n" +
