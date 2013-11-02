@@ -5,6 +5,7 @@ Donuts::Application.routes.draw do
   resources :entries
   get "/statistics" => "statistics#index"
   get "/statistics/:type" => "statistics#show"
+  get "/entriesDownload" => "entries#download_html"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

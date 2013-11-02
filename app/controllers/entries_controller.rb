@@ -10,9 +10,19 @@ class EntriesController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { send_data format_entries(@entries), :filename => "entries.txt" }
-      format.js { send_data format_entriesHTML(@entries), :filename => "entries.html" }
+      format.text { send_data format_entriesTXT(@entries), :filename => "entries.txt" }
+      #format.js { send_data format_entriesHTML(@entries), :filename => "entries.html" }
     end
+  end
+  
+  #GET /entriesDownload
+  def download_html
+    if params[:search].blank?
+      @entries = Entry.where(user_id: current_user.id).order("created_at desc")
+    else
+      @entries = Entry.search(params[:search], current_user.id)
+    end
+    send_data format_entriesHTML(@entries), :filename => "entries.html"
   end
 
   # GET /entries/1
@@ -61,7 +71,7 @@ class EntriesController < ApplicationController
   
   private
   
-    def format_entries entries
+    def format_entriesTXT entries
       #put logic here to create file with entries
       content = ""
       entries.each do |entry|
