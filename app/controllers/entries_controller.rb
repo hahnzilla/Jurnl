@@ -11,7 +11,6 @@ class EntriesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.text { send_data format_entriesTXT(@entries), :filename => "entries.txt" }
-      #format.js { send_data format_entriesHTML(@entries), :filename => "entries.html" }
     end
   end
   
