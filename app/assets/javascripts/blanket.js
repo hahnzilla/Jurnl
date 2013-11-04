@@ -6,7 +6,8 @@ function initTiny() {
 	width : "1000",
 	height : "500",
 	save_onsavecallback : "addEntry",
-	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
+	//plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
+	plugins: "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks", //get rid of wordcount
 
 	// Theme options
 	theme_advanced_buttons1 : "close,save,pdw_toggle",

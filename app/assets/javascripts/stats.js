@@ -18,11 +18,14 @@ function stats(elt, wordGoal, startTime) {
     this.refresh = function () {
         //Displays the message to the element div provided
 
-        distractionTime = window.tinyTimer.GetDistractions().TotalDuration()
+        //distractionTime = window.tinyTimer.GetDistractions().TotalDuration()
+        distractionTime = Donuts.Utils.TotalDuration(); //updated to refactored JS
+
 
         //first div for distractions
         //had to do the var inner to fix a glitch
-        var inner = "<div>\nDistractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
+        //var inner = "<div>\nDistractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
+        var inner = "<div>\nDistractions: " + Donuts.Utils.TotalDistractions() + "\n<br />\n" + //Updated to refactored JS
                          "Duration: " + secondsToString(distractionTime, 2) + "\n<br />\n</div>";
 
         //second div for word count:
