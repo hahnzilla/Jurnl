@@ -6,11 +6,11 @@ function export_entries(){
         autoOpen: true,
         buttons: {
             HTML: function() {
-                location.href = "http://localhost:3000/entriesDownload?" + subURL;
+                location.href = "http://localhost:3000/entriesDownload_html?" + subURL;
                 $(this).dialog("close");
             },
             TXT: function() {
-                location.href = "http://localhost:3000/entries.text?" + subURL;
+                location.href = "http://localhost:3000/entriesDownload_txt?" + subURL;
                 $(this).dialog("close");
             }
         },
