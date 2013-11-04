@@ -83,6 +83,9 @@ Donuts.Application.AttachEvents = function() {
     $(".close").click(function() {
         $(this).closest("div").hide();
     });
+    $(document).on("click", "#date-icon", Donuts.Application.ToggleDateSearch);
+    $(document).on("click", "#prev-month", Donuts.Application.PrevMonthsEntries);
+    $(document).on("click", "#next-month", Donuts.Application.NextMonthsEntries);
 };
 
 Donuts.Application.StartTimers = function() {
@@ -107,6 +110,38 @@ Donuts.Application.OpenEditor = function() {
         }
         Donuts.Application.FocusedCallback();
     });
+};
+
+Donuts.Application.ToggleDateSearch = function() {
+    $(".date-selects").toggleClass("date-selects-hidden");
+};
+
+Donuts.Application.PrevMonthsEntries = function() {
+    var currentMonthVal = parseInt($("#search_date_month").val());
+    var currentYearVal = parseInt($("#search_date_year").val());
+    if(currentMonthVal == 1){
+      if(!isNaN(currentYearVal)){
+        currentYearVal -= 1;
+        $("#search_date_year").val(currentYearVal);
+      }
+      currentMonthVal = 13;
+    }
+    $("#search_date_month").val(currentMonthVal - 1);
+    $("#search-form").submit();
+};
+
+Donuts.Application.NextMonthsEntries = function() {
+    var currentMonthVal = parseInt($("#search_date_month").val());
+    var currentYearVal = parseInt($("#search_date_year").val());
+    if(currentMonthVal == 12){
+      if(!isNaN(currentYearVal)){
+        currentYearVal += 1;
+        $("#search_date_year").val(currentYearVal);
+      }
+      currentMonthVal = 0;
+    }
+    $("#search_date_month").val(currentMonthVal + 1);
+    $("#search-form").submit();
 };
 
 /* -------------------------------------------*

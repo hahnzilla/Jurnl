@@ -1,8 +1,19 @@
-  <header class="main-header">
-    <h1><%= link_to "jurnl", entries_path %></h1>
-    <form>
-      <input type="button" class="button" value="Search">
-      <a href="#" title="Search by Month" class="button icon"><span aria-hidden="true" data-icon="&#x27;"></span></a>
-      <input type="text" name="search" class="search right">
-    </form> 
-  </header>
+<header class="main-header">
+  <h1><%= link_to "jurnl", entries_path %></h1>
+  <%= form_tag "/entries", method: "get", id: "search-form" do %>
+    <%= submit_tag "Search", class: "button search-button" %>
+    <%= link_to "javascript:void(0)", title: "Search by Month", class: "button icon", id: "date-icon" do %>
+      <span aria-hidden="true" data-icon="&#x27;"></span>
+    <% end %>
+    <div class="date-selects <%= "date-selects-hidden" unless date_searched? @search %>">
+      <%= select_tag("search[date][month]", options_for_select(monthnames, @search.try(:[],:date).try(:[],:month)), prompt: "Month") %>
+      <%= select_tag("search[date][year]", options_for_select(YEARS, @search.try(:[],:date).try(:[],:year)), prompt: "Year", include_blank: false) %>
+    </div>
+    <%= text_field_tag "search[q]", @search.try(:[],:q) ,class: "search right" %>
+  <% end %>
+</header>
+
+<% if date_searched? @search %>
+  <%= link_to "Previous Month", "javascript:void(0);", id: "prev-month"%>
+  <%= link_to "Next Month", "javascript:void(0);", id: "next-month"%>
+<% end %>
