@@ -76,6 +76,7 @@ function blanket_size(popUpDivVar) {
 	popUpDiv_height=blanket_height/2-150;
 	popUpDiv.style.top = popUpDiv_height + 'px';
 }
+
 function popup(windowname) {
   blanket_size(windowname);
   toggle('blanket');

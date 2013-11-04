@@ -12,7 +12,7 @@ function stats(elt, wordGoal, startTime) {
     this.interval.onTick = function () {
         me.refresh();
     }
-    this.interval.duration = -1; //what the hell is this for?
+    this.interval.duration = -1; 
     this.interval.start(refreshInterval);
     
     this.refresh = function () {
@@ -50,7 +50,6 @@ function stats(elt, wordGoal, startTime) {
         this.interval.restart();
     }
     this.refresh(); //displays the div
-
 }
 
 // Helpful functions and objects
