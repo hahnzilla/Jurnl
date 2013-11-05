@@ -47,8 +47,11 @@ class EntriesController < ApplicationController
     end
   end
 
+  # PUT /entries/1
+  # PUT /entries/1.json
   def update
     @entry = Entry.find(params[:id])
+
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
         format.json { render json: @entry, status: :created, location: @entry }
