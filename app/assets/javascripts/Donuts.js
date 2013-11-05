@@ -148,6 +148,7 @@ Donuts.Editor.Initialize = function() {
 	// General options
 	mode : "textareas",
 	theme : "advanced",
+    skin: "donuts",
 	width : "1000",
 	height : "500",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
