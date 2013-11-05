@@ -53,8 +53,8 @@ end
 def login!
   @user = FactoryGirl.create(:user)
   visit "/users/sign_in"
-  fill_in 'Email', :with => @user.email
-  fill_in 'Password', :with => @user.password
-  click_on 'Sign in'
+  fill_in 'sign_in_email', :with => @user.email
+  fill_in 'sign_in_password', :with => @user.password
+  click_on 'Sign In'
 end
 

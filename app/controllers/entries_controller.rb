@@ -5,9 +5,9 @@ class EntriesController < ApplicationController
     if params[:search].blank?
       @entries = Entry.where(user_id: current_user.id).order("created_at desc")
     else
+      @search = params[:search]
       @entries = Entry.search(params[:search], current_user.id)
     end
-    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @entries }
@@ -47,9 +47,12 @@ class EntriesController < ApplicationController
     end
   end
 
+  # PUT /entries/1
+  # PUT /entries/1.json
   def update
-  @entry=Entry.find(params[:id])
-  respond_to do |format|
+    @entry = Entry.find(params[:id])
+
+    respond_to do |format|
       if @entry.update_attributes(params[:entry])
         format.json { render json: @entry, status: :created, location: @entry }
       else
