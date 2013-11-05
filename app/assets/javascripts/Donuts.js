@@ -50,17 +50,19 @@ Donuts.Application.AutoSaveCallback = function() {
 
 Donuts.Application.DistractionCallback = function() {
     //TODO Figure out some better way of doing all of this
+    /* Stats manager now does this
     var AlertDiv = document.getElementById("distractionAlerts");
     AlertDiv.style.backgroundColor = "#cc0011";
     AlertDiv.innerHTML = "DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);
+    AlertBody(AlertDiv);*/
 };
 
-Donuts.Application.FocusedCallback = function() {
+Donuts.Application.FocusedCallback = function () {
+    /* Stats manager now does this
     var AlertDiv = document.getElementById("distractionAlerts");
     AlertDiv.style.backgroundColor = "#00cc11";
     AlertDiv.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);
+    AlertBody(AlertDiv);*/
 };
 
 Donuts.Application.InitTimers = function(Timers) {
@@ -78,6 +80,7 @@ Donuts.Application.InitTimers = function(Timers) {
     );
     Timers["Distraction"].Initialize(INTERVAL);
 };
+
 Donuts.Application.AttachEvents = function() {
     $(document).on("click", "#opener", Donuts.Application.OpenEditor);
     $(".close").click(function() {
@@ -110,6 +113,7 @@ Donuts.Application.OpenEditor = function() {
         }
         Donuts.Application.FocusedCallback();
     });
+    window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
 };
 
 Donuts.Application.ToggleDateSearch = function() {
@@ -174,6 +178,27 @@ Donuts.Utils.TotalDuration = function() {
     return Donuts.Utils.GetSavedDistractionDuration() + Donuts.Timers["Distraction"].DistractionDuration();
 };
 
+Donuts.Utils.secondsToString = function (time, min) {
+    // Displays the seconds in hh:mm:ss format
+    // doesn't show hh if 00, or mm if 00(unless hour > 00)
+    // examples: 5 => 5, 15 => 15, 60 => 1:00, 65 => 1:05, etc
+    // other methods return time components
+    // if a second argument (min) is given, it defines how many blocks will be shown;
+    // ie: if sec = 30 and min = 1, returns 30
+    //     if sec = 30 and min = 2, returns 0:30
+    var seconds = time % 60;
+    var minutes = Math.floor((time % 3600) / 60)
+    var hours = Math.floor(time / 3600);
+
+    var hour = ((time >= 3600) || min >= 3) ? hours + ":" : "";
+    var minute = ((time >= 60) || min >= 2) ? minutes + ":" : "";
+    var second = "" + seconds;
+
+    if (hour && minute.length === 2) minute = "0" + minute;
+    if (minute && second.length === 1) second = "0" + second;
+    return hour + minute + second;
+}
+
 /* --------------------------------------------- *
  *          Editor namespace defintions          *
  * --------------------------------------------- */
@@ -186,7 +211,7 @@ Donuts.Editor.Initialize = function() {
 	width : "1000",
 	height : "500",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
-	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
+	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
 
 	// Theme options
 	theme_advanced_buttons1 : "close,save,pdw_toggle",
