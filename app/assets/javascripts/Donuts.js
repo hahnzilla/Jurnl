@@ -28,7 +28,7 @@ Donuts.Application.UpdateEntry = function() {
                  dataType: "json",
                  type: "post",
                  success: function(data) {
-                     $("#popUpDiv").data("entry-id", data.id);
+                     $("#popUpDiv").attr("data-entry-id", data.id);
                  }});
     }
     else {
@@ -83,6 +83,9 @@ Donuts.Application.AttachEvents = function() {
     $(".close").click(function() {
         $(this).closest("div").hide();
     });
+    $(document).on("click", "#date-icon", Donuts.Application.ToggleDateSearch);
+    $(document).on("click", "#prev-month", Donuts.Application.PrevMonthsEntries);
+    $(document).on("click", "#next-month", Donuts.Application.NextMonthsEntries);
 };
 
 Donuts.Application.StartTimers = function() {
@@ -100,13 +103,45 @@ Donuts.Application.OpenEditor = function() {
     $.getJSON("/entries/current", function(result){
         Donuts.Editor.ToggleDisplay("popUpDiv");
         if(result != null) {
-            $('#popUpDiv').data('entry-id', result.id);
-            $('#popUpDiv').data('dist-count', result.distraction_count);
-            $('#popUpDiv').data('dist-time', result.duration);
+            $('#popUpDiv').attr('data-entry-id', result.id);
+            $('#popUpDiv').attr('data-dist-count', result.distraction_count);
+            $('#popUpDiv').attr('data-dist-time', result.duration);
             tinyMCE.get("entry_content").setContent(result.content);
         }
         Donuts.Application.FocusedCallback();
     });
+};
+
+Donuts.Application.ToggleDateSearch = function() {
+    $(".date-selects").toggleClass("date-selects-hidden");
+};
+
+Donuts.Application.PrevMonthsEntries = function() {
+    var currentMonthVal = parseInt($("#search_date_month").val());
+    var currentYearVal = parseInt($("#search_date_year").val());
+    if(currentMonthVal == 1){
+      if(!isNaN(currentYearVal)){
+        currentYearVal -= 1;
+        $("#search_date_year").val(currentYearVal);
+      }
+      currentMonthVal = 13;
+    }
+    $("#search_date_month").val(currentMonthVal - 1);
+    $("#search-form").submit();
+};
+
+Donuts.Application.NextMonthsEntries = function() {
+    var currentMonthVal = parseInt($("#search_date_month").val());
+    var currentYearVal = parseInt($("#search_date_year").val());
+    if(currentMonthVal == 12){
+      if(!isNaN(currentYearVal)){
+        currentYearVal += 1;
+        $("#search_date_year").val(currentYearVal);
+      }
+      currentMonthVal = 0;
+    }
+    $("#search_date_month").val(currentMonthVal + 1);
+    $("#search-form").submit();
 };
 
 /* -------------------------------------------*
@@ -114,20 +149,20 @@ Donuts.Application.OpenEditor = function() {
  * -------------------------------------------*/
    
 Donuts.Utils.GetUserID = function() {
-    return $("#userid").val();
+    return $("#entry_user_id").val();
 };
 
 Donuts.Utils.GetEntryID = function() {
-    return $("#popUpDiv").data("entry-id");
+    return $("#popUpDiv").attr("data-entry-id");
 };
 
 Donuts.Utils.GetSavedDistractionCount = function() {
-    var DistractionCount = $("#popUpDiv").data("dist-count");
+    var DistractionCount = $("#popUpDiv").attr("data-dist-count");
     return (DistractionCount === "" ? 0 : DistractionCount);
 };
 
 Donuts.Utils.GetSavedDistractionDuration = function() {
-    var DistractionDuration = $("#popUpDiv").data("dist-time");
+    var DistractionDuration = $("#popUpDiv").attr("data-dist-time");
     return (DistractionDuration === "" ? 0 : DistractionDuration);
 };
 

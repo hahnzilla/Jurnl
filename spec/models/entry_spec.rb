@@ -48,44 +48,85 @@ describe Entry do
   describe "search for hash tags" do
     let!(:user_id) { entry.user.id }
     let!(:entry2) { Entry.create(content: "don't return me!", user_id: user_id) }
-    context "param contains tag" do
-      let(:param) { entry.tags.first.name }
+    context "params contains tag" do
+      let(:params) { {q: entry.tags.first.name} }
 
       context "user_id doesn't match" do
         it "should not return entry" do
-          Entry.search(param, -1).should eq []
+          Entry.search(params, -1).should eq []
         end
       end
 
       context "user_id matches" do
-        it "should return entries associated with tag" do
-          Entry.search(param, user_id).should eq [entry]
-        end
-
-        context "param does not contain tag" do
-          context "param contains date" do
-            let(:param) { entry.created_at.to_s }
-
-            it "should return entry created on date" do
-              entries = Entry.search(param, user_id)
-              entries.should include entry
-              entries.length.should be 2
-            end
+        context "date range is not given" do
+          it "should return entries associated with tag" do
+            Entry.search(params, user_id).should eq [entry]
           end
 
-          context "param does not contain date" do
-            let(:param) { entry.content.split(" ")[15] }
+          context "params does not contain tag" do
+            context "params contains date" do
+              let(:params) { {q: entry.created_at.to_s } }
 
-            context "param includes a word found in an entry" do
-              it "should return all entries associated with word" do
-                Entry.search(param, user_id).should eq [entry]
+              it "should return entry created on date" do
+                entries = Entry.search(params, user_id)
+                entries.should include entry
+                entries.length.should be 2
               end
             end
 
-            context "param does not include any words found in entry" do
-              let(:param) { "" }
-              it "should return all entries" do
-                Entry.search(param, user_id).should eq Entry.all
+            context "params does not contain date" do
+              let(:params) { {q: entry.content.split(" ")[15]} }
+
+              context "params includes a word found in an entry" do
+                it "should return all entries associated with word" do
+                  Entry.search(params, user_id).should eq [entry]
+                end
+              end
+
+              context "params does not include any words found in entry" do
+                let(:params) { {q: ""} }
+                it "should return all entries" do
+                  Entry.search(params, user_id).should eq Entry.all.reverse
+                end
+              end
+            end
+          end
+
+          context "date range is given" do
+            let!(:entry3) do
+              e = Entry.create(content: "don't return me!", user_id: user_id)
+              e.created_at = 410.days.ago 
+              e.save
+              e
+            end
+
+            context "month is given" do
+              let(:params) { {q: "", date: { month: entry.created_at.month.to_s }} }
+              it "should restrict entries to given month" do
+                entries = Entry.search(params, user_id)
+                entries.should include entry
+                entries.should_not include entry3
+                entries.length.should be 2
+              end
+            end
+
+            context "year is given" do
+              let(:params) { {q: "", date: { year: entry.created_at.year.to_s }} }
+              it "should restrict entries to given month" do
+                entries = Entry.search(params, user_id)
+                entries.should include entry
+                entries.should_not include entry3
+                entries.length.should be 2
+              end
+            end
+
+            context "both month and year is given" do
+              let(:params) { {q: "", date: { month: entry.created_at.month.to_s ,year: entry.created_at.year.to_s }} }
+              it "should restrict entries to given month" do
+                entries = Entry.search(params, user_id)
+                entries.should include entry
+                entries.should_not include entry3
+                entries.length.should be 2
               end
             end
           end
