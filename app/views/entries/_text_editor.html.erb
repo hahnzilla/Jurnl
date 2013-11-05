@@ -1,5 +1,4 @@
 <%= form_tag('/entries', method: "post", id: "createEntry") do -%>
-<%# <%= form_tag "/entries", method: "post", :html => {:id => "createEntry"} do |f| %>
   <%= hidden_field_tag "entry[user_id]", current_user.id%>
   <div id="blanket" style="display:none;"></div>
   <div id="popUpDiv" data-created-at="" data-entry-id="" data-dist-count="" data-dist-time="" style="display:none;">

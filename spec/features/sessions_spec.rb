@@ -5,9 +5,9 @@ feature "Manage Sessions:" do
   
   scenario "user wants to log in" do
     visit "/users/sign_in"
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_on "Sign in"
+    fill_in "sign_in_email", with: user.email
+    fill_in "sign_in_password", with: user.password
+    click_on "Sign In"
     page.current_url.should eq root_url
   end
 
