@@ -36,9 +36,7 @@ Donuts.Application.OpenEditor = function() {
         }
         Donuts.Application.FocusedCallback();
     });
-    //console.log($("#popUpDiv").data("created-at"));
     window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
-
 };
 
 Donuts.Utils.GetUserID = function() {

@@ -1,9 +1,7 @@
-//Stats Manager Object(to be completed)
+//Stats Manager Object
 refreshInterval = 1000;
 function dateFromString(inString) {
     var tokens = inString.split(/-|T|:/);
-    //console.log(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6], tokens[7]);
-    //return (Math.round(Date.UTC(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]) / 1000) - (6 * 3600));
     return (Date.parse(inString) / 1000) + (tokens[6] * 3600); //the second part adds the timezone offset
 }
 
@@ -12,23 +10,8 @@ function stats(elt, wordGoal, startTime) {
     this.elt = elt;
     this.wordGoal = wordGoal;
 
-    //if (startTime) {
-    //    this.startTime = startTime;
-    //} else {
-    //    this.startTime = $("#popUpDiv").data("created-at");
-    //}
-
-    //console.log("time:" + $("#popUpDiv").data("created-at"));
-
-    //if (this.startTime) {
-    //    this.startTime = dateFromString(this.startTime);
-    //} else {
-    //    this.startTime = Math.round(Date.now() / 1000);
-    //}
-
     this.startTime = (startTime) ? startTime : Math.round(Date.now() / 1000);
-    
-
+   
     this.interval = new Timer();
 
     var me = this;
@@ -50,13 +33,11 @@ function stats(elt, wordGoal, startTime) {
         var d = new Date(this.startTime);
         
 
-        //distractionTime = window.tinyTimer.GetDistractions().TotalDuration()
         distractionTime = Donuts.Utils.TotalDuration(); //updated to refactored JS
         
 
         //first div for distractions
         //had to do the var inner to fix a glitch
-        //var inner = "<div>\nDistractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
         var inner = "<div>\nDistractions: " + Donuts.Utils.TotalDistractions() + "\n<br />\n" + //Updated to refactored JS
                          "Duration: " + secondsToString(distractionTime, 2) + "\n<br />\n</div>";
 
@@ -76,9 +57,6 @@ function stats(elt, wordGoal, startTime) {
                               "Words Per Minute: " + Math.round(60 * wCount / typingTime) + "\n</div>\n";
         this.elt.innerHTML = inner;
 
-        //this.elt.innerHTML = "Distractions: " + window.tinyTimer.GetDistractions().numDistractions() + "\n<br />\n" +
-        //         "Duration: " + window.tinyTimer.GetDistractions().TotalDuration() + "\n<br />\n" +
-        //         "Word Count: " + WordCount();
         this.interval.restart();
     }
     this.refresh(); //displays the div
