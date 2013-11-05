@@ -1,8 +1,10 @@
 module Searchable
-  def search param, user_id
+  def search params, user_id
     %w{hashtag date keyword}.each do |search_type|
-      search_output = send("search_for_#{search_type}", param, user_id)
-      return search_output unless search_output.blank?
+      search_output = send("search_for_#{search_type}", params[:q], user_id)
+      unless search_output.blank?
+        return restrict_date_range(search_output, params[:date]).order("created_at desc")
+      end
     end
     []
   end
@@ -24,5 +26,24 @@ module Searchable
 
     def search_for_keyword param, user_id
       Entry.where("content LIKE ? AND user_id = ?", "%#{param}%", user_id)
+    end
+
+    #TODO Refactor at some point... kinda looks ugly
+    def restrict_date_range(entries, date={})
+      unless date.blank?
+        where, values = [], []
+        unless date[:month].blank?
+          where << "to_char(created_at, 'MM') = ?"
+          values << date[:month]
+        end
+
+        unless date[:year].blank?
+          where << "to_char(created_at, 'YYYY') = ?"
+          values << date[:year]
+        end
+
+        return entries.where(where.join(" AND "), *values)
+      end
+      entries
     end
 end
