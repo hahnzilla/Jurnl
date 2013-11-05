@@ -10,8 +10,27 @@ class EntriesController < ApplicationController
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @entries }
     end
+  end
+  
+  #GET /entriesDownload_html
+  def download_html
+    if params[:search].blank?
+      @entries = Entry.where(user_id: current_user.id).order("created_at desc")
+    else
+      @entries = Entry.search(params[:search], current_user.id)
+    end
+    send_data format_entriesHTML(@entries), :filename => "entries.html"
+  end
+  
+  #GET /entriesDownload_txt
+  def download_txt
+    if params[:search].blank?
+      @entries = Entry.where(user_id: current_user.id).order("created_at desc")
+    else
+      @entries = Entry.search(params[:search], current_user.id)
+    end
+    send_data format_entriesTXT(@entries), :filename => "entries.txt"
   end
 
   # GET /entries/1
@@ -59,6 +78,26 @@ class EntriesController < ApplicationController
         format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
-  end   
+  end
+  
+  private
+  
+    def format_entriesTXT entries
+      #put logic here to create file with entries
+      content = ""
+      entries.each do |entry|
+        content += entry.content.gsub(%r{</?[^>]+?>}, '') + "\n***\n"
+      end
+      content
+    end
+    
+    def format_entriesHTML entries
+      #put logic here to create file with entries
+      content = ""
+      entries.each do |entry|
+        content += entry.content + "\n***\n"
+      end
+      content
+    end
 end
 
