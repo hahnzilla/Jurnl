@@ -229,11 +229,12 @@ input.search-button:hover{
 }
 
 .entry {
-	font-family: 'Bitter', serif;
+	font-family: 'bitterregular', serif;
 	background-color: $white;
 	margin-bottom: 1em;
 	padding: 1em;
 	h4 {
+		font-family: 'bitterbold', serif;
 		font-size: 1.2em;
 		margin-bottom: .3em;
 	}

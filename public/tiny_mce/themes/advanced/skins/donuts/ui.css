@@ -40,7 +40,7 @@
 .donutsSkin .mceButtonDisabled .mceIcon {opacity:0.3; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=30)}
 .donutsSkin .mceButtonLabeled {width:auto}
 .donutsSkin .mceButtonLabeled span.mceIcon {float:left}
-.donutsSkin span.mceButtonLabel {display:block; font-size:10px; padding:4px 6px 0 22px; font-family:Tahoma,Verdana,Arial,Helvetica}
+.donutsSkin span.mceButtonLabel {display:block; font-size:10px; padding:4px 6px 0 22px; font-family: Tahoma,Verdana,Arial,Helvetica}
 .donutsSkin .mceButtonDisabled .mceButtonLabel {color:#888}
 
 /* Separator */
