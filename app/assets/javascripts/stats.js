@@ -1,10 +1,33 @@
 //Stats Manager Object(to be completed)
 refreshInterval = 1000;
+function dateFromString(inString) {
+    var tokens = inString.split(/-|T|:/);
+    //console.log(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6], tokens[7]);
+    //return (Math.round(Date.UTC(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]) / 1000) - (6 * 3600));
+    return (Date.parse(inString) / 1000) + (tokens[6] * 3600); //the second part adds the timezone offset
+}
+
 
 function stats(elt, wordGoal, startTime) {
     this.elt = elt;
     this.wordGoal = wordGoal;
+
+    //if (startTime) {
+    //    this.startTime = startTime;
+    //} else {
+    //    this.startTime = $("#popUpDiv").data("created-at");
+    //}
+
+    //console.log("time:" + $("#popUpDiv").data("created-at"));
+
+    //if (this.startTime) {
+    //    this.startTime = dateFromString(this.startTime);
+    //} else {
+    //    this.startTime = Math.round(Date.now() / 1000);
+    //}
+
     this.startTime = (startTime) ? startTime : Math.round(Date.now() / 1000);
+    
 
     this.interval = new Timer();
 
@@ -18,9 +41,18 @@ function stats(elt, wordGoal, startTime) {
     this.refresh = function () {
         //Displays the message to the element div provided
 
+        if ($("#popUpDiv").data("created-at")) {
+            //this is a workaround.
+            //When data-created-at is set in Donuts.Application.OpenEditor, the DOM doesn't
+            //imediatly update. This checks to see if the value has been set
+            this.startTime = dateFromString($("#popUpDiv").data("created-at"));
+        }
+        var d = new Date(this.startTime);
+        
+
         //distractionTime = window.tinyTimer.GetDistractions().TotalDuration()
         distractionTime = Donuts.Utils.TotalDuration(); //updated to refactored JS
-
+        
 
         //first div for distractions
         //had to do the var inner to fix a glitch
@@ -114,7 +146,7 @@ function seconds(second, min) {
         if (!min) min = 1;
         var hour = ((second >= 3600) || min >= 3) ? this.hours(second) + ":" : "";
         var minute = ((second >= 60) || min >= 2) ? this.minutes(second) + ":" : "";
-        if (hour && minute.length === 1) minute = "0" + minute;
+        if (hour && minute.length === 2) minute = "0" + minute;
         var second = "" + this.seconds(second);
         if (minute && second.length === 1) second = "0" + second;
         return hour + minute + second;

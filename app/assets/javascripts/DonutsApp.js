@@ -31,11 +31,13 @@ Donuts.Application.OpenEditor = function() {
             $('#popUpDiv').data('entry-id', result.id);
             $('#popUpDiv').data('dist-count', result.distraction_count);
             $('#popUpDiv').data('dist-time', result.duration);
+			$('#popUpDiv').data('created-at', result.created_at);
             tinyMCE.get("entry_content").setContent(result.content);
         }
         Donuts.Application.FocusedCallback();
     });
-    //window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
+    //console.log($("#popUpDiv").data("created-at"));
+    window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
 
 };
 
