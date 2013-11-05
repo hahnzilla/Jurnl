@@ -28,7 +28,7 @@ Donuts.Application.UpdateEntry = function() {
                  dataType: "json",
                  type: "post",
                  success: function(data) {
-                     $("#popUpDiv").data("entry-id", data.id);
+                     $("#popUpDiv").attr("data-entry-id", data.id);
                  }});
     }
     else {
@@ -103,9 +103,9 @@ Donuts.Application.OpenEditor = function() {
     $.getJSON("/entries/current", function(result){
         Donuts.Editor.ToggleDisplay("popUpDiv");
         if(result != null) {
-            $('#popUpDiv').data('entry-id', result.id);
-            $('#popUpDiv').data('dist-count', result.distraction_count);
-            $('#popUpDiv').data('dist-time', result.duration);
+            $('#popUpDiv').attr('data-entry-id', result.id);
+            $('#popUpDiv').attr('data-dist-count', result.distraction_count);
+            $('#popUpDiv').attr('data-dist-time', result.duration);
             tinyMCE.get("entry_content").setContent(result.content);
         }
         Donuts.Application.FocusedCallback();
@@ -149,20 +149,20 @@ Donuts.Application.NextMonthsEntries = function() {
  * -------------------------------------------*/
    
 Donuts.Utils.GetUserID = function() {
-    return $("#userid").val();
+    return $("#entry_user_id").val();
 };
 
 Donuts.Utils.GetEntryID = function() {
-    return $("#popUpDiv").data("entry-id");
+    return $("#popUpDiv").attr("data-entry-id");
 };
 
 Donuts.Utils.GetSavedDistractionCount = function() {
-    var DistractionCount = $("#popUpDiv").data("dist-count");
+    var DistractionCount = $("#popUpDiv").attr("data-dist-count");
     return (DistractionCount === "" ? 0 : DistractionCount);
 };
 
 Donuts.Utils.GetSavedDistractionDuration = function() {
-    var DistractionDuration = $("#popUpDiv").data("dist-time");
+    var DistractionDuration = $("#popUpDiv").attr("data-dist-time");
     return (DistractionDuration === "" ? 0 : DistractionDuration);
 };
 
