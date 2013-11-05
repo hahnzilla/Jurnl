@@ -7,6 +7,8 @@ Donuts::Application.routes.draw do
   get "/statistics/:type" => "statistics#show"
   get "/users/:id/edit", to: "users#edit"
   put "/users/:id", to: "users#update"
+  get "/entriesDownload_html" => "entries#download_html"
+  get "/entriesDownload_txt" => "entries#download_txt"
 
 
 
