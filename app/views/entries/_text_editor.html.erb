@@ -2,6 +2,10 @@
   <%= hidden_field_tag "entry[user_id]", current_user.id%>
   <div id="blanket" style="display:none;"></div>
   <div id="popUpDiv" data-entry-id="" style="display:none;">
+  	<div id="editorHead">
+  		<a role="button" id="entry_content_close" class="ed-button" href="javascript:;" onmousedown="return false;" onclick="return false;" aria-labelledby="entry_content_close_voice" tabindex="-1">Close</button>
+  		<a role="button" id="entry_content_save" class="ed-button" href="javascript:;" onmousedown="return false;" onclick="return false;" aria-labelledby="entry_content_save_voice" tabindex="-1">Save</button>
+  	</div>
     <%= text_area_tag "entry[content]"%>
     <div id="distractionAlerts"></div>
   </div>

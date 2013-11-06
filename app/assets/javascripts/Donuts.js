@@ -51,15 +51,11 @@ Donuts.Application.AutoSaveCallback = function() {
 Donuts.Application.DistractionCallback = function() {
     //TODO Figure out some better way of doing all of this
     var AlertDiv = document.getElementById("distractionAlerts");
-    AlertDiv.style.backgroundColor = "#cc0011";
-    AlertDiv.innerHTML = "DISTRACTED!!!\n<br/>\n";
     AlertBody(AlertDiv);
 };
 
 Donuts.Application.FocusedCallback = function() {
     var AlertDiv = document.getElementById("distractionAlerts");
-    AlertDiv.style.backgroundColor = "#00cc11";
-    AlertDiv.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
     AlertBody(AlertDiv);
 };
 
@@ -184,16 +180,16 @@ Donuts.Editor.Initialize = function() {
 	mode : "textareas",
 	theme : "advanced",
     skin: "donuts",
-	width : "1000",
+	width : "60rem",
 	height : "500",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
 	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
 
 	// Theme options
-	theme_advanced_buttons1 : "close,save,pdw_toggle",
-	theme_advanced_buttons2 : "bold,italic,underline,|,fontselect,fontsizeselect",
-	theme_advanced_buttons3 : "forecolor,backcolor,|,spellchecker,|,bullist,numlist,|,blockquote",
-	theme_advanced_toolbar_location : "top",
+	theme_advanced_buttons1 : "close,save,|,bold,italic,underline,|,fontselect,fontsizeselect,|,bullist,numlist,|,blockquote,|,spellchecker",
+	theme_advanced_buttons2 : "",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_statusbar_location : "bottom",
 	theme_advanced_resizing : false,
@@ -206,7 +202,6 @@ Donuts.Editor.Initialize = function() {
 	setup : function(ed) {
 	    // Close Editor Button
 	    ed.addButton('close', {
-		label : 'Close',
 		image : 'close.png',
 		onclick : function() {
 		    Donuts.Editor.ToggleDisplay("popUpDiv");
@@ -217,6 +212,10 @@ Donuts.Editor.Initialize = function() {
 	}
     });
 };
+
+$('#entry_content_close').on('click', function(){
+    console.log("yes");
+});
 
 Donuts.Editor.SaveClickHandler = function() {
     Donuts.Application.UpdateEntry();
@@ -268,6 +267,7 @@ Donuts.Editor.ToggleDisplay = function(windowname) {
         status bar
 */
 function AlertBody(AlertDiv) {
-    AlertDiv.innerHTML += "Distractions: " + Donuts.Utils.TotalDistractions() + "<br>" +
-                          "Duration: " + Donuts.Utils.TotalDuration();
+    AlertDiv.innerHTML = "Total: | Typing: | Distracted: " + 
+        Donuts.Utils.TotalDuration() + " | Distractions: " + 
+        Donuts.Utils.TotalDistractions();
 }
