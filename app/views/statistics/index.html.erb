@@ -9,13 +9,17 @@
 <section class="wrapper">
   <%= render "shared/navbar" %>
   <%= render "shared/header" %>
-  <section class="entry">
+  <section class="page">
+    <div class="stat-boxes cf">
     <% @statistics.each do |key, value|  %>
-      <h2><%= key.to_s.titleize %></h2>
-      <p>Minimum: <%= value[:min] %></p>
-      <p>Maximum: <%= value[:max] %></p>
-      <p>Average: <%= value[:avg] %></p>
+      <div class="stat-box">
+        <h2><%= key.to_s.titleize %></h2>
+        <p>Minimum: <%= value[:min] %></p>
+        <p>Maximum: <%= value[:max] %></p>
+        <p>Average: <%= value[:avg] %></p>
+      </div>
     <% end %>
+    </div>
     <img id="stats-loading" src="assets/stats-loading.gif"/>
   </section>
 </section>
