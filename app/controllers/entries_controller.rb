@@ -27,7 +27,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/current
   def current
-    entry = Entry.where("cast(created_at as text) like ?", "#{Time.zone.today}%").first
+    entry = Entry.where("cast(created_at as text) like ? AND user_id = ?", "#{Time.zone.today}%", current_user.id).first
     render json: entry
   end
 
