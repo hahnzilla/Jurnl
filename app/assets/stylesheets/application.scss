@@ -157,10 +157,6 @@ input.search-button:hover{
 }
 
  .shared_links {
-// 	width: 50%;
-// 	margin: 0 auto;
-// 	background-color: rgba($grey, 0.7);
-// 	padding: 1em 0;
 	li {
 		display: block;
 	}
@@ -179,7 +175,7 @@ input.search-button:hover{
 		text-align: center;
 		height: 2em;
 		width: 2em;
-		margin: .2em 0 0 0;
+		margin: 0 0 0.4rem 0;
 		padding: 0;
 	}
 	.icon:first-child {
@@ -229,11 +225,12 @@ input.search-button:hover{
 }
 
 .entry {
-	font-family: 'Bitter', serif;
+	font-family: 'bitterregular', serif;
 	background-color: $white;
 	margin-bottom: 1em;
 	padding: 1em;
 	h4 {
+		font-family: 'bitterbold', serif;
 		font-size: 1.2em;
 		margin-bottom: .3em;
 	}
@@ -335,4 +332,59 @@ input.search-button:hover{
 #error_explanation {
 	color: $white;
 	margin-bottom: 1em;
+}
+
+/*---------- Editor Styling ------------*/
+#blanket {
+    background-color:#111;
+    opacity: 0.80;
+    filter:alpha(opacity=80);
+    position:absolute;
+    z-index: 9001;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100%;
+}
+#popUpDiv {
+    position: absolute;
+    margin-left: -30rem;
+    left: 50%;
+    background-color:#eeeeee;
+    margin-top: -18rem;
+    height:500px;
+    z-index: 9002;
+}
+#distractionAlerts, #editorHead {
+	background-color: $background;
+	color: $white;
+	font-family: "open_sanslight", sans-serif;
+	font-size: 1rem;
+	.ed-button{
+		border-right: 1px solid lighten($background, 20%);
+		display: inline-block;
+		padding: 0.4rem 0.7rem;
+	}
+	.ed-button:hover {
+		background-color: lighten($background, 10%);
+	}
+}
+#distractionAlerts {
+	padding: 0.4rem;
+}
+
+/*---------- Statistics & Settings ----------*/
+
+.page {
+	background-color: $white;
+	padding: 1rem;
+	font-family: 
+}
+
+.stat-box {
+	width: 50%;
+	float: left;
+	h2 {
+		text-align: center;
+	}
 }

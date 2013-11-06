@@ -28,3 +28,33 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'bitterregular';
+    src: url(font-path('bitter-regular-webfont.eot'));
+    src: url(font-path('bitter-regular-webfont.eot') + "?#iefix") format('embedded-opentype'),
+         url(font-path('bitter-regular-webfont.woff')) format('woff'),
+         url(font-path('bitter-regular-webfont.ttf')) format('truetype'),
+         url(font-path('bitter-regular-webfont.svg') + "#bitterregular") format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'bitteritalic';
+    src: url(font-path('bitter-italic-webfont.eot'));
+    src: url(font-path('bitter-italic-webfont.eot') + "?#iefix") format('embedded-opentype'),
+         url(font-path('bitter-italic-webfont.woff')) format('woff'),
+         url(font-path('bitter-italic-webfont.ttf')) format('truetype'),
+         url(font-path('bitter-italic-webfont.svg') + "bitteritalic") format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'bitterbold';
+    src: url(font-path('bitter-bold-webfont.eot'));
+    src: url(font-path('bitter-bold-webfont.eot') + "?#iefix") format('embedded-opentype'),
+         url(font-path('bitter-bold-webfont.woff')) format('woff'),
+         url(font-path('bitter-bold-webfont.ttf')) format('truetype'),
+         url(font-path('bitter-bold-webfont.svg') + "#bitterbold") format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
