@@ -18,8 +18,9 @@ function stats(elt, wordGoal, startTime) {
     this.interval.onTick = function () {
         me.refresh();
     }
-    this.interval.duration = -1; 
-    this.interval.start(refreshInterval);
+    this.interval.duration = -1;
+    this.interval.interval = refreshInterval;
+    //this.interval.start(refreshInterval);
     
     this.refresh = function () {
         //Displays the message to the element div provided
@@ -57,9 +58,19 @@ function stats(elt, wordGoal, startTime) {
                               "Words Per Minute: " + Math.round(60 * wCount / typingTime) + "\n</div>\n";
         this.elt.innerHTML = inner;
 
-        this.interval.restart();
+        //this.interval.restart();
     }
-    this.refresh(); //displays the div
+
+    this.start = function() {
+        this.interval.start();
+        this.refresh();
+    }
+
+    this.stop = function() {
+        this.interval.stop();
+    }
+
+    //this.refresh(); //displays the div
 }
 
 // Helpful functions and objects

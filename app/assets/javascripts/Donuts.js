@@ -12,6 +12,7 @@ Donuts.init = function() {
     Donuts.Editor.Initialize();
     Donuts.Application.InitTimers(Donuts.Timers);
     Donuts.Application.AttachEvents();
+    Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
 };
 
 /* ------------------------------------- *
@@ -28,7 +29,7 @@ Donuts.Application.UpdateEntry = function() {
                  dataType: "json",
                  type: "post",
                  success: function(data) {
-                     $("#popUpDiv").attr("data-entry-id", data.id);
+                     $("#popUpDiv").data("entry-id", data.id);
                  }});
     }
     else {
@@ -93,12 +94,15 @@ Donuts.Application.AttachEvents = function() {
 
 Donuts.Application.StartTimers = function() {
     Donuts.Timers["Distraction"].Start();
+    Donuts.Timers["Distraction"].Focus();
     Donuts.Timers["AutoSave"].start();
 };
 
 Donuts.Application.StopTimers = function() {
     Donuts.Timers["Distraction"].Stop();
+    Donuts.Timers["Distraction"].InternalDistractions.clear();
     Donuts.Timers["AutoSave"].stop();
+    Donuts.Stats.stop();
 };
 
 Donuts.Application.OpenEditor = function() { 
@@ -106,14 +110,16 @@ Donuts.Application.OpenEditor = function() {
     $.getJSON("/entries/current", function(result){
         Donuts.Editor.ToggleDisplay("popUpDiv");
         if(result != null) {
-            $('#popUpDiv').attr('data-entry-id', result.id);
-            $('#popUpDiv').attr('data-dist-count', result.distraction_count);
-            $('#popUpDiv').attr('data-dist-time', result.duration);
+            $('#popUpDiv').data('entry-id', result.id);
+            $('#popUpDiv').data('dist-count', result.distraction_count);
+            $('#popUpDiv').data('dist-time', result.duration);
+            $('#popUpDiv').data('created-at', result.created_at);
             tinyMCE.get("entry_content").setContent(result.content);
         }
+        Donuts.Stats.start();
         Donuts.Application.FocusedCallback();
     });
-    window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
+    //window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
 };
 
 Donuts.Application.ToggleDateSearch = function() {
@@ -157,16 +163,16 @@ Donuts.Utils.GetUserID = function() {
 };
 
 Donuts.Utils.GetEntryID = function() {
-    return $("#popUpDiv").attr("data-entry-id");
+    return $("#popUpDiv").data("entry-id");
 };
 
 Donuts.Utils.GetSavedDistractionCount = function() {
-    var DistractionCount = $("#popUpDiv").attr("data-dist-count");
+    var DistractionCount = $("#popUpDiv").data("dist-count");
     return (DistractionCount === "" ? 0 : DistractionCount);
 };
 
 Donuts.Utils.GetSavedDistractionDuration = function() {
-    var DistractionDuration = $("#popUpDiv").attr("data-dist-time");
+    var DistractionDuration = $("#popUpDiv").data("dist-time");
     return (DistractionDuration === "" ? 0 : DistractionDuration);
 };
 
@@ -234,7 +240,7 @@ Donuts.Editor.Initialize = function() {
 		image : 'close.png',
 		onclick : function() {
 		    Donuts.Editor.ToggleDisplay("popUpDiv");
-                    Donuts.Application.StopTimers();
+            Donuts.Application.StopTimers();
 		}
 	    });
 	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
@@ -286,12 +292,3 @@ Donuts.Editor.ToggleDisplay = function(windowname) {
     Donuts.Editor.ToggleDivDisplay('blanket');
     Donuts.Editor.ToggleDivDisplay(windowname);
 };
-
-/* Temporary function until status bar is real
-   TODO Get rid of this function and make proper
-        status bar
-*/
-function AlertBody(AlertDiv) {
-    AlertDiv.innerHTML += "Distractions: " + Donuts.Utils.TotalDistractions() + "<br>" +
-                          "Duration: " + Donuts.Utils.TotalDuration();
-}
