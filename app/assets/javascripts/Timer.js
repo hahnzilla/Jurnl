@@ -113,7 +113,7 @@ function Timer()
             if(this.onStart) this.onStart();
         }
         else
-            throw "interval or duration has invalid value";
+            throw "interval or duration has invalid value: duration:" + this.duration + ", interval:" + this.interval;
     };
     
     this.pause = function()

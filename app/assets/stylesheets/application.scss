@@ -350,10 +350,10 @@ input.search-button:hover{
     position: absolute;
     margin-left: -30rem;
     left: 50%;
+    margin-top: 5rem;
     background-color:#eeeeee;
-    margin-top: -18rem;
-    height:500px;
     z-index: 9002;
+    height: 20rem;
 }
 #distractionAlerts, #editorHead {
 	background-color: $background;
@@ -371,6 +371,11 @@ input.search-button:hover{
 }
 #distractionAlerts {
 	padding: 0.4rem;
+	div {
+		width: 31%;
+		padding: 1%;
+		float: left;
+	}
 }
 
 /*---------- Statistics & Settings ----------*/
