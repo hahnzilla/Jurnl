@@ -10,10 +10,13 @@ class EntriesController < ApplicationController
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @entries }
+
+      format.download_html { send_data format_as_html(@entries), filename: "entries.html" }
+
+      format.download_text { send_data format_as_text(@entries), filename: "entries.txt" }
     end
   end
-
+  
   # GET /entries/1
   # GET /entries/1.json
   def show
@@ -59,6 +62,18 @@ class EntriesController < ApplicationController
         format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
-  end   
+  end
+  
+  private
+  
+    def format_as_text entries
+      #put logic here to create file with entries
+      entries.map{|e| e.content.gsub(%r{</?[^>]+?>}, '')}.join("\n\n***\n\n")
+    end
+    
+    def format_as_html entries
+      #put logic here to create file with entries
+      entries.map(&:content).join("\n\n***\n\n")
+    end
 end
 
