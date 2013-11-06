@@ -1,19 +1,24 @@
-function export_entries(){
-    var url = document.URL;
-    var subURL = url.substring(url.indexOf("search"), url.length);
+$(document).on("click", "#export", function (){
+    if(window.location.pathname == "/")
+      var url = document.URL + "/entries"
+    else
+      var url = document.URL.replace(/\/[a-zA-Z\.]+.*(?:\?|$)/, "/entries?")
     
     $( "#dialog" ).dialog({
         autoOpen: true,
         buttons: {
             HTML: function() {
-                location.href = "http://localhost:3000/entriesDownload_html?" + subURL;
+                var download_url = url.replace(/\/entries/,"\/entries.download_html");
+                location.assign(download_url);
                 $(this).dialog("close");
             },
-            TXT: function() {
-                location.href = "http://localhost:3000/entriesDownload_txt?" + subURL;
+            TEXT: function() {
+                var download_url = url.replace(/\/entries/,"\/entries.download_text");
+                location.assign(download_url);
                 $(this).dialog("close");
             }
         },
-        width: "200px"
+        width: "210px"
     });
-}
+});
+

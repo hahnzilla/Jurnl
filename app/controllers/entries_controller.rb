@@ -10,29 +10,13 @@ class EntriesController < ApplicationController
     end
     respond_to do |format|
       format.html # index.html.erb
-    end
-  end
-  
-  #GET /entriesDownload_html
-  def download_html
-    if params[:search].blank?
-      @entries = Entry.where(user_id: current_user.id).order("created_at desc")
-    else
-      @entries = Entry.search(params[:search], current_user.id)
-    end
-    send_data format_entriesHTML(@entries), :filename => "entries.html"
-  end
-  
-  #GET /entriesDownload_txt
-  def download_txt
-    if params[:search].blank?
-      @entries = Entry.where(user_id: current_user.id).order("created_at desc")
-    else
-      @entries = Entry.search(params[:search], current_user.id)
-    end
-    send_data format_entriesTXT(@entries), :filename => "entries.txt"
-  end
 
+      format.download_html { send_data format_as_html(@entries), filename: "entries.html" }
+
+      format.download_text { send_data format_as_text(@entries), filename: "entries.txt" }
+    end
+  end
+  
   # GET /entries/1
   # GET /entries/1.json
   def show
@@ -82,22 +66,14 @@ class EntriesController < ApplicationController
   
   private
   
-    def format_entriesTXT entries
+    def format_as_text entries
       #put logic here to create file with entries
-      content = ""
-      entries.each do |entry|
-        content += entry.content.gsub(%r{</?[^>]+?>}, '') + "\n***\n"
-      end
-      content
+      entries.map{|e| e.content.gsub(%r{</?[^>]+?>}, '')}.join("\n\n***\n\n")
     end
     
-    def format_entriesHTML entries
+    def format_as_html entries
       #put logic here to create file with entries
-      content = ""
-      entries.each do |entry|
-        content += entry.content + "\n***\n"
-      end
-      content
+      entries.map(&:content).join("\n\n***\n\n")
     end
 end
 
