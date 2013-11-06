@@ -191,24 +191,24 @@ input.search-button:hover{
 		float: right;
 	}
         
-        .date-selects-hidden{
-          visibility: hidden;
-          width: 0;
-          margin: 0;
-          padding: 0;
-          display: inline;
-        }
+  .date-selects-hidden{
+    visibility: hidden;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    display: inline;
+  }
 
-        .date-selects{
-                font-size: 1em;
-                height: 2em;
-                margin: 1.4em 0 0;
-                border: 0;
-                outline: 0;
-                float:right;  
-                display: inline;
-                height: 2em;
-        }
+  .date-selects{
+    font-size: 1em;
+    height: 2em;
+    margin: 1.4em 0 0;
+    border: 0;
+    outline: 0;
+    float:right;  
+    display: inline;
+    height: 2em;
+  }
 
 	input.search-button{
 		height: 2em;
@@ -375,16 +375,55 @@ input.search-button:hover{
 
 /*---------- Statistics & Settings ----------*/
 
-.page {
+.statistics {
 	background-color: $white;
 	padding: 1rem;
-	font-family: 
+	font-family: 'bitterregular', serif;
+	text-align: center;
+	padding-bottom: 3rem;
+	h2 {
+		font-family: 'bitterbold', serif;
+		color: $primary;
+	}
 }
 
 .stat-box {
 	width: 50%;
 	float: left;
+	p {
+		margin-top: 0.5rem;
+	}
+	margin: 1rem 0 2rem;
+}
+
+.settings {
+	background-color: $white;
+	padding: 1rem;
+	font-family: 'bitterregular', serif;
 	h2 {
-		text-align: center;
+		font-family: 'bitterbold', serif;
+		color: $primary;
+	}
+	label {
+		width: 30%;
+		color: #000000;
+		display: inline-block;
+	}
+	p {
+		margin-top: 1rem
+	}
+	select {
+		margin: 0;
+		width: 4rem;
+	}
+	input {
+		padding: 0.2rem 0.4rem;
+		margin: 0;
+		border: 1px solid #000000;
+	}
+	.button {
+		padding: 0;
+		border: 0;
+		margin: 1rem 0;
 	}
 }
