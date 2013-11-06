@@ -12,6 +12,7 @@ Donuts.init = function() {
     Donuts.Editor.Initialize();
     Donuts.Application.InitTimers(Donuts.Timers);
     Donuts.Application.AttachEvents();
+    Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
 };
 
 /* ------------------------------------- *
@@ -28,7 +29,7 @@ Donuts.Application.UpdateEntry = function() {
                  dataType: "json",
                  type: "post",
                  success: function(data) {
-                     $("#popUpDiv").attr("data-entry-id", data.id);
+                     $("#popUpDiv").data("entry-id", data.id);
                  }});
     }
     else {
@@ -50,17 +51,19 @@ Donuts.Application.AutoSaveCallback = function() {
 
 Donuts.Application.DistractionCallback = function() {
     //TODO Figure out some better way of doing all of this
+    /* Stats manager now does this
     var AlertDiv = document.getElementById("distractionAlerts");
     AlertDiv.style.backgroundColor = "#cc0011";
     AlertDiv.innerHTML = "DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);
+    AlertBody(AlertDiv);*/
 };
 
-Donuts.Application.FocusedCallback = function() {
+Donuts.Application.FocusedCallback = function () {
+    /* Stats manager now does this
     var AlertDiv = document.getElementById("distractionAlerts");
     AlertDiv.style.backgroundColor = "#00cc11";
     AlertDiv.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);
+    AlertBody(AlertDiv);*/
 };
 
 Donuts.Application.InitTimers = function(Timers) {
@@ -78,6 +81,7 @@ Donuts.Application.InitTimers = function(Timers) {
     );
     Timers["Distraction"].Initialize(INTERVAL);
 };
+
 Donuts.Application.AttachEvents = function() {
     $(document).on("click", "#opener", Donuts.Application.OpenEditor);
     $(".close").click(function() {
@@ -90,12 +94,15 @@ Donuts.Application.AttachEvents = function() {
 
 Donuts.Application.StartTimers = function() {
     Donuts.Timers["Distraction"].Start();
+    Donuts.Timers["Distraction"].Focus();
     Donuts.Timers["AutoSave"].start();
 };
 
 Donuts.Application.StopTimers = function() {
     Donuts.Timers["Distraction"].Stop();
+    Donuts.Timers["Distraction"].InternalDistractions.clear();
     Donuts.Timers["AutoSave"].stop();
+    Donuts.Stats.stop();
 };
 
 Donuts.Application.OpenEditor = function() { 
@@ -103,13 +110,16 @@ Donuts.Application.OpenEditor = function() {
     $.getJSON("/entries/current", function(result){
         Donuts.Editor.ToggleDisplay("popUpDiv");
         if(result != null) {
-            $('#popUpDiv').attr('data-entry-id', result.id);
-            $('#popUpDiv').attr('data-dist-count', result.distraction_count);
-            $('#popUpDiv').attr('data-dist-time', result.duration);
+            $('#popUpDiv').data('entry-id', result.id);
+            $('#popUpDiv').data('dist-count', result.distraction_count);
+            $('#popUpDiv').data('dist-time', result.duration);
+            $('#popUpDiv').data('created-at', result.created_at);
             tinyMCE.get("entry_content").setContent(result.content);
         }
+        Donuts.Stats.start();
         Donuts.Application.FocusedCallback();
     });
+    //window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
 };
 
 Donuts.Application.ToggleDateSearch = function() {
@@ -153,16 +163,16 @@ Donuts.Utils.GetUserID = function() {
 };
 
 Donuts.Utils.GetEntryID = function() {
-    return $("#popUpDiv").attr("data-entry-id");
+    return $("#popUpDiv").data("entry-id");
 };
 
 Donuts.Utils.GetSavedDistractionCount = function() {
-    var DistractionCount = $("#popUpDiv").attr("data-dist-count");
+    var DistractionCount = $("#popUpDiv").data("dist-count");
     return (DistractionCount === "" ? 0 : DistractionCount);
 };
 
 Donuts.Utils.GetSavedDistractionDuration = function() {
-    var DistractionDuration = $("#popUpDiv").attr("data-dist-time");
+    var DistractionDuration = $("#popUpDiv").data("dist-time");
     return (DistractionDuration === "" ? 0 : DistractionDuration);
 };
 
@@ -173,6 +183,27 @@ Donuts.Utils.TotalDistractions = function() {
 Donuts.Utils.TotalDuration = function() {
     return Donuts.Utils.GetSavedDistractionDuration() + Donuts.Timers["Distraction"].DistractionDuration();
 };
+
+Donuts.Utils.secondsToString = function (time, min) {
+    // Displays the seconds in hh:mm:ss format
+    // doesn't show hh if 00, or mm if 00(unless hour > 00)
+    // examples: 5 => 5, 15 => 15, 60 => 1:00, 65 => 1:05, etc
+    // other methods return time components
+    // if a second argument (min) is given, it defines how many blocks will be shown;
+    // ie: if sec = 30 and min = 1, returns 30
+    //     if sec = 30 and min = 2, returns 0:30
+    var seconds = time % 60;
+    var minutes = Math.floor((time % 3600) / 60)
+    var hours = Math.floor(time / 3600);
+
+    var hour = ((time >= 3600) || min >= 3) ? hours + ":" : "";
+    var minute = ((time >= 60) || min >= 2) ? minutes + ":" : "";
+    var second = "" + seconds;
+
+    if (hour && minute.length === 2) minute = "0" + minute;
+    if (minute && second.length === 1) second = "0" + second;
+    return hour + minute + second;
+}
 
 /* --------------------------------------------- *
  *          Editor namespace defintions          *
@@ -186,7 +217,7 @@ Donuts.Editor.Initialize = function() {
 	width : "1000",
 	height : "500",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
-	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,wordcount,advlist,visualblocks",
+	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
 
 	// Theme options
 	theme_advanced_buttons1 : "close,save,pdw_toggle",
@@ -209,7 +240,7 @@ Donuts.Editor.Initialize = function() {
 		image : 'close.png',
 		onclick : function() {
 		    Donuts.Editor.ToggleDisplay("popUpDiv");
-                    Donuts.Application.StopTimers();
+            Donuts.Application.StopTimers();
 		}
 	    });
 	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
@@ -261,12 +292,3 @@ Donuts.Editor.ToggleDisplay = function(windowname) {
     Donuts.Editor.ToggleDivDisplay('blanket');
     Donuts.Editor.ToggleDivDisplay(windowname);
 };
-
-/* Temporary function until status bar is real
-   TODO Get rid of this function and make proper
-        status bar
-*/
-function AlertBody(AlertDiv) {
-    AlertDiv.innerHTML += "Distractions: " + Donuts.Utils.TotalDistractions() + "<br>" +
-                          "Duration: " + Donuts.Utils.TotalDuration();
-}

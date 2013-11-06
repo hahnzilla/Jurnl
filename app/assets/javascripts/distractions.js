@@ -40,6 +40,7 @@ function distractions() {
     this.distractions = [];
     this.numOdistractions = 0;
     this.distracted = false;
+    //this.initTime = Date.now();
 
     function distraction(type, datetime) {
         /*Distraction Node 
