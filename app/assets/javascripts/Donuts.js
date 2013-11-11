@@ -221,7 +221,7 @@ Donuts.Editor.Initialize = function() {
 	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
 
 	// Theme options
-	theme_advanced_buttons1 : "close,save,|,bold,italic,underline,|,fontselect,fontsizeselect,|,bullist,numlist,|,blockquote,|,spellchecker",
+	theme_advanced_buttons1 : "close,save,|,bold,italic,underline,|,fontselect,fontsizeselect,|,bullist,numlist,|,blockquote,|,spellchecker,|,Verbatim,Monospace",
 	theme_advanced_buttons2 : "",
     theme_advanced_buttons3 : "",
     theme_advanced_toolbar_location : "top",
@@ -235,6 +235,28 @@ Donuts.Editor.Initialize = function() {
 	
 	//Setup for custom buttons
 	setup : function(ed) {
+
+		//Verbatim button
+	    ed.addButton('Verbatim',{
+		title : 'Change verbatim',
+		image : 'V.png',
+		onclick : function(){
+			ed.execCommand('FormatBlock', false, 'blockquote');
+			ed.execCommand('FontName', false, 'Monospace');
+			ed.controlManager.get('Verbatim').setActive(true);
+		}
+	    });
+
+	    // Monospace button
+	    ed.addButton('Monospace',{
+		title : 'Change to monospace',
+		image : 'M.png',
+		onclick : function(){
+			ed.controlManager.get('Monospace').setActive(true);
+			ed.execCommand('FontName', false, 'Monospace');
+		}
+	    });
+	
 	    // Close Editor Button
 	    ed.addButton('close', {
 		image : 'close.png',
@@ -244,6 +266,25 @@ Donuts.Editor.Initialize = function() {
 		}
 	    });
 	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
+		
+		// checks the current node type to activate/deactivate monospace button
+	    ed.onNodeChange.add(function(ed, cm, e) {
+			//console.log(e);
+			//console.log(resolveNode(e));
+			//resolveNode(e);
+			var resultnode = resolveNode(e);
+			if(resultnode == 'Verbatim'){
+				cm.setActive('Verbatim', true);
+				cm.setActive('Monospace', false);
+				cm.setActive('blockquote', false);///////////this is not producing the desired effect
+			}else if(resultnode == 'Monospace'){
+				cm.setActive('Monospace', true);
+				cm.setActive('Verbatim', false);
+			}else{
+				cm.setActive('Monospace', false);
+				cm.setActive('Verbatim', false);
+			}
+		});
 	}
     });
 };
