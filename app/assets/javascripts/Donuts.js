@@ -269,14 +269,11 @@ Donuts.Editor.Initialize = function() {
 		
 		// checks the current node type to activate/deactivate monospace button
 	    ed.onNodeChange.add(function(ed, cm, e) {
-			//console.log(e);
-			//console.log(resolveNode(e));
-			//resolveNode(e);
 			var resultnode = resolveNode(e);
 			if(resultnode == 'Verbatim'){
 				cm.setActive('Verbatim', true);
 				cm.setActive('Monospace', false);
-				cm.setActive('blockquote', false);///////////this is not producing the desired effect
+				cm.setActive('blockquote', false);
 			}else if(resultnode == 'Monospace'){
 				cm.setActive('Monospace', true);
 				cm.setActive('Verbatim', false);
@@ -284,6 +281,21 @@ Donuts.Editor.Initialize = function() {
 				cm.setActive('Monospace', false);
 				cm.setActive('Verbatim', false);
 			}
+			
+			setTimeout(function(){//repeat to make sure
+				var resultnode = resolveNode(e);
+				if(resultnode == 'Verbatim'){
+					cm.setActive('Verbatim', true);
+					cm.setActive('Monospace', false);
+					cm.setActive('blockquote', false);
+				}else if(resultnode == 'Monospace'){
+					cm.setActive('Monospace', true);
+					cm.setActive('Verbatim', false);
+				}else{
+					cm.setActive('Monospace', false);
+					cm.setActive('Verbatim', false);
+				}
+			}, 3);
 		});
 	}
     });
