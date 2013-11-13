@@ -337,6 +337,61 @@ input.search-button:hover{
 	margin-bottom: 1em;
 }
 
+/*---------- Statistics & Settings ----------*/
+
+.statistics {
+	background-color: $white;
+	padding: 1rem;
+	font-family: 'bitterregular', serif;
+	text-align: center;
+	padding-bottom: 3rem;
+	h2 {
+		font-family: 'bitterbold', serif;
+		color: $primary;
+	}
+}
+
+.stat-box {
+	width: 50%;
+	float: left;
+	p {
+		margin-top: 0.5rem;
+	}
+	margin: 1rem 0 2rem;
+}
+
+.settings {
+	background-color: $white;
+	padding: 1rem;
+	font-family: 'bitterregular', serif;
+	h2 {
+		font-family: 'bitterbold', serif;
+		color: $primary;
+	}
+	label {
+		width: 30%;
+		color: #000000;
+		display: inline-block;
+	}
+	p {
+		margin-top: 1rem
+	}
+	select {
+		margin: 0;
+		width: 4rem;
+	}
+	input {
+		padding: 0.2rem 0.4rem;
+		margin: 0;
+		border: 1px solid #000000;
+	}
+	.button {
+		padding: 0;
+		border: 0;
+		margin: 1rem 0;
+	}
+}
+
 
 
 
