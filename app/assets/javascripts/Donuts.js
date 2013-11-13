@@ -295,7 +295,7 @@ Donuts.Editor.Initialize = function() {
 					cm.setActive('Monospace', false);
 					cm.setActive('Verbatim', false);
 				}
-			}, 3);
+			}, 30);
 		});
 	}
     });
