@@ -3,35 +3,36 @@
   <%= render "shared/navbar" %>
   <%= render "shared/header" %>
 
-  <div>
+  <div class="settings">
+    <h2>Settings</h2>
     <%= form_for @user, url: "/users/#{@user.id}", method: "put" do |f| %>
       <p>
-        <%= f.label :bg_color_hex %>
+        <%= f.label :bg_color_hex, "Entry Background Color:" %>
         <%= f.text_field :bg_color_hex, class: "color" %>
       </p>
      
       <p>
-        <%= f.label :font_color_hex %>
+        <%= f.label :font_color_hex, "Entry Text Color:" %>
         <%= f.text_field :font_color_hex, class: "color" %>
       </p>
       
       <p>
-        <br><%= f.label :font_point %>
+        <%= f.label :font_point, "Entry Text Size:" %>
         <%= f.select :font_point, options_for_select(possible_font_points, @user.font_point) %>
       </p>
      
       <p>
-        <%= f.label :goal_duration %>
+        <%= f.label :goal_duration, "Time Goal:" %>
         <%= f.text_field :goal_duration %>
       </p>
       
       <p>
-        <%= f.label :goal_word_count %>
+        <%= f.label :goal_word_count, "Word Count Goal:" %>
         <%= f.text_field :goal_word_count %>
       </p>
      
       <p>
-        <%= f.submit %>
+        <%= f.submit :class => 'button' %>
       </p>
     <% end %>
 </section>
