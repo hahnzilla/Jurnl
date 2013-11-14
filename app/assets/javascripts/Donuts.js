@@ -218,7 +218,7 @@ Donuts.Editor.Initialize = function() {
 	width : "60rem",
     height: "20rem",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
-	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
+	plugins : "spellchecker,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
 
 	// Theme options
 	theme_advanced_buttons1 : "close,save,|,bold,italic,underline,|,fontselect,fontsizeselect,|,bullist,numlist,|,blockquote,|,spellchecker,|,Verbatim,Monospace",
