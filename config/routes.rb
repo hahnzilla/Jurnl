@@ -1,4 +1,5 @@
 Donuts::Application.routes.draw do
+
   devise_for :users
 
   get "/entries/current" => "entries#current"
@@ -59,6 +60,16 @@ Donuts::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'entries#index'
+  
+  resources :settings
+  #root :to => 'settings#index'
+  
+  #get "settings/edit"
+  root :to => 'settings#edit'
+  
+  get "settings/show"
+
+  get "settings/index"
 
   # See how all your routes lay out with "rake routes"
 

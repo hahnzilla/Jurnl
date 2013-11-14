@@ -214,18 +214,19 @@ Donuts.Editor.Initialize = function() {
 	// General options
 	mode : "textareas",
 	theme : "advanced",
-	width : "1000",
-	height : "500",
+    skin: "donuts",
+	width : "60rem",
+    height: "20rem",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
-	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
+	plugins : "spellchecker,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
 
 	// Theme options
-	theme_advanced_buttons1 : "close,save,pdw_toggle",
-	theme_advanced_buttons2 : "newdocument,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,fontselect,fontsizeselect",
-	theme_advanced_buttons3 : "forecolor,backcolor,|,spellchecker,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,insertdate,inserttime",
-	theme_advanced_toolbar_location : "top",
+	theme_advanced_buttons1 : "close,save,|,bold,italic,underline,|,fontselect,fontsizeselect,|,bullist,numlist,|,blockquote,|,spellchecker,|,Verbatim,Monospace",
+	theme_advanced_buttons2 : "",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
-	theme_advanced_statusbar_location : "bottom",
+    theme_advanced_statusbar_location : "none",
 	theme_advanced_resizing : false,
 	
 	//Toggles show/hide toolbars
@@ -234,9 +235,30 @@ Donuts.Editor.Initialize = function() {
 	
 	//Setup for custom buttons
 	setup : function(ed) {
+
+		//Verbatim button
+	    ed.addButton('Verbatim',{
+		title : 'Change verbatim',
+		image : 'V.png',
+		onclick : function(){
+			ed.execCommand('FormatBlock', false, 'blockquote');
+			ed.execCommand('FontName', false, 'Monospace');
+			ed.controlManager.get('Verbatim').setActive(true);
+		}
+	    });
+
+	    // Monospace button
+	    ed.addButton('Monospace',{
+		title : 'Change to monospace',
+		image : 'M.png',
+		onclick : function(){
+			ed.controlManager.get('Monospace').setActive(true);
+			ed.execCommand('FontName', false, 'Monospace');
+		}
+	    });
+	
 	    // Close Editor Button
 	    ed.addButton('close', {
-		label : 'Close',
 		image : 'close.png',
 		onclick : function() {
 		    Donuts.Editor.ToggleDisplay("popUpDiv");
@@ -244,9 +266,44 @@ Donuts.Editor.Initialize = function() {
 		}
 	    });
 	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
+		
+		// checks the current node type to activate/deactivate monospace button
+	    ed.onNodeChange.add(function(ed, cm, e) {
+			var resultnode = resolveNode(e);
+			if(resultnode == 'Verbatim'){
+				cm.setActive('Verbatim', true);
+				cm.setActive('Monospace', false);
+				cm.setActive('blockquote', false);
+			}else if(resultnode == 'Monospace'){
+				cm.setActive('Monospace', true);
+				cm.setActive('Verbatim', false);
+			}else{
+				cm.setActive('Monospace', false);
+				cm.setActive('Verbatim', false);
+			}
+			
+			setTimeout(function(){//repeat to make sure
+				var resultnode = resolveNode(e);
+				if(resultnode == 'Verbatim'){
+					cm.setActive('Verbatim', true);
+					cm.setActive('Monospace', false);
+					cm.setActive('blockquote', false);
+				}else if(resultnode == 'Monospace'){
+					cm.setActive('Monospace', true);
+					cm.setActive('Verbatim', false);
+				}else{
+					cm.setActive('Monospace', false);
+					cm.setActive('Verbatim', false);
+				}
+			}, 30);
+		});
 	}
     });
 };
+
+$('#entry_content_close').on('click', function(){
+    console.log("yes");
+});
 
 Donuts.Editor.SaveClickHandler = function() {
     Donuts.Application.UpdateEntry();
@@ -284,7 +341,6 @@ Donuts.Editor.StyleBackdrop = function(DivElem) {
 	backdrop.style.height = backdrop_height + 'px';
 	var popUpDiv = document.getElementById(DivElem);
 	popUpDiv_height=backdrop_height/2-150;
-	popUpDiv.style.top = popUpDiv_height + 'px';
 };
 
 Donuts.Editor.ToggleDisplay = function(windowname) {
