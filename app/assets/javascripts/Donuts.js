@@ -36,7 +36,9 @@ Donuts.Application.UpdateEntry = function() {
         $.ajax({ url: "/entries/" + Donuts.Utils.GetEntryID(), 
                  data:{ entry: { content: $("#entry_content").val(),
                                  distraction_count: Donuts.Utils.TotalDistractions(),
-                                 duration: Donuts.Utils.TotalDuration() }},
+                                 duration: Donuts.Utils.TotalDuration(),
+                                 word_count: Donuts.Stats.getWordCount(),
+                                 words_per_minute: Donuts.Stats.WPM() }},
                  dataType: "json",
                  type: "put"});
     }
@@ -107,6 +109,7 @@ Donuts.Application.StopTimers = function() {
 
 Donuts.Application.OpenEditor = function() { 
     Donuts.Application.StartTimers();
+    //Ajax call to get the current editor data
     $.getJSON("/entries/current", function(result){
         Donuts.Editor.ToggleDisplay("popUpDiv");
         if(result != null) {
@@ -115,7 +118,10 @@ Donuts.Application.OpenEditor = function() {
             $('#popUpDiv').data('dist-time', result.duration);
             $('#popUpDiv').data('created-at', result.created_at);
             tinyMCE.get("entry_content").setContent(result.content);
+            Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
+            //console.log(result.created_at); //debug
         }
+        
         Donuts.Stats.start();
         Donuts.Application.FocusedCallback();
     });
@@ -203,6 +209,36 @@ Donuts.Utils.secondsToString = function (time, min) {
     if (hour && minute.length === 2) minute = "0" + minute;
     if (minute && second.length === 1) second = "0" + second;
     return hour + minute + second;
+}
+
+Donuts.Utils.wordCount = function (str){
+    // Counts words in the string.
+    // If no string is give, gets it from tinyMCE.
+    // Note: This seems to work better than the plugin, and is easier to get the
+    //      data than from the plugin
+    if (!str) str = tinyMCE.activeEditor.getContent();
+
+    //console.log(str); //debug
+
+    var words = str.split(/\s+/);
+    var count = 0;
+
+    for (i = 0; i < words.length; i++) {
+        // the following tallies up all the non whitespace things
+        if (!(
+            // Add whitespace words as needed
+            words[i] === "&nbsp;" ||
+            words[i] === "<p>&nbsp;</p>" ||
+            words[i] === ""
+            )) count++;
+    }
+    return count;
+}
+
+Donuts.Utils.dateFromString = function (inString) {
+    //takes a string date from the ajax call and converts it into # of seconds
+    var tokens = inString.split(/-|T|:/);
+    return (Date.parse(inString) / 1000) + (tokens[6] * 3600); //the second part adds the timezone offset
 }
 
 /* --------------------------------------------- *
