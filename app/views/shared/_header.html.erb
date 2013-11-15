@@ -11,6 +11,7 @@
     </div>
     <%= text_field_tag "search[q]", @search.try(:[],:q) ,class: "search right" %>
   <% end %>
+  <script type="text/javascript" src="/tiny_mce/tiny_mce.js"></script>
 </header>
 
 <% if date_searched? @search %>
