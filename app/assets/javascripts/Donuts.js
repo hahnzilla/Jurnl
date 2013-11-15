@@ -36,7 +36,9 @@ Donuts.Application.UpdateEntry = function() {
         $.ajax({ url: "/entries/" + Donuts.Utils.GetEntryID(), 
                  data:{ entry: { content: $("#entry_content").val(),
                                  distraction_count: Donuts.Utils.TotalDistractions(),
-                                 duration: Donuts.Utils.TotalDuration() }},
+                                 duration: Donuts.Utils.TotalDuration(),
+                                 word_count: Donuts.Stats.getWordCount(),
+                                 words_per_minute: Donuts.Stats.WPM() }},
                  dataType: "json",
                  type: "put"});
     }
