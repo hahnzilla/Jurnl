@@ -172,6 +172,9 @@ Donuts.Utils.AjaxGetUserSettings = function() {
         }
     })
 }
+Donuts.Utils.GetFontPoint = function(){
+    return $("#popUpDiv").data("font-point");
+};
    
 Donuts.Utils.GetUserID = function() {
     return $("#entry_user_id").val();
@@ -275,9 +278,17 @@ Donuts.Editor.Initialize = function() {
 	pdw_toggle_on : 1,
 	pdw_toggle_toolbars : "2, 3",
 	
+
+
 	//Setup for custom buttons
 	setup : function(ed) {
 	    // Close Editor Button
+        /*
+        ed.onInit.add(function(ed)
+        {
+            ed.getBody().style.fontSize = Donuts.Utils.GetFontPoint();
+        })
+*/
 	    ed.addButton('close', {
 		label : 'Close',
 		image : 'close.png',
