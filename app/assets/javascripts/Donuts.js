@@ -13,6 +13,8 @@ Donuts.init = function() {
     Donuts.Application.InitTimers(Donuts.Timers);
     Donuts.Application.AttachEvents();
     Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
+    console.log('now'); //debug
+    Donuts.Utils.AjaxGetUserSettings();
 };
 
 /* ------------------------------------- *
@@ -109,25 +111,9 @@ Donuts.Application.StopTimers = function() {
 
 Donuts.Application.OpenEditor = function() { 
     Donuts.Application.StartTimers();
-    //Ajax call to get the current editor data
-    $.getJSON("/entries/current", function(result){
-        Donuts.Editor.ToggleDisplay("popUpDiv");
-        if(result != null) {
-            $('#popUpDiv').data('entry-id', result.id);
-            $('#popUpDiv').data('dist-count', result.distraction_count);
-            $('#popUpDiv').data('dist-time', result.duration);
-            $('#popUpDiv').data('created-at', result.created_at);
-            tinyMCE.get("entry_content").setContent(result.content);
-
-            Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
-            //console.log(result.created_at); //debug
-        }
-        
-        Donuts.Stats.start();
-        Donuts.Application.FocusedCallback();
-    });
-
-	Donuts.Utils.AjaxGetUserSettings();
+    Donuts.Utils.AjaxGetEntry();
+    Donuts.Stats.start();
+    Donuts.Application.FocusedCallback();
 };
 
 Donuts.Application.ToggleDateSearch = function() {
@@ -166,15 +152,32 @@ Donuts.Application.NextMonthsEntries = function() {
  *       Utils namespace definitions          *
  * -------------------------------------------*/
    
+Donuts.Utils.AjaxGetEntry = function () {
+    //Ajax call to get the current editor data
+    $.getJSON("/entries/current", function (result) {
+        Donuts.Editor.ToggleDisplay("popUpDiv");
+        if (result != null) {
+            $('#popUpDiv').data('entry-id', result.id);
+            $('#popUpDiv').data('dist-count', result.distraction_count);
+            $('#popUpDiv').data('dist-time', result.duration);
+            $('#popUpDiv').data('created-at', result.created_at);
+            tinyMCE.get("entry_content").setContent(result.content);
+
+            Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
+        }
+    });
+}
+
 Donuts.Utils.AjaxGetUserSettings = function() {
-		//Ajax call to get user settings
+	//Ajax call to get user settings
     $.getJSON("/users/current", function(result){
         //get settings form the database
         if(result != null) {
             Donuts.Stats.updateWordGoal(result.goal_word_count);
-			console.log(result.distraction_timeout);
-            Donuts.Timers["Distraction"].Initialize(result.distraction_timeout);
-			//$('#popUpDiv').data('entry-id', result.id);
+            $('#popUpDiv').data('bg-color-hex', result.bg_color_hex);
+            $('#popUpDiv').data('font-color-hex', result.font_color_hex);
+            $('#popUpDiv').data('font-point', result.font_point);
+			Donuts.Timers["Distraction"].Initialize(result.distraction_timeout * 1000);         
         }
     })
 }
