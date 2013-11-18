@@ -11,6 +11,10 @@ function stats(elt, wordGoal, startTime) {
     this.interval.duration = -1;
     this.interval.interval = refreshInterval;
 
+    this.updateWordGoal = function (update) {
+        this.wordGoal = update;
+    }
+
     this.updateStartTime = function (time) {
         this.startTime = time;
     }

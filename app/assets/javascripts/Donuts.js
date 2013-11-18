@@ -36,7 +36,9 @@ Donuts.Application.UpdateEntry = function() {
         $.ajax({ url: "/entries/" + Donuts.Utils.GetEntryID(), 
                  data:{ entry: { content: $("#entry_content").val(),
                                  distraction_count: Donuts.Utils.TotalDistractions(),
-                                 duration: Donuts.Utils.TotalDuration() }},
+                                 duration: Donuts.Utils.TotalDuration(),
+								 word_count: Donuts.Stats.getWordCount(),
+								 words_per_minute: Donuts.Stats.WPM(),}},
                  dataType: "json",
                  type: "put"});
     }
@@ -116,6 +118,7 @@ Donuts.Application.OpenEditor = function() {
             $('#popUpDiv').data('dist-time', result.duration);
             $('#popUpDiv').data('created-at', result.created_at);
             tinyMCE.get("entry_content").setContent(result.content);
+
             Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
             //console.log(result.created_at); //debug
         }
@@ -123,7 +126,14 @@ Donuts.Application.OpenEditor = function() {
         Donuts.Stats.start();
         Donuts.Application.FocusedCallback();
     });
-    //window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
+
+    $.getJSON("/users/current", function(result){
+        //get settings form the database
+        if(result != null) {
+            Donuts.Stats.updateWordGoal(result.goal_word_count);
+            Timers["Distraction"].Initialize(result.distraction_time);
+        }
+    })
 };
 
 Donuts.Application.ToggleDateSearch = function() {
