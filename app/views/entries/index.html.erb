@@ -1,4 +1,3 @@
-<script type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <%= render 'text_editor' %>
 <div id="dialog" title="What Format?"></div>
@@ -17,7 +16,7 @@
         <footer>
           <ul>
             <% entry.tags.each do |tag| %>
-              <li><a href="/entries?search=<%= tag.name %>" class="tag">#<%= tag.name %></a></li>
+              <li><a href="/entries?search[q]=<%= tag.name %>" class="tag">#<%= tag.name %></a></li>
             <% end %>
           </ul>
         </footer>

@@ -37,8 +37,8 @@ Donuts.Application.UpdateEntry = function() {
                  data:{ entry: { content: $("#entry_content").val(),
                                  distraction_count: Donuts.Utils.TotalDistractions(),
                                  duration: Donuts.Utils.TotalDuration(),
-								 word_count: Donuts.Stats.getWordCount(),
-								 words_per_minute: Donuts.Stats.WPM(),}},
+                                 word_count: Donuts.Stats.getWordCount(),
+                                 words_per_minute: Donuts.Stats.WPM() }},
                  dataType: "json",
                  type: "put"});
     }
