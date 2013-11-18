@@ -31,23 +31,26 @@ function stats(elt, wordGoal, startTime) {
         elapsedTime = this.elapsedTime();
         this.wCount = Donuts.Utils.wordCount();
 
-        //first div for distractions
         //had to do the var inner to fix a glitch
-        var inner = "<div>\nDistractions: " + Donuts.Utils.TotalDistractions() + "\n<br />\n" + //Updated to refactored JS
-                         "Duration: " + Donuts.Utils.secondsToString(distractionTime, 2) + "\n<br />\n</div>";
+        var inner = "";
 
-        //second div for word count:
+        //div for times n such	
+        typingTime = elapsedTime - distractionTime;
+        inner += "<div>\nElapsed Time: " + Donuts.Utils.secondsToString(this.elapsedTime(), 2) + "\n<br />\n" +
+                              "Typing Time: " + Donuts.Utils.secondsToString(this.typingTime(), 2) + "\n<br />\n" +
+                              "Words Per Minute: " + this.WPM() + "\n</div>\n";
+
+        //div for word count:
         inner += "<div>\nWord Count: " + this.wCount + "\n<br />\n" +
                         "Word Count Goal: " + this.wordGoal + "\n<br />\n";
 
         inner += (this.wCount >= this.wordGoal) ? "Goal Completed!" : ("Remaining: " + (this.wordGoal - this.wCount));
         inner += "\n</div>\n";
 
-        //third div for times n such	
-        typingTime = elapsedTime - distractionTime;
-        inner += "<div>\nElapsed Time: " + Donuts.Utils.secondsToString(this.elapsedTime(), 2) + "\n<br />\n" +
-                              "Typing Time: " + Donuts.Utils.secondsToString(this.typingTime(), 2) + "\n<br />\n" +
-                              "Words Per Minute: " + this.WPM() + "\n</div>\n";
+        //div for distractions
+        inner += "<div>\nDistractions: " + Donuts.Utils.TotalDistractions() + "\n<br />\n" + //Updated to refactored JS
+                         "Duration: " + Donuts.Utils.secondsToString(distractionTime, 2) + "\n<br />\n</div>";
+
         this.elt.innerHTML = inner;
     }
 

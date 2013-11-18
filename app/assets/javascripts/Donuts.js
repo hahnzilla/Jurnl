@@ -13,7 +13,7 @@ Donuts.init = function() {
     Donuts.Application.InitTimers(Donuts.Timers);
     Donuts.Application.AttachEvents();
     Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
-    console.log('now'); //debug
+
     Donuts.Utils.AjaxGetUserSettings();
 };
 
@@ -54,20 +54,11 @@ Donuts.Application.AutoSaveCallback = function() {
 };
 
 Donuts.Application.DistractionCallback = function() {
-    //TODO Figure out some better way of doing all of this
-    /* Stats manager now does this
-    var AlertDiv = document.getElementById("distractionAlerts");
-    AlertDiv.style.backgroundColor = "#cc0011";
-    AlertDiv.innerHTML = "DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);*/
+
 };
 
 Donuts.Application.FocusedCallback = function () {
-    /* Stats manager now does this
-    var AlertDiv = document.getElementById("distractionAlerts");
-    AlertDiv.style.backgroundColor = "#00cc11";
-    AlertDiv.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);*/
+
 };
 
 Donuts.Application.InitTimers = function(Timers) {
@@ -235,8 +226,6 @@ Donuts.Utils.wordCount = function (str){
     // Note: This seems to work better than the plugin, and is easier to get the
     //      data than from the plugin
     if (!str) str = tinyMCE.activeEditor.getContent();
-
-    //console.log(str); //debug
 
     var words = str.split(/\s+/);
     var count = 0;
