@@ -127,13 +127,7 @@ Donuts.Application.OpenEditor = function() {
         Donuts.Application.FocusedCallback();
     });
 
-    $.getJSON("/users/current", function(result){
-        //get settings form the database
-        if(result != null) {
-            Donuts.Stats.updateWordGoal(result.goal_word_count);
-            Timers["Distraction"].Initialize(result.distraction_time);
-        }
-    })
+	Donuts.Utils.AjaxGetUserSettings();
 };
 
 Donuts.Application.ToggleDateSearch = function() {
@@ -171,6 +165,19 @@ Donuts.Application.NextMonthsEntries = function() {
 /* -------------------------------------------*
  *       Utils namespace definitions          *
  * -------------------------------------------*/
+   
+Donuts.Utils.AjaxGetUserSettings = function() {
+		//Ajax call to get user settings
+    $.getJSON("/users/current", function(result){
+        //get settings form the database
+        if(result != null) {
+            Donuts.Stats.updateWordGoal(result.goal_word_count);
+			console.log(result.distraction_timeout);
+            Donuts.Timers["Distraction"].Initialize(result.distraction_timeout);
+			//$('#popUpDiv').data('entry-id', result.id);
+        }
+    })
+}
    
 Donuts.Utils.GetUserID = function() {
     return $("#entry_user_id").val();
