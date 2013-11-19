@@ -1,9 +1,11 @@
 <script type="text/javascript" src="/jscolor/jscolor.js"> </script>
+<script type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
+
 <section class="wrapper">
   <%= render "shared/navbar" %>
   <%= render "shared/header" %>
 
-  <div class="settings">
+  <section class="settings">
     <h2>Settings</h2>
     <%= form_for @user, url: "/users/#{@user.id}", method: "put" do |f| %>
       <p>
@@ -40,5 +42,6 @@
         <%= f.submit :class => 'button' %>
       </p>
     <% end %>
+</section>
 </section>
 
