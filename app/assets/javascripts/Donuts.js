@@ -257,8 +257,8 @@ Donuts.Editor.Initialize = function() {
 	// General options
 	mode : "textareas",
 	theme : "advanced",
-	width : "1000",
-	height : "500",
+	width : "60rem",
+    height: "400px",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
 	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
 
@@ -327,11 +327,11 @@ Donuts.Editor.StyleBackdrop = function(DivElem) {
 	backdrop.style.height = backdrop_height + 'px';
 	var popUpDiv = document.getElementById(DivElem);
 	popUpDiv_height=backdrop_height/2-150;
-	popUpDiv.style.top = popUpDiv_height + 'px';
+    popUpDiv.style.top = popUpDiv_height + 'px';
 };
 
 Donuts.Editor.ToggleDisplay = function(windowname) {
-    Donuts.Editor.StyleBackdrop(windowname);
+    //Donuts.Editor.StyleBackdrop(windowname); //Frank removed this.
     Donuts.Editor.ToggleDivDisplay('blanket');
     Donuts.Editor.ToggleDivDisplay(windowname);
 };
