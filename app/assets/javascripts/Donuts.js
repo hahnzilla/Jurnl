@@ -296,6 +296,7 @@ Donuts.Editor.Initialize = function() {
         {
             ed.getBody().style.fontSize = Donuts.Utils.GetFontPoint();
             ed.getBody().style.color = Donuts.Utils.GetFontColor();
+	    ed.getBody().style.backgroundColor = Donuts.Utils.GetBackgroundColor();
         })
 
 	    ed.addButton('close', {
