@@ -14,6 +14,8 @@
 </header>
 
 <% if date_searched? @search %>
+  <div class="cf">
   <%= link_to "Previous Month", "javascript:void(0);", id: "prev-month"%>
   <%= link_to "Next Month", "javascript:void(0);", id: "next-month"%>
+  </div>
 <% end %>
