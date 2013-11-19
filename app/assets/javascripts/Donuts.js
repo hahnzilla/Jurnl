@@ -1,4 +1,3 @@
-
 //Namespace register
 var Donuts = Donuts||{};
 Donuts.Application = Donuts.Application||{};
