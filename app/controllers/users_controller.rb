@@ -4,6 +4,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
+  # GET /users/current
+  def current
+    #entry = Entry.where("cast(created_at as text) like ? AND user_id = ?", "#{Time.zone.today}%", current_user.id).first
+    render json: current_user
+  end
+  
   # PUT /users/1
   # PUT /users/1.json
   def update

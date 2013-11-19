@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :bg_color_hex, :font_color_hex, :font_point, :goal_duration, :goal_word_count
+  attr_accessible :bg_color_hex, :font_color_hex, :font_point, :goal_duration, :goal_word_count, :distraction_timeout
 
   has_many :entries
 end

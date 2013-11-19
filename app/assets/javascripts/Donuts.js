@@ -13,6 +13,8 @@ Donuts.init = function() {
     Donuts.Application.InitTimers(Donuts.Timers);
     Donuts.Application.AttachEvents();
     Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
+
+    Donuts.Utils.AjaxGetUserSettings();
 };
 
 /* ------------------------------------- *
@@ -52,20 +54,11 @@ Donuts.Application.AutoSaveCallback = function() {
 };
 
 Donuts.Application.DistractionCallback = function() {
-    //TODO Figure out some better way of doing all of this
-    /* Stats manager now does this
-    var AlertDiv = document.getElementById("distractionAlerts");
-    AlertDiv.style.backgroundColor = "#cc0011";
-    AlertDiv.innerHTML = "DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);*/
+
 };
 
 Donuts.Application.FocusedCallback = function () {
-    /* Stats manager now does this
-    var AlertDiv = document.getElementById("distractionAlerts");
-    AlertDiv.style.backgroundColor = "#00cc11";
-    AlertDiv.innerHTML = "NOT DISTRACTED!!!\n<br/>\n";
-    AlertBody(AlertDiv);*/
+
 };
 
 Donuts.Application.InitTimers = function(Timers) {
@@ -109,23 +102,9 @@ Donuts.Application.StopTimers = function() {
 
 Donuts.Application.OpenEditor = function() { 
     Donuts.Application.StartTimers();
-    //Ajax call to get the current editor data
-    $.getJSON("/entries/current", function(result){
-        Donuts.Editor.ToggleDisplay("popUpDiv");
-        if(result != null) {
-            $('#popUpDiv').data('entry-id', result.id);
-            $('#popUpDiv').data('dist-count', result.distraction_count);
-            $('#popUpDiv').data('dist-time', result.duration);
-            $('#popUpDiv').data('created-at', result.created_at);
-            tinyMCE.get("entry_content").setContent(result.content);
-            Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
-            //console.log(result.created_at); //debug
-        }
-        
-        Donuts.Stats.start();
-        Donuts.Application.FocusedCallback();
-    });
-    //window.statsMan = new stats(document.getElementById("distractionAlerts"), 20); //initalize the stats manager
+    Donuts.Utils.AjaxGetEntry();
+    Donuts.Stats.start();
+    Donuts.Application.FocusedCallback();
 };
 
 Donuts.Application.ToggleDateSearch = function() {
@@ -163,6 +142,43 @@ Donuts.Application.NextMonthsEntries = function() {
 /* -------------------------------------------*
  *       Utils namespace definitions          *
  * -------------------------------------------*/
+
+Donuts.Utils.AjaxGetEntry = function () {
+    
+    //Ajax call to get the current editor data
+    $.getJSON("/entries/current", function (result) {
+        Donuts.Editor.ToggleDisplay("popUpDiv");
+        if (result != null) {
+            $('#popUpDiv').data('entry-id', result.id);
+            $('#popUpDiv').data('dist-count', result.distraction_count);
+            $('#popUpDiv').data('dist-time', result.duration);
+            $('#popUpDiv').data('created-at', result.created_at);
+            tinyMCE.get("entry_content").setContent(result.content);
+
+            Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
+        }
+    });
+}
+
+Donuts.Utils.AjaxGetUserSettings = function() {
+	//Ajax call to get user settings
+    $.getJSON("/users/current", function(result){
+        //get settings form the database
+        if(result != null) {
+            Donuts.Stats.updateWordGoal(result.goal_word_count);
+            $('#popUpDiv').data('bg-color-hex', result.bg_color_hex);
+            $('#popUpDiv').data('font-color-hex', result.font_color_hex);
+            $('#popUpDiv').data('font-point', result.font_point);
+			Donuts.Timers["Distraction"].Initialize(result.distraction_timeout * 1000);         
+        }
+    })
+}
+Donuts.Utils.GetFontPoint = function(){
+    return $("#popUpDiv").data("font-point");
+};
+Donuts.Utils.GetFontColor = function(){
+    return $("#popUpDiv").data("font-color-hex");
+};
    
 Donuts.Utils.GetUserID = function() {
     return $("#entry_user_id").val();
@@ -218,8 +234,6 @@ Donuts.Utils.wordCount = function (str){
     //      data than from the plugin
     if (!str) str = tinyMCE.activeEditor.getContent();
 
-    //console.log(str); //debug
-
     var words = str.split(/\s+/);
     var count = 0;
 
@@ -268,9 +282,18 @@ Donuts.Editor.Initialize = function() {
 	pdw_toggle_on : 1,
 	pdw_toggle_toolbars : "2, 3",
 	
+
+
 	//Setup for custom buttons
 	setup : function(ed) {
 	    // Close Editor Button
+        
+        ed.onInit.add(function(ed)
+        {
+            ed.getBody().style.fontSize = Donuts.Utils.GetFontPoint();
+            ed.getBody().style.color = Donuts.Utils.GetFontColor(); 
+        })
+
 	    ed.addButton('close', {
 		label : 'Close',
 		image : 'close.png',
