@@ -29,7 +29,9 @@ class Entry < ActiveRecord::Base
   scope :user_entries, ->(user_id) { where("user_id = ?", user_id) }
 
   private
+    #TODO add tags as an array datatype so we can avoid deletion everytime
     def find_and_save_tags
+      self.tags.destroy_all
       self.content.scan(Tag::REGEX).flatten
         .each{ |tag_name| Tag.create(entry_id: self.id, name: tag_name) }
     end
