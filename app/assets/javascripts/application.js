@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require_tree .
 $(document).ready(Donuts.init);
+$(document).ready(function(){
+	$("#search_date_month, #search_date_year").selectbox();
+});

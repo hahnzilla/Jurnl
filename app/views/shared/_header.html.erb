@@ -6,8 +6,7 @@
       <span aria-hidden="true" data-icon="&#x27;"></span>
     <% end %>
     <div class="date-selects <%= "date-selects-hidden" unless date_searched? @search %>">
-      <%= select_tag("search[date][month]", options_for_select(monthnames, @search.try(:[],:date).try(:[],:month)), prompt: "Month") %>
-      <%= select_tag("search[date][year]", options_for_select(YEARS, @search.try(:[],:date).try(:[],:year)), prompt: "Year", include_blank: false) %>
+      <%= select_tag("search[date][month]", options_for_select(monthnames, @search.try(:[],:date).try(:[],:month)), prompt: "Month") %><%= select_tag("search[date][year]", options_for_select(YEARS, @search.try(:[],:date).try(:[],:year)), prompt: "Year", include_blank: false) %>
     </div>
     <%= text_field_tag "search[q]", @search.try(:[],:q) ,class: "search right" %>
   <% end %>
@@ -15,6 +14,8 @@
 </header>
 
 <% if date_searched? @search %>
+  <div class="cf">
   <%= link_to "Previous Month", "javascript:void(0);", id: "prev-month"%>
   <%= link_to "Next Month", "javascript:void(0);", id: "next-month"%>
+  </div>
 <% end %>
