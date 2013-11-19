@@ -179,7 +179,11 @@ Donuts.Utils.GetFontPoint = function(){
 Donuts.Utils.GetFontColor = function(){
     return $("#popUpDiv").data("font-color-hex");
 };
-   
+
+Donuts.Utils.GetBackgroundColor = function(){
+   return $("#popUpDiv").data("bg-color-hex");
+};
+
 Donuts.Utils.GetUserID = function() {
     return $("#entry_user_id").val();
 };
@@ -291,7 +295,7 @@ Donuts.Editor.Initialize = function() {
         ed.onInit.add(function(ed)
         {
             ed.getBody().style.fontSize = Donuts.Utils.GetFontPoint();
-            ed.getBody().style.color = Donuts.Utils.GetFontColor(); 
+            ed.getBody().style.color = Donuts.Utils.GetFontColor();
         })
 
 	    ed.addButton('close', {
