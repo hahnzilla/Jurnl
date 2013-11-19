@@ -30,6 +30,11 @@
         <%= f.label :goal_word_count, "Word Count Goal:" %>
         <%= f.text_field :goal_word_count %>
       </p>
+
+      <p>
+        <%= f.label :distraction_timeout, "Time Until Distracted: (seconds) " %>
+        <%= f.text_field :distraction_timeout %>
+      </p>
      
       <p>
         <%= f.submit :class => 'button' %>
