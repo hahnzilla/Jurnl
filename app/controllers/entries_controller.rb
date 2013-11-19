@@ -68,12 +68,12 @@ class EntriesController < ApplicationController
   
     def format_as_text entries
       #put logic here to create file with entries
-      entries.map{|e| e.content.gsub(%r{</?[^>]+?>}, '')}.join("\n\n***\n\n")
+      entries.map{|e| "***\n\n" + e.created_at.strftime("%F") + "\n\n" + e.content.gsub(%r{</?[^>]+?>}, '')}.join("\n\n")
     end
     
     def format_as_html entries
       #put logic here to create file with entries
-      entries.map(&:content).join("\n\n***\n\n")
+      entries.map{|e| "***\n\n" + e.created_at.strftime("%F") + "\n\n" + e.content}.join("\n\n")
     end
 end
 
