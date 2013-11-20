@@ -34,7 +34,7 @@ module Searchable
         where, values = [], []
         unless date[:month].blank?
           where << "to_char(created_at, 'MM') = ?"
-          values << date[:month]
+          values << pad_month(date[:month]) if single_digit? date[:month] 
         end
 
         unless date[:year].blank?
@@ -46,4 +46,13 @@ module Searchable
       end
       entries
     end
+
+    def pad_month month
+    "0#{month}"
+    end
+
+    def single_digit? month
+    month.to_i < 10
+    end
+
 end
