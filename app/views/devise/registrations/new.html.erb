@@ -11,42 +11,26 @@ body {
   background: none;
 }
 </style>
-<html class="SignupPage">
-  <body class="SignupPage">
-    <div id="WindowWrapper">
-            <div id="Forms">
-                    <div class="FormWrapper">
-                            <h1>Donuts</h1>
-                                    <div class="FormInner" id="logIn">
-                                    
-                                            <h2>Sign up</h2>
 
-                                            <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), class: "SignupForm") do |f| %>
-                                                    <dl>
-                                                      <%= devise_error_messages! %>
+	<section class="wrapper form">
+		<header>
+			<h2>Sign up</h2>
+		</header>
+		<div class="entrance cf">
+			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), class: "new_user", id: "new_user") do |f| %>
+			  <%= devise_error_messages! %>
 
-                                                      <dt class="Baseline"><%= f.label :email %></dt>
-                                                      <dd class="Baseline"><%= f.email_field :email, :autofocus => true %></dd>
-                                                      <hr class="Baseline" />
+			  <%= f.email_field :email, :autofocus => true, :placeholder => "Email" %>
 
-                                                      <dt class="Baseline"><%= f.label :password %></dt>
-                                                      <dd class="Baseline"><%= f.password_field :password %></dd>
-                                                      <hr class="Baseline" />
+			  <%= f.password_field :password, :placeholder => "Password" %>
 
-                                                      <dt class="Baseline"><%= f.label :password_confirmation %></dt>
-                                                      <dd class="Baseline"><%= f.password_field :password_confirmation %></dd>
-                                                      <hr class="Baseline" />
+			  <%= f.password_field :password_confirmation, :placeholder => "Retype Password" %>
 
-                                                      <div class="SubmitButton"><%= f.submit "Sign up" %></div>
-                                                    </dl>
-                                            <% end %>
+			  <%= f.submit "Sign up", :class => "button" %>
+			<% end %>
+		</div>
+	</section>
 
-                                    </div>
-                                    <div class="SharedLinks">
-                                            <%= render "devise/shared/links" %>
-                                    </div>
-                    </div>
-            </div>
-    </div>
-  </body>
-</html>
+	<%= render "devise/shared/links" %>
+
+
