@@ -364,7 +364,7 @@ input.search-button:hover{
     background-color:#111;
     opacity: 0.80;
     filter:alpha(opacity=80);
-    position:absolute;
+    position:fixed;
     z-index: 9001;
     top:0px;
     left:0px;
@@ -372,7 +372,7 @@ input.search-button:hover{
     height: 100%;
 }
 #popUpDiv {
-    position: absolute;
+    position: fixed;
     margin-left: -30rem;
     left: 50%;
     margin-top: 5rem;
