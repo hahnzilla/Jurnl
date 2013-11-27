@@ -1,4 +1,4 @@
-$('#entries').append('<%= escape_javascript render(@entries) %>');
+$('.entries').append('<%= escape_javascript render(@entries) %>');
 <% if @entries.next_page %>
   $('.pagination').replaceWith('<%= escape_javascript will_paginate(@entries) %>');
 <% else %>
