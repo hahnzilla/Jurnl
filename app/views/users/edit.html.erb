@@ -1,13 +1,13 @@
 <script type="text/javascript" src="/jscolor/jscolor.js"> </script>
-<script type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
 
+<%= render 'entries/text_editor' %>
 <section class="wrapper">
-  <%= render "shared/navbar" %>
+  <%= render "shared/navbar2" %>
   <%= render "shared/header" %>
-
   <section class="settings">
-    <h2>Settings</h2>
-    <%= form_for @user, url: "/users/#{@user.id}", method: "put" do |f| %>
+    
+      <h2>Settings</h2>
+      <%= form_for @user, url: "/users/#{@user.id}", method: "put" do |f| %>
       <p>
         <%= f.label :bg_color_hex, "Entry Background Color:" %>
         <%= f.text_field :bg_color_hex, class: "color" %>
@@ -42,6 +42,8 @@
         <%= f.submit :class => 'button' %>
       </p>
     <% end %>
+
 </section>
 </section>
+
 
