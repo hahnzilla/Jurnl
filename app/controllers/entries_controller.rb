@@ -8,11 +8,11 @@ class EntriesController < ApplicationController
       @search = params[:search]
       @entries = Entry.search(params[:search], current_user.id)
     end
+
     respond_to do |format|
-      format.html # index.html.erb
-
+      format.html { @entries = @entries.page(params[:page]) }
+      format.js { @entries = @entries.page(params[:page]) }
       format.download_html { send_data format_as_html(@entries), filename: "entries.html" }
-
       format.download_text { send_data format_as_text(@entries), filename: "entries.txt" }
     end
   end

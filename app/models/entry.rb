@@ -16,7 +16,7 @@
 class Entry < ActiveRecord::Base
   include Statistics
   extend Searchable
-
+  self.per_page = 10
   attr_accessible :content, :word_count, :distraction_count, :duration, :words_per_minute, :user_id
 
   belongs_to :user
