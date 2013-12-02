@@ -11,17 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118183657) do
+ActiveRecord::Schema.define(:version => 20131127164855) do
 
   create_table "entries", :force => true do |t|
     t.text     "content"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "word_count"
     t.integer  "distraction_count"
     t.integer  "duration"
     t.integer  "words_per_minute"
     t.integer  "user_id"
+    t.boolean  "goal_completed",    :default => false
   end
 
   create_table "tags", :force => true do |t|
