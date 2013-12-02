@@ -255,19 +255,8 @@ Donuts.Utils.wordCount = function (str){
 
     var words = $(str).text();
     words = words.split(/\s+/);
-
-    var count = 0;
-
-    for (i = 0; i < words.length; i++) {
-        // the following tallies up all the non whitespace things
-        if (!(
-            // Add whitespace words as needed
-            words[i] === "&nbsp;" ||
-            words[i] === "<p>&nbsp;</p>" ||
-            words[i] === ""
-            )) count++;
-    }
-    return count;
+    var count = words.length;
+    return (words[count - 1] == "") ? count - 1 : count; //sometimes the last element will be blank
 }
 
 Donuts.Utils.dateFromString = function (inString) {
