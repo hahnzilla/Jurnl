@@ -188,9 +188,7 @@ Donuts.Utils.AjaxGetUserSettings = function() {
 
 Donuts.Utils.UpdateDistractionTime = function(duration, updated_at) {
     var distractionToAdd = (Date.now() / 1000) - Donuts.Utils.dateFromString(updated_at);
-    console.log("Begin: " + duration)
     duration += Math.round(distractionToAdd);
-    console.log("End: " + duration)
     return duration;
 }
 
