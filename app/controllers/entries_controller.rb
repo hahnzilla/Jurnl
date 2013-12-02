@@ -73,7 +73,9 @@ class EntriesController < ApplicationController
     
     def format_as_html entries
       #put logic here to create file with entries
-      entries.map{|e| "<div>\n\n***\n\n" + e.created_at.strftime("%F") + "\n\n" + e.content}.join("\n\n</div>\n\n")
+      string = "<html>\n\n<head></head>\n\n<body>\n\n"
+      string += entries.map{|e| "<div>\n\n" + e.created_at.strftime("%F") + "\n\n" + e.content}.join("\n\n</div>\n\n")
+      string += "</body>\n\n</html>"
     end
 end
 
