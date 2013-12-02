@@ -40,7 +40,8 @@ Donuts.Application.UpdateEntry = function() {
                                  distraction_count: Donuts.Utils.TotalDistractions(),
                                  duration: Donuts.Utils.TotalDuration(),
                                  word_count: Donuts.Stats.getWordCount(),
-                                 words_per_minute: Donuts.Stats.WPM() }},
+                                 words_per_minute: Donuts.Stats.WPM(),
+                                 goal_completed: Donuts.Stats.checkGoalCompleted()}},
                  dataType: "json",
                  type: "put"});
     }
@@ -148,12 +149,22 @@ Donuts.Utils.AjaxGetEntry = function () {
     $.getJSON("/entries/current", function (result) {
         Donuts.Editor.ToggleDisplay("popUpDiv");
         if (result != null) {
-            console.log(result.updated_at);
+            var DistractionTime = 0;
+
             $('#popUpDiv').data('entry-id', result.id);
             $('#popUpDiv').data('dist-count', result.distraction_count);
-            $('#popUpDiv').data('dist-time', Donuts.Utils.UpdateDistractionTime(result.duration, result.updated_at));
             $('#popUpDiv').data('created-at', result.created_at);
+            $('#popUpDiv').data('goal-completed', result.goal_completed);
             tinyMCE.get("entry_content").setContent(result.content);
+            
+            if(!result.goal_completed) {
+                DistractionTime = Donuts.Utils.UpdateDistractionTime(result.duration, result.updated_at);
+                Donuts.Timers["Distraction"].Distract();
+            }
+            else
+                DistractionTime = result.duration;
+            $('#popUpDiv').data('dist-time', DistractionTime); 
+
             Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
         }
         Donuts.Stats.refresh();
@@ -166,11 +177,11 @@ Donuts.Utils.AjaxGetUserSettings = function() {
         //get settings form the database
         if(result != null) {
             Donuts.Stats.updateWordGoal(result.goal_word_count);
+            Donuts.Stats.updateDurationGoal(result.goal_duration);
             $('#popUpDiv').data('bg-color-hex', result.bg_color_hex);
             $('#popUpDiv').data('font-color-hex', result.font_color_hex);
             $('#popUpDiv').data('font-point', result.font_point);
             Donuts.Timers["Distraction"].Initialize(result.distraction_timeout * 1000);
-            Donuts.Timers["Distraction"].Distract();
         }
     })
 }
@@ -221,9 +232,18 @@ Donuts.Utils.TotalDistractions = function() {
     return Donuts.Utils.GetSavedDistractionCount() + Donuts.Timers["Distraction"].DistractionCount();
 };
 
+Donuts.Utils.GetDuration = function() {
+    var CreatedSeconds = Donuts.Utils.dateFromString(Donuts.Utils.GetCreatedAt());
+    return CreatedSeconds - Donuts.Utils.TotalDuration();
+}
+
 Donuts.Utils.TotalDuration = function() {
     return Donuts.Utils.GetSavedDistractionDuration() + Donuts.Timers["Distraction"].DistractionDuration();
 };
+
+Donuts.Utils.GetCreatedAt = function() {
+    return $('#popUpDiv').data('created-at');
+}
 
 Donuts.Utils.secondsToString = function (time, min) {
     // Displays the seconds in hh:mm:ss format
