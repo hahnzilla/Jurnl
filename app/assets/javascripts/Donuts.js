@@ -48,7 +48,7 @@ Donuts.Application.UpdateEntry = function() {
 
 Donuts.Application.AutoSaveCallback = function() {
     Donuts.Application.UpdateEntry();
-    this.stop();    //TODO Verify using 'this' here is best practice
+    this.stop();
     this.reset();
     this.start();
 };
@@ -64,7 +64,7 @@ Donuts.Application.FocusedCallback = function () {
 Donuts.Application.InitTimers = function(Timers) {
     Timers["AutoSave"] = new Timer();
     Timers["AutoSave"].setDuration(-1);
-    Timers["AutoSave"].setInterval(5000); //TODO Get from db
+    Timers["AutoSave"].setInterval(5000);
     Timers["AutoSave"].onTick = Donuts.Application.AutoSaveCallback;
     Timers["Distraction"] = new DistractionTimer(function() { 
             Donuts.Application.DistractionCallback(); 
@@ -104,7 +104,6 @@ Donuts.Application.OpenEditor = function() {
     Donuts.Application.StartTimers();
     Donuts.Utils.AjaxGetEntry();
     Donuts.Stats.start();
-    Donuts.Application.FocusedCallback();
 };
 
 Donuts.Application.ToggleDateSearch = function() {
@@ -149,14 +148,15 @@ Donuts.Utils.AjaxGetEntry = function () {
     $.getJSON("/entries/current", function (result) {
         Donuts.Editor.ToggleDisplay("popUpDiv");
         if (result != null) {
+            console.log(result.updated_at);
             $('#popUpDiv').data('entry-id', result.id);
             $('#popUpDiv').data('dist-count', result.distraction_count);
-            $('#popUpDiv').data('dist-time', result.duration);
+            $('#popUpDiv').data('dist-time', Donuts.Utils.UpdateDistractionTime(result.duration, result.updated_at));
             $('#popUpDiv').data('created-at', result.created_at);
             tinyMCE.get("entry_content").setContent(result.content);
-
             Donuts.Stats.updateStartTime(Donuts.Utils.dateFromString(result.created_at));
         }
+        Donuts.Stats.refresh();
     });
 }
 
@@ -169,20 +169,35 @@ Donuts.Utils.AjaxGetUserSettings = function() {
             $('#popUpDiv').data('bg-color-hex', result.bg_color_hex);
             $('#popUpDiv').data('font-color-hex', result.font_color_hex);
             $('#popUpDiv').data('font-point', result.font_point);
-			Donuts.Timers["Distraction"].Initialize(result.distraction_timeout * 1000);         
+            Donuts.Timers["Distraction"].Initialize(result.distraction_timeout * 1000);
+            Donuts.Timers["Distraction"].Distract();
         }
     })
 }
+
+Donuts.Utils.UpdateDistractionTime = function(duration, updated_at) {
+    var distractionToAdd = (Date.now() / 1000) - Donuts.Utils.dateFromString(updated_at);
+    console.log("Begin: " + duration)
+    duration += Math.round(distractionToAdd);
+    console.log("End: " + duration)
+    return duration;
+}
+
 Donuts.Utils.GetFontPoint = function(){
     return $("#popUpDiv").data("font-point");
 };
+
 Donuts.Utils.GetFontColor = function(){
     return $("#popUpDiv").data("font-color-hex");
 };
 
 Donuts.Utils.GetBackgroundColor = function(){
-   return $("#popUpDiv").data("bg-color-hex");
+    return $("#popUpDiv").data("bg-color-hex");
 };
+
+Donuts.Utils.GetUpdatedAt = function() {
+    return $("#popUpDiv").data("updated-at");
+}
 
 Donuts.Utils.GetUserID = function() {
     return $("#entry_user_id").val();
@@ -238,7 +253,9 @@ Donuts.Utils.wordCount = function (str){
     //      data than from the plugin
     if (!str) str = tinyMCE.activeEditor.getContent();
 
-    var words = str.split(/\s+/);
+    var words = $(str).text();
+    words = words.split(/\s+/);
+
     var count = 0;
 
     for (i = 0; i < words.length; i++) {
@@ -269,7 +286,7 @@ Donuts.Editor.Initialize = function() {
 	mode : "textareas",
 	theme : "advanced",
 	width : "60rem",
-    height: "400px",
+        height: "400px",
 	save_onsavecallback : Donuts.Editor.SaveClickHandler, //"addEntry",
 	plugins : "spellchecker,pdw,lists,style,save,insertdatetime,searchreplace,paste,nonbreaking,advlist,visualblocks",
 
