@@ -6,7 +6,7 @@
   <%= render "shared/header" %>
   <section class="entries">
     <% @entries.each do |entry| %>
-      <article class="entry">
+      <article class="entry <%= entry.goal_completed %>">
         <header>
           <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
         </header>

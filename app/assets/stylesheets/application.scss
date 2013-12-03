@@ -239,6 +239,15 @@ input.search-button:hover{
 	}
 }
 
+.entry.true{
+    border:solid 1px #77FF44;
+}
+
+.entry.true:after{
+    content: "Goal completed :)";
+    color:#77FF44;
+}
+
 .tag {
 	color: $primary;
 	font-size: 0.8em;
