@@ -55,7 +55,6 @@ function DistractionTimer(DistractCallBack, FocusCallBack) {
     this.SwapTimer = function() {
         this.Stop();
         if(this.IsDistracted()) {
-            console.log(this.InternalTimer.onTick);
             this.functionswap = this.InternalTimer.onTick;
             this.InternalTimer.onTick = DistractCallBack;
             this.InternalTimer.interval = 1000;

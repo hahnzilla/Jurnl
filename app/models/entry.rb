@@ -17,7 +17,7 @@ class Entry < ActiveRecord::Base
   include Statistics
   extend Searchable
 
-  attr_accessible :content, :word_count, :distraction_count, :duration, :words_per_minute, :user_id
+  attr_accessible :content, :word_count, :distraction_count, :duration, :words_per_minute, :user_id, :goal_completed
 
   belongs_to :user
   has_many :tags
