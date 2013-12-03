@@ -1,4 +1,3 @@
-
 //Namespace register
 var Donuts = Donuts||{};
 Donuts.Application = Donuts.Application||{};
@@ -15,6 +14,7 @@ Donuts.init = function() {
     Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
 
     Donuts.Utils.AjaxGetUserSettings();
+////////Github deletion was here
 };
 
 /* ------------------------------------- *
@@ -299,7 +299,7 @@ Donuts.Editor.Initialize = function() {
 
 	// Theme options
 	theme_advanced_buttons1 : "close,save,pdw_toggle",
-	theme_advanced_buttons2 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,forecolor,backcolor,|,spellchecker,|,bullist,numlist,blockquote",
+	theme_advanced_buttons2 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,forecolor,backcolor,|,spellchecker,|,bullist,numlist,blockquote,Verbatim,Monospace",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_statusbar_location : "bottom",
@@ -309,12 +309,31 @@ Donuts.Editor.Initialize = function() {
 	pdw_toggle_on : 1,
 	pdw_toggle_toolbars : "2",
 	
-
-
 	//Setup for custom buttons
 	setup : function(ed) {
-	    // Close Editor Button
-        
+
+		//Verbatim button
+	    ed.addButton('Verbatim',{
+		title : 'Change verbatim',
+		image : 'V.png',
+		onclick : function(){
+			ed.execCommand('FormatBlock', false, 'blockquote');
+			ed.execCommand('FontName', false, 'Monospace');
+			ed.controlManager.get('Verbatim').setActive(true);
+		}
+	    });
+
+	    // Monospace button
+	    ed.addButton('Monospace',{
+		title : 'Change to monospace',
+		image : 'M.png',
+		onclick : function(){
+			ed.controlManager.get('Monospace').setActive(true);
+			ed.execCommand('FontName', false, 'Monospace');
+		}
+	    });
+
+        // Close Editor Button
         ed.onInit.add(function(ed)
         {
             ed.getBody().style.fontSize = Donuts.Utils.GetFontPoint();
@@ -331,6 +350,38 @@ Donuts.Editor.Initialize = function() {
 		}
 	    });
 	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
+        
+		// checks the current node type to activate/deactivate monospace button
+	    ed.onNodeChange.add(function(ed, cm, e) {
+			var resultnode = resolveNode(e);
+			if(resultnode == 'Verbatim'){
+				cm.setActive('Verbatim', true);
+				cm.setActive('Monospace', false);
+				cm.setActive('blockquote', false);
+			}else if(resultnode == 'Monospace'){
+				cm.setActive('Monospace', true);
+				cm.setActive('Verbatim', false);
+			}else{
+				cm.setActive('Monospace', false);
+				cm.setActive('Verbatim', false);
+			}
+			
+			setTimeout(function(){//repeat to make sure
+				var resultnode = resolveNode(e);
+				if(resultnode == 'Verbatim'){
+					cm.setActive('Verbatim', true);
+					cm.setActive('Monospace', false);
+					cm.setActive('blockquote', false);
+				}else if(resultnode == 'Monospace'){
+					cm.setActive('Monospace', true);
+					cm.setActive('Verbatim', false);
+				}else{
+					cm.setActive('Monospace', false);
+					cm.setActive('Verbatim', false);
+				}
+			}, 10);
+		});
+        
 	}
     });
 };
@@ -379,3 +430,4 @@ Donuts.Editor.ToggleDisplay = function(windowname) {
     Donuts.Editor.ToggleDivDisplay('blanket');
     Donuts.Editor.ToggleDivDisplay(windowname);
 };
+
