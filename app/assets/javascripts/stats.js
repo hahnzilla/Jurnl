@@ -15,6 +15,10 @@ function stats(elt, wordGoal, startTime) {
         this.wordGoal = update;
     }
 
+    this.updateDurationGoal = function (update) {
+        this.durationGoal = update;
+    }
+
     this.updateStartTime = function (time) {
         this.startTime = time;
     }
@@ -41,10 +45,9 @@ function stats(elt, wordGoal, startTime) {
                               "Words Per Minute: " + this.WPM() + "\n</div>\n";
 
         //div for word count:
-        inner += "<div>\nWord Count: " + this.wCount + "\n<br />\n" +
-                        "Word Count Goal: " + this.wordGoal + "\n<br />\n";
+        inner += "<div>\nWord Count: " + this.wCount + "\n<br />\n"; 
 
-        inner += (this.wCount >= this.wordGoal) ? "Goal Completed!" : ("Remaining: " + (this.wordGoal - this.wCount));
+        inner += this.goalMessage();
         inner += "\n</div>\n";
 
         //div for distractions
@@ -52,6 +55,50 @@ function stats(elt, wordGoal, startTime) {
                          "Duration: " + Donuts.Utils.secondsToString(distractionTime, 2) + "\n<br />\n</div>";
 
         this.elt.innerHTML = inner;
+        if($('#popUpDiv').data('goal-completed')) {
+            Donuts.Timers["Distraction"].Stop();
+        }
+        else {
+            if(this.checkGoalCompleted())
+                $('#popUpDiv').data('goal-completed', true);
+        }
+            
+    }
+    
+    this.checkGoalCompleted = function() {
+        if(this.wordGoal !== null)
+            if(this.wCount >= this.wordGoal)
+                return true;
+        if(this.durationGoal !== null)
+            if(Donuts.Utils.GetDuration() >= this.durationGoal)
+                return true;
+
+        return false;
+    }
+
+    this.remainingWords = function() {
+        return this.wordGoal - this.wCount;
+    }
+
+    this.remainingTime = function() {
+        return this.durationGoal - Donuts.Utils.GetDuration();
+    }
+
+    this.goalMessage = function() {
+        var response = "";
+        if(!this.checkGoalCompleted()) {
+            if(this.wordGoal !== null)
+                response = "Remaining words: " + this.remainingWords();
+            if(this.durationGoal !== null)
+            {
+                if(response !== "") response += "<br/>";
+                response += "Remaining time: " + this.remainingTime();
+            }
+        }
+        else 
+            return "Goal Completed!";
+
+        return response;
     }
 
     this.start = function() {
@@ -63,19 +110,19 @@ function stats(elt, wordGoal, startTime) {
         this.interval.stop();
     }
 	
-	this.WPM = function() {
-		return Math.round(60 * Donuts.Utils.wordCount() / typingTime);
-	}
-	
-	this.elapsedTime = function() {
-		return Math.round(Date.now() / 1000) - this.startTime;
-	}
-	
-	this.typingTime = function() {
-	    return this.elapsedTime() - Donuts.Utils.TotalDuration();
-	}
+    this.WPM = function() {
+        return Math.round(60 * Donuts.Utils.wordCount() / typingTime);
+    }
+    
+    this.elapsedTime = function() {
+        return Math.round(Date.now() / 1000) - this.startTime;
+    }
+    
+    this.typingTime = function() {
+        return this.elapsedTime() - Donuts.Utils.TotalDuration();
+    }
 
-	this.getWordCount = function () {
-	    return this.wCount;
-	}
+    this.getWordCount = function () {
+        return this.wCount;
+    }
 }
