@@ -14,7 +14,7 @@ Donuts.init = function() {
     Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
 
     Donuts.Utils.AjaxGetUserSettings();
-////////Github deletion was here
+
 };
 
 /* ------------------------------------- *
@@ -315,7 +315,7 @@ Donuts.Editor.Initialize = function() {
 		//Verbatim button
 	    ed.addButton('Verbatim',{
 		title : 'Change verbatim',
-		image : 'V.png',
+		image : '/V.png',
 		onclick : function(){
 			ed.execCommand('FormatBlock', false, 'blockquote');
 			ed.execCommand('FontName', false, 'Monospace');
@@ -326,7 +326,7 @@ Donuts.Editor.Initialize = function() {
 	    // Monospace button
 	    ed.addButton('Monospace',{
 		title : 'Change to monospace',
-		image : 'M.png',
+		image : '/M.png',
 		onclick : function(){
 			ed.controlManager.get('Monospace').setActive(true);
 			ed.execCommand('FontName', false, 'Monospace');
@@ -343,7 +343,7 @@ Donuts.Editor.Initialize = function() {
 
 	    ed.addButton('close', {
 		label : 'Close',
-		image : 'close.png',
+		image : '/close.png',
 		onclick : function() {
 		    Donuts.Editor.ToggleDisplay("popUpDiv");
             Donuts.Application.StopTimers();
