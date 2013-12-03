@@ -1,12 +1,8 @@
 $(document).on("click", "#export", function (){
-    if(window.location.pathname == "/"){
+    if(window.location.pathname == "/")
       var url = document.URL + "/entries";
-    }
-    else{
-      var pathArray = document.URL.split("/");
-      var rootURL = "/" + pathArray[2];
-      var url = document.URL.replace(/\/[a-zA-Z\.]+.*(?:\?|$)/, rootURL + "/entries?");
-    }
+    else
+      var url = document.URL;
     
     $( "#dialog" ).dialog({
         autoOpen: true,
