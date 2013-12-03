@@ -5,22 +5,9 @@
   <%= render "shared/navbar" %>
   <%= render "shared/header" %>
   <section class="entries">
-    <% @entries.each do |entry| %>
-      <article class="entry <%= entry.goal_completed %>">
-        <header>
-          <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
-        </header>
-        <p>
-          <%= entry.content.html_safe %>
-        </p>
-        <footer>
-          <ul>
-            <% entry.tags.each do |tag| %>
-              <li><a href="/entries?search[q]=<%= tag.name %>" class="tag">#<%= tag.name %></a></li>
-            <% end %>
-          </ul>
-        </footer>
-      </article>
-    <% end %>
+    <%= render @entries %>
   </section>
+
+  <%= will_paginate @entries %>
 </section>
+
