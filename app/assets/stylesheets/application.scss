@@ -664,3 +664,15 @@ input.search-button:hover{
 .sbOptions .sbSub{
 	padding-left: 17px;
 }
+
+/*---------- Context Help ----------*/
+#help-div {
+	max-width: 18.75rem;
+	font-family: 'open_sanslight', sans-serif;
+	background-color: $secondary;
+	color: $white;
+	padding: 0.6rem;
+	margin-top: 0.6rem;
+	position: absolute;
+	z-index: 1;
+}

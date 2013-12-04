@@ -3,6 +3,7 @@ var Donuts = Donuts||{};
 Donuts.Application = Donuts.Application||{};
 Donuts.Utils = Donuts.Utils||{};
 Donuts.Editor = Donuts.Editor||{};
+Donuts.Help = Donuts.Help||{};
 
 INTERVAL = 10000; //TODO Get from db, this line should not be here
 
@@ -86,6 +87,7 @@ Donuts.Application.AttachEvents = function() {
     $(document).on("click", "#date-icon", Donuts.Application.ToggleDateSearch);
     $(document).on("click", "#prev-month", Donuts.Application.PrevMonthsEntries);
     $(document).on("click", "#next-month", Donuts.Application.NextMonthsEntries);
+    $(".help-item").hover(Donuts.Application.ShowHelp, Donuts.Application.HideHelp);
 };
 
 Donuts.Application.StartTimers = function() {
@@ -137,6 +139,29 @@ Donuts.Application.NextMonthsEntries = function() {
     }
     $("#search_date_month").val(currentMonthVal + 1);
     $("#search-form").submit();
+};
+
+Donuts.Application.ShowHelp = function()
+{
+    var HelpItem = $(this);
+    var offset = HelpItem.offset();
+    var HelpString = Donuts.Help.HelpTopics[HelpItem.attr("id")];
+    if($('#help-div').size() < 1)
+    {
+        var HelpDiv = $('<div id="help-div"></div>');
+        $('body').append(HelpDiv);
+    }
+    var HelpDiv = $('#help-div');
+    HelpDiv.html(HelpString);
+    HelpDiv.css('top','' + (offset.top + 20) + 'px');
+    HelpDiv.css('left','' + (offset.left + 20) + 'px');
+    HelpDiv.show();
+};
+
+Donuts.Application.HideHelp = function()
+{
+    $('#help-div').hide();
+    
 };
 
 /* -------------------------------------------*
@@ -411,3 +436,24 @@ Donuts.Editor.ToggleDisplay = function(windowname) {
     Donuts.Editor.ToggleDivDisplay(windowname);
 };
 
+/* --------------------------------------------- *
+ *          Help namespace defintions          *
+ * --------------------------------------------- */
+
+ Donuts.Help.HelpTopics = {
+    GoalDuration: "Time goal is how many seconds you must type in order to complete your daily goal. Leave blank " +
+                  "if you do not wish to have a time goal.",
+    GoalWordCount: "Word count goal is how many words you must type in order to complete your daily goal. " +
+                   "Leave blank if you do not wish to have a word count goal.",
+    CreateJournal: "Click here to create a new post.",
+    StatsButton: "Click here to view statistical information about your posts.",
+    SettingsButton: "Click here to view various editable settings for the editor. " +
+                    "The settings page allows you to change the default background " +
+                    "color of the editor, the default text color, default text size, " +
+                    "the time goal, word count goal, and distraction time.",
+    DistractionTime: "Time until distracted is the amount of time in seconds of " +
+                     "you not typing until the editor counts a distraction.",
+    SearchBar: "Time until distracted is the amount of time in seconds of you not typing until the editor counts a distraction.",
+    SignOutButton: "Click here to sign out.",
+    GoalCompleted: "This journal entry has met your goals."
+}
