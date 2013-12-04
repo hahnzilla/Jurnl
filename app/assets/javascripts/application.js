@@ -20,7 +20,7 @@ $(document).ready(function(){
 		if($(this).height() > 260){
 			$(this).addClass("expandable");
 			$(this).on('click', function(){
-				$(this).toggleClass("expanded", 200);
+				$(this).toggleClass("expanded");
 			});
 		}
 	});
