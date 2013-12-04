@@ -44,7 +44,7 @@ module Statistics
       end
 
       def sanitize_content content
-        content.gsub!("\n","").gsub!("&nbsp;")
+        content.gsub!("\n","").gsub!("&nbsp;","")
         HTML::FullSanitizer.new.sanitize content
       end
 
