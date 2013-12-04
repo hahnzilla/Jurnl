@@ -154,13 +154,8 @@ Donuts.Application.ShowHelp = function()
     var HelpDiv = $('#help-div');
     HelpDiv.html(HelpString);
     //HelpDiv.offset({top: 0, left: 0});
-    HelpDiv.css('position','absolute');
-    HelpDiv.css('z-index','1');
-    HelpDiv.css('width','300');
     HelpDiv.css('top','' + (offset.top + 20) + 'px');
     HelpDiv.css('left','' + (offset.left + 20) + 'px');
-    HelpDiv.css('background-color', 'white');
-    HelpDiv.css('padding', '10');
     HelpDiv.show();
 };
 
