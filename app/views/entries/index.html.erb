@@ -8,6 +8,8 @@
     <%= render @entries %>
   </section>
 
-  <%= will_paginate @entries %>
+  <% unless @entries.blank? %>
+    <%= will_paginate @entries %>
+  <% end %>
 </section>
 
