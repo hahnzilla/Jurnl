@@ -669,10 +669,10 @@ input.search-button:hover{
 #help-div {
 	max-width: 18.75rem;
 	font-family: 'open_sanslight', sans-serif;
-	background-color: $background;
-	color: white;
-	padding: 1rem;
-	margin-top: 0.4rem;
+	background-color: $secondary;
+	color: $white;
+	padding: 0.6rem;
+	margin-top: 0.6rem;
 	position: absolute;
 	z-index: 1;
 }
