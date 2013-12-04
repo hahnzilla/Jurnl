@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
   end
+
+  def readme
+    render "readme"
+  end
   
   # GET /users/current
   def current

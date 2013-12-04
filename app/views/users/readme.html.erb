@@ -1,0 +1,73 @@
+<section class="wrapper">
+  <h1>Jurnl Readme</h1>
+
+  <div class="cf"></div>
+  <article class="entry">
+    <h2>Welcome to your online jurnl. To get start, create an account on our homepage and start journaling! </h2>
+  </article>
+
+  <article class="entry">
+    <h3>Create Journal Button <a href="#" id = "opener" class="button icon"><span aria-hidden="true" data-icon="&#xe600;"></a> </h3>
+    <p>Click here to create a new post.</p>
+  </article>
+
+  <article class="entry">
+    <h3>Journal Editor</h3>
+    <p>The editor has basic editing and formatting functionality. </p>
+  </article>
+
+  <article class="entry">
+    <h3>Statistics Button <a href="/statistics" title="Statistics" class="button icon"><span aria-hidden="true" data-icon="&#xe601;"></span></a> </h3>
+    <p>Click here to view statistical information about your posts.
+            <br />
+            The statistics page allows you to see your minimum, average, and maximum values for word count, distraction count, 
+            post duration, and words per minute of your posts. This page also includes a histogram of commonly used words in your posts. 
+    </p>
+  </article>
+
+  <article class="entry">
+    <h3>Settings Button <a href="/users/<%=current_user.id%>/edit" title="Settings" class="button icon"><span aria-hidden="true" data-icon="&#xe602;"></span></a></h3>
+    <p>
+            Click here to view various editable settings for the editor. The settings page allows you to change the default background color of the editor, the default text color, default text size, the time goal, word count goal, and distraction time.
+            <ul>
+            <li>Time goal is how many seconds you must type in order to complete your daily goal. </li>
+            <li>Word count goal is how many words you must type in order to complete your daily goal.</li>
+            <li>Time until distracted is the amount of time in seconds of you not typing until the editor counts a distraction. </li>
+            <li>A distraction is a period of time you are not typing. Try closing other browser windows or programs that you would be likely to switch to when creating a journal entry. </li>
+            </ul
+    </p>
+  </article>
+
+  <article class="entry">
+    <h3>Exporting <a href="javascript:void(0);" title="Export" id="export" class="button icon"><span aria-hidden="true" data-icon="&#xe605;"></span></a> </h3>
+    <p>The export is only visible from your homepage. Click the export entry button to export your currently displayed posts to plain text or html. Keep in mind export only exports the currently displayed posts, if you want to export posts for last December, you will have to search for these posts first in order to display them. Try it out! </p>
+
+  </article>
+
+  <article class="entry">
+    <h3>Search</h3>
+    <p>By using the text field in the navbar, you can search for posts by keywords, tags, or date. The priority for searching is tag, date, keyword. This means that if a tags are found it will return those entries and discontinue searching.</p>
+    <ul>
+      <li>Tag Search: Search for any words that you specifically tagged in your entries.</li>
+      <li>Keyword Search: Search for any words contained in your post.</li>
+    </ul>
+
+    <p> You can also browse the entries by month. To do this, click
+
+    <a title="Search by Month" class="button icon", id="date-icon"> <span aria-hidden="true" data-icon="&#xe604;"></span></a>
+
+    Then select the MONTH and or YEAR you would like to browse.
+
+    Afterwards, you will see 
+    <a id="prev-month" style="float:none;display:inline;margin-right:2px;">Previous Month</a>
+    and
+    <a id="next-month" style="float:none;display:inline;">Next Month</a>
+    You can use these buttons to browse either next month's entries or the previous month's entries.
+    </p>
+  </article>
+
+  <article class="entry">
+    <h3>Sign-out Button <span class="button icon" aria-hidden="true" data-icon="&#xe603;"> </h3>
+    <p>Click here to sign-out. </p>  
+  </article>
+</section>
