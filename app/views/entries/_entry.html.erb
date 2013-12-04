@@ -1,6 +1,7 @@
-<article class="entry">
-  <header>
+<article class="entry <%= entry.goal_completed %>">
+  <header class="cf">
     <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
+    <span aria-hidden="true" class="goal-met" data-icon="&#xe606;"></span>
   </header>
   <p>
     <%= entry.content.html_safe %>

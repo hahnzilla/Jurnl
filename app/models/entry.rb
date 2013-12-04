@@ -11,6 +11,7 @@
 #  duration          :integer
 #  words_per_minute  :integer
 #  user_id           :integer
+#  goal_completed    :boolean
 #
 
 class Entry < ActiveRecord::Base

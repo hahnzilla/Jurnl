@@ -234,9 +234,26 @@ input.search-button:hover{
 	margin-bottom: 1em;
 	padding: 1em;
 	h4 {
-		font-size: 1.2em;
-		margin-bottom: .3em;
+		font-size: 1.4em;
+		float: left;
+		color: $primary;
+		margin-bottom: .55em;
 	}
+}
+
+.entry .goal-met{
+	float: right;
+	font-size: 1.7rem;
+	color: $secondary;
+	display: none;
+}
+
+.entry.true .goal-met{
+	/*-- 
+			This shows up when the goal is met. 
+			Overrides display: none 
+	--*/
+	display: block;
 }
 
 .tag {
