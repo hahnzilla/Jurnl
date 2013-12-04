@@ -142,16 +142,15 @@ function Timer()
     this.restart = function()
     {
         this.stop();
+        this.reset();
         this.start();
     };
         
     this.stop = function()
     {
-        if(this.TimerState === this.TimerStates.Running) {
-            this.pause();
-            this.elapsed = 0;
-            if(this.onStop) this.onStop();
-        }
+        this.pause();
+        this.elapsed = 0;
+        if(this.onStop) this.onStop();
     };
     
     this.resume = function()

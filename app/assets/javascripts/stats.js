@@ -15,6 +15,10 @@ function stats(elt, wordGoal, startTime) {
         this.wordGoal = update;
     }
 
+    this.updateLastSaveTime = function(update) {
+        this.updatedAt = update;
+    };
+
     this.updateDurationGoal = function (update) {
         this.durationGoal = update;
     }
@@ -97,7 +101,6 @@ function stats(elt, wordGoal, startTime) {
         }
         else 
             return "Goal Completed!";
-
         return response;
     }
 

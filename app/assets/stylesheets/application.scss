@@ -661,8 +661,9 @@ input.search-button:hover{
 
 /*---------- Context Help ----------*/
 #help-div {
-    width: 300px;
-    background-color: white;
+    max-width: 300px;
+    background-color: $background;
+    color: white;
     padding: 25px;
     border-color: black;
     border-style: solid;

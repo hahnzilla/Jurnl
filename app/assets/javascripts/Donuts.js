@@ -153,7 +153,6 @@ Donuts.Application.ShowHelp = function()
     }
     var HelpDiv = $('#help-div');
     HelpDiv.html(HelpString);
-    //HelpDiv.offset({top: 0, left: 0});
     HelpDiv.css('top','' + (offset.top + 20) + 'px');
     HelpDiv.css('left','' + (offset.left + 20) + 'px');
     HelpDiv.show();
@@ -462,8 +461,19 @@ Donuts.Editor.ToggleDisplay = function(windowname) {
  * --------------------------------------------- */
 
  Donuts.Help.HelpTopics = {
-    GoalDuration: "This is the time (in seconds) that you wish to type. Leave blank " +
+    GoalDuration: "Time goal is how many seconds you must type in order to complete your daily goal. Leave blank " +
                   "if you do not wish to have a time goal.",
-    GoalWordCount: "This is the amount of words that you wish to type. Leave blank " +
-                  "if you do not wish to have a word count goal."
- }
+    GoalWordCount: "Word count goal is how many words you must type in order to complete your daily goal. " +
+                   "Leave blank if you do not wish to have a word count goal.",
+    CreateJournal: "Click here to create a new post.",
+    StatsButton: "Click here to view statistical information about your posts.",
+    SettingsButton: "Click here to view various editable settings for the editor. " +
+                    "The settings page allows you to change the default background " +
+                    "color of the editor, the default text color, default text size, " +
+                    "the time goal, word count goal, and distraction time.",
+    DistractionTime: "Time until distracted is the amount of time in seconds of " +
+                     "you not typing until the editor counts a distraction.",
+    SearchBar: "Time until distracted is the amount of time in seconds of you not typing until the editor counts a distraction.",
+    SignOutButton: "Click here to sign out.",
+    GoalCompleted: "This journal entry has met your goals."
+}

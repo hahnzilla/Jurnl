@@ -24,8 +24,8 @@
       </p>
      
       <p>
-        <%= f.label :goal_duration, "Time Goal: (seconds)" %>
-        <%= f.text_field :goal_duration %><a href="#" class="help-item" id="GoalDuration" style="color: black;">?</a>
+        <span id="GoalDuration" class="help-item"><%= f.label :goal_duration, "Time Goal: (seconds)" %></span>
+        <%= f.text_field :goal_duration %>
       </p>
       
       <p>
@@ -34,7 +34,7 @@
       </p>
 
       <p>
-        <%= f.label :distraction_timeout, "Time Until Distracted: (seconds) " %>
+        <span id="DistractionTime" class="help-item"><%= f.label :distraction_timeout, "Time Until Distracted: (seconds) " %></span>
         <%= f.text_field :distraction_timeout %>
       </p>
      
