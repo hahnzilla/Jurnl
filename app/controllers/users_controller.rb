@@ -17,6 +17,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
+        flash[:notice] = "Settings successfully updated!"
         format.html { render "edit" }
         format.json { render json: @user, status: :created, location: @user }
       else
