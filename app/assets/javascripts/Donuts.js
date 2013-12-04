@@ -3,6 +3,7 @@ var Donuts = Donuts||{};
 Donuts.Application = Donuts.Application||{};
 Donuts.Utils = Donuts.Utils||{};
 Donuts.Editor = Donuts.Editor||{};
+Donuts.Help = Donuts.Help||{};
 
 INTERVAL = 10000; //TODO Get from db, this line should not be here
 
@@ -86,6 +87,7 @@ Donuts.Application.AttachEvents = function() {
     $(document).on("click", "#date-icon", Donuts.Application.ToggleDateSearch);
     $(document).on("click", "#prev-month", Donuts.Application.PrevMonthsEntries);
     $(document).on("click", "#next-month", Donuts.Application.NextMonthsEntries);
+    $(".help-item").hover(Donuts.Application.ShowHelp, Donuts.Application.HideHelp);
 };
 
 Donuts.Application.StartTimers = function() {
@@ -137,6 +139,37 @@ Donuts.Application.NextMonthsEntries = function() {
     }
     $("#search_date_month").val(currentMonthVal + 1);
     $("#search-form").submit();
+};
+
+Donuts.Application.ShowHelp = function()
+{
+    console.log($(this).offset());
+    var HelpItem = $(this);
+    var offset = HelpItem.offset();
+    var HelpString = Donuts.Help.HelpTopics[HelpItem.attr("id")];
+    if($('#help-div').size() < 1)
+    {
+        var HelpDiv = $('<div id="help-div"></div>');
+        $('body').append(HelpDiv);
+    }
+    var HelpDiv = $('#help-div');
+    HelpDiv.html(HelpString);
+    //HelpDiv.offset({top: 0, left: 0});
+    HelpDiv.css('position','absolute');
+    HelpDiv.css('z-index','1');
+    HelpDiv.css('width','300');
+    HelpDiv.css('top','' + (offset.top + 20) + 'px');
+    HelpDiv.css('left','' + (offset.left + 20) + 'px');
+    HelpDiv.css('background-color', 'white');
+    HelpDiv.css('padding', '10');
+        console.log("HelpDiv: " + HelpDiv.html());
+    HelpDiv.show();
+};
+
+Donuts.Application.HideHelp = function()
+{
+    $('#help-div').hide();
+    
 };
 
 /* -------------------------------------------*
@@ -431,3 +464,13 @@ Donuts.Editor.ToggleDisplay = function(windowname) {
     Donuts.Editor.ToggleDivDisplay(windowname);
 };
 
+/* --------------------------------------------- *
+ *          Help namespace defintions          *
+ * --------------------------------------------- */
+
+ Donuts.Help.HelpTopics = {
+    GoalDuration: "This is the time (in seconds) that you wish to type. Leave blank " +
+                  "if you do not wish to have a time goal.",
+    GoalWordCount: "This is the amount of words that you wish to type. Leave blank " +
+                  "if you do not wish to have a word count goal."
+ }
