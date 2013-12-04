@@ -16,6 +16,10 @@
 $(document).ready(Donuts.init);
 $(document).ready(function(){
 	$("#search_date_month, #search_date_year").selectbox();
+	updateExpandable();
+});
+
+function updateExpandable(){
 	$(".entry").each(function(){
 		if($(this).height() > 260){
 			$(this).addClass("expandable");
@@ -24,4 +28,4 @@ $(document).ready(function(){
 			});
 		}
 	});
-});
+}
