@@ -237,8 +237,28 @@ input.search-button:hover{
 		font-size: 1.4em;
 		float: left;
 		color: $primary;
-		margin-bottom: .55em;
+		margin-bottom: .6em;
 	}
+	ul {
+		list-style: disc outside none;
+	}
+	li {
+		list-style: disc outside none;
+		margin-left: 1.2rem;
+		display: list-item;
+	}
+	blockquote > * {
+		margin-bottom: 0.6rem;
+	}
+	blockquote {
+		margin: 0 1.2rem 0.8rem;
+	}
+	position: relative;
+	overflow: hidden;
+}
+
+.entry > * {
+	margin-bottom: 0.6rem;
 }
 
 .entry .goal-met{
@@ -256,6 +276,13 @@ input.search-button:hover{
 	display: block;
 }
 
+.entry:hover {
+	cursor: pointer;
+	.read-more-fade {
+		color: $primary;
+	}
+}
+
 .tag {
 	color: $primary;
 	font-size: 0.8em;
@@ -264,6 +291,51 @@ input.search-button:hover{
 .tag:hover {
 	color: darken($primary, 20%);
 }
+
+.entry .read-more-fade { 
+	font-size: 2rem;
+	line-height: 1rem;
+	position: absolute; 
+	bottom: 0; left: 0;
+	width: 100%; 
+	text-align: center; 
+	margin: 0; padding: 4rem 0 0.5rem;
+	display: none;
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, transparent),color-stop(60%, white));
+        background-image: -webkit-linear-gradient(top, transparent, white 60%);
+        background-image: -moz-linear-gradient(top, transparent, white 60%);
+        background-image: -ms-linear-gradient(top, transparent, white 60%);
+        background-image: -o-linear-gradient(top, transparent, white 60%);
+
+	-webkit-transition: color 0.15s ease-in-out;
+	-moz-transition: color 0.15s ease-in-out;
+	-o-transition: color 0.15s ease-in-out;
+	transition: color 0.15s ease-in-out; 
+}
+
+.entry.expandable{
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out; 
+	max-height: 18rem;
+	.read-more-fade{
+		display: block;
+	}
+}
+
+.entry.expandable.expanded {
+	max-height: 100rem;
+	.read-more-fade{
+		display: none;
+	}
+}
+
+.entry .read-more-fade:hover {
+	cursor: pointer;
+}
+
+/*-------------------- Searching by Date --------------------*/
 
 #prev-month, #next-month {
 	background-color: $primary;
