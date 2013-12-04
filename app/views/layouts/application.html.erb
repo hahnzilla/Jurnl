@@ -8,11 +8,11 @@
     <link id="page_favicon" href="/assets/favicon.ico" rel="icon" type="image/x-icon" />
   </head>
   <body>
-    <% if notice %>
+    <% if notice && notice != "Signed in successfully."%>
     <div class="notice"><p class="wrapper"><span aria-hidden="true" class="close" data-icon="&#x25;"></span><%= notice %></p></div>
     <% end -%>
 
-    <% if alert %>
+    <% if alert && alert != "You need to sign in or sign up before continuing."%>
     <div class="alert"><p class="wrapper"><span aria-hidden="true" class="close" data-icon="&#x25;"></span><%= alert %></p></div>
     <% end %>
     <%= yield %>
