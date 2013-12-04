@@ -143,7 +143,6 @@ Donuts.Application.NextMonthsEntries = function() {
 
 Donuts.Application.ShowHelp = function()
 {
-    console.log($(this).offset());
     var HelpItem = $(this);
     var offset = HelpItem.offset();
     var HelpString = Donuts.Help.HelpTopics[HelpItem.attr("id")];
@@ -162,7 +161,6 @@ Donuts.Application.ShowHelp = function()
     HelpDiv.css('left','' + (offset.left + 20) + 'px');
     HelpDiv.css('background-color', 'white');
     HelpDiv.css('padding', '10');
-        console.log("HelpDiv: " + HelpDiv.html());
     HelpDiv.show();
 };
 
