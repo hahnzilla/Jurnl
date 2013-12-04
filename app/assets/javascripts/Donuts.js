@@ -320,6 +320,7 @@ Donuts.Editor.Initialize = function() {
 			ed.execCommand('FormatBlock', false, 'blockquote');
 			ed.execCommand('FontName', false, 'Monospace');
 			ed.controlManager.get('Verbatim').setActive(true);
+            NodeChangeHandler(ed, ed.controlManager, tinyMCE.activeEditor.selection.getNode());
 		}
 	    });
 
@@ -330,6 +331,7 @@ Donuts.Editor.Initialize = function() {
 		onclick : function(){
 			ed.controlManager.get('Monospace').setActive(true);
 			ed.execCommand('FontName', false, 'Monospace');
+            NodeChangeHandler(ed, ed.controlManager, tinyMCE.activeEditor.selection.getNode());
 		}
 	    });
 
@@ -352,34 +354,12 @@ Donuts.Editor.Initialize = function() {
 	    ed.onKeyPress.add(function(ed, e) { Donuts.Timers["Distraction"].KeyPressHandler(); });
         
 		// checks the current node type to activate/deactivate monospace button
-	    ed.onNodeChange.add(function(ed, cm, e) {
-			var resultnode = resolveNode(e);
-			if(resultnode == 'Verbatim'){
-				cm.setActive('Verbatim', true);
-				cm.setActive('Monospace', false);
-				cm.setActive('blockquote', false);
-			}else if(resultnode == 'Monospace'){
-				cm.setActive('Monospace', true);
-				cm.setActive('Verbatim', false);
-			}else{
-				cm.setActive('Monospace', false);
-				cm.setActive('Verbatim', false);
-			}
-			
-			setTimeout(function(){//repeat to make sure
-				var resultnode = resolveNode(e);
-				if(resultnode == 'Verbatim'){
-					cm.setActive('Verbatim', true);
-					cm.setActive('Monospace', false);
-					cm.setActive('blockquote', false);
-				}else if(resultnode == 'Monospace'){
-					cm.setActive('Monospace', true);
-					cm.setActive('Verbatim', false);
-				}else{
-					cm.setActive('Monospace', false);
-					cm.setActive('Verbatim', false);
-				}
-			}, 10);
+        ed.onNodeChange.add(function (ed, cm, e) {
+            NodeChangeHandler(ed, cm, e);
+            setTimeout(function () {//repeat to make sure
+                NodeChangeHandler(ed, cm, e);
+            }, 6);
+
 		});
         
 	}

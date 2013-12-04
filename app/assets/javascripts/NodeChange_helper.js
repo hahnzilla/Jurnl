@@ -74,7 +74,30 @@ function resolveNode(e){
 		}else{
 			return('Monospace');
 		}
-	}else{
+	}else if (inBlockquote(e, false)) {
+        return('Blockquote');
+    }else{
 		return('NoTarget');
 	}
+}
+
+// checks the current node type to activate/deactivate monospace button
+function NodeChangeHandler(ed, cm, e) {
+
+    var resultnode = resolveNode(e);
+    if(resultnode == 'Verbatim'){
+        cm.setActive('Verbatim', true);
+        cm.setActive('Monospace', false);
+        cm.setActive('blockquote', false);
+    }else if(resultnode == 'Monospace'){
+        cm.setActive('Monospace', true);
+        cm.setActive('Verbatim', false);
+    }else if (resultnode == 'Blockquote') {
+        cm.setActive('Verbatim', false);
+        cm.setActive('Monospace', false);
+        cm.setActive('blockquote', true);
+    }else{
+        cm.setActive('Monospace', false);
+        cm.setActive('Verbatim', false);
+    } 
 }
