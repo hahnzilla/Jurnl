@@ -1,0 +1,16 @@
+<article class="entry <%= entry.goal_completed %>">
+  <header class="cf">
+    <h4 class="left"><%= parseForDate(entry.created_at) %></h4>
+    <span aria-hidden="true" class="goal-met" data-icon="&#xe606;"></span>
+  </header>
+  <p>
+    <%= entry.content.html_safe %>
+  </p>
+  <footer>
+    <ul>
+      <% entry.tags.each do |tag| %>
+        <li><a href="/entries?search[q]=<%= tag.name %>" class="tag">#<%= tag.name %></a></li>
+      <% end %>
+    </ul>
+  </footer>
+</article>
