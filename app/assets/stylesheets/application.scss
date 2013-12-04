@@ -244,8 +244,11 @@ input.search-button:hover{
 	}
 	li {
 		list-style: disc outside none;
-		margin-left: 1.2rem;
+		margin-left: 1.5rem;
 		display: list-item;
+	}
+	ol li {
+		list-style-type: decimal;
 	}
 	blockquote > * {
 		margin-bottom: 0.6rem;
