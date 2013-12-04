@@ -301,11 +301,11 @@ input.search-button:hover{
 	text-align: center; 
 	margin: 0; padding: 4rem 0 0.5rem;
 	display: none;
-	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, transparent),color-stop(60%, white));
-        background-image: -webkit-linear-gradient(top, transparent, white 60%);
-        background-image: -moz-linear-gradient(top, transparent, white 60%);
-        background-image: -ms-linear-gradient(top, transparent, white 60%);
-        background-image: -o-linear-gradient(top, transparent, white 60%);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.001)),color-stop(60%, white));
+        background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.001) 0%, white 60%);
+        background-image: -moz-linear-gradient(top, rgba(255,255,255,0.001) 0%, white 60%);
+        background-image: -ms-linear-gradient(top, rgba(255,255,255,0.001) 0%, white 60%);
+        background-image: -o-linear-gradient(top, rgba(255,255,255,0.001) 0%, white 60%);
 
 	-webkit-transition: color 0.15s ease-in-out;
 	-moz-transition: color 0.15s ease-in-out;
