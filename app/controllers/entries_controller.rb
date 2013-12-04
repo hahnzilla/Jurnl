@@ -10,8 +10,8 @@ class EntriesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { @entries = @entries.page(params[:page]) }
-      format.js { @entries = @entries.page(params[:page]) }
+      format.html { @entries = @entries.blank? ? @entries : @entries.page(params[:page]) }
+      format.js { @entries = @entries.blank? ? @entries : @entries.page(params[:page]) }
       format.download_html { send_data format_as_html(@entries), filename: "entries.html" }
       format.download_text { send_data format_as_text(@entries), filename: "entries.txt" }
     end
