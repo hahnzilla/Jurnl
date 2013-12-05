@@ -9,13 +9,10 @@ INTERVAL = 10000; //TODO Get from db, this line should not be here
 
 Donuts.init = function() {
     Donuts.Timers = {};
-    Donuts.Editor.Initialize();
+    Donuts.Utils.AjaxGetUserSettings(Donuts.Editor.Initialize);
     Donuts.Application.InitTimers(Donuts.Timers);
     Donuts.Application.AttachEvents();
     Donuts.Stats = new stats(document.getElementById("distractionAlerts"), 20);
-
-    Donuts.Utils.AjaxGetUserSettings();
-
 };
 
 /* ------------------------------------- *
@@ -196,7 +193,7 @@ Donuts.Utils.AjaxGetEntry = function () {
     });
 }
 
-Donuts.Utils.AjaxGetUserSettings = function() {
+Donuts.Utils.AjaxGetUserSettings = function(InitEditor) {
 	//Ajax call to get user settings
     $.getJSON("/users/current", function(result){
         //get settings form the database
@@ -208,6 +205,7 @@ Donuts.Utils.AjaxGetUserSettings = function() {
             $('#popUpDiv').data('font-point', result.font_point);
             Donuts.Timers["Distraction"].Initialize(result.distraction_timeout * 1000);
         }
+        InitEditor();
     })
 }
 
